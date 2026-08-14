@@ -1,4 +1,4 @@
-const CACHE = "set-tools-dof-v3";
+const CACHE = "bg-set-tools-dof-v3.4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -7,7 +7,7 @@ const ASSETS = [
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
-  "./logo-bruno-guillard.jpg"
+  "./logo-bruno-guillard.png"
 ];
 
 self.addEventListener("install", (event) => {

@@ -1,6 +1,6 @@
 {
-  "name": "SET TOOLS / DOF",
-  "short_name": "SET · DOF",
+  "name": "BG SET TOOLS / DOF",
+  "short_name": "BG · DOF",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0B0C0E",
