@@ -139,3 +139,16 @@ V4.7 — Final app icon
 - Mise à jour des fichiers icon-192.png et icon-512.png.
 - Aucun changement dans l’interface ni dans les calculs.
 - Version visible : v4.7
+
+V4.8
+- Nom court d'installation modifié : DOF · BRUNO
+- Ligne d'identité revue : "BRUNO SET TOOLS" est désormais d'une seule couleur, "/ DOF" reste distinct.
+- Mode clair : chiffres / options non sélectionnés légèrement éclaircis.
+- Aucun changement dans les calculs.
+- Version visible : v4.8
+
+V4.9
+- Ajout de la focale rapide 105 mm entre 85 mm et 135 mm.
+- Conservation de l’icône DOF validée.
+- Aucun autre changement dans l’interface ni dans les calculs.
+- Version visible : v4.9

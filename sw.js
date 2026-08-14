@@ -1,9 +1,9 @@
-const CACHE = "bruno-set-tools-dof-v4.7";
+const CACHE = "bruno-set-tools-dof-v4.9";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=4.7",
-  "./app.js?v=4.7",
+  "./style.css?v=4.9",
+  "./app.js?v=4.9",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",

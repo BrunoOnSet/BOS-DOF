@@ -18,7 +18,7 @@
   --hero-text:#111315;
   --hero-muted:#4D535A;
   --technical:#7C8186;
-  --chip-text:#4A5158;
+  --chip-text:#586068;
   --chip-active-bg:#92B8C0;
   --chip-active-text:#182126;
   --chip-bg:#E7E7E3;
@@ -507,11 +507,12 @@ body:not(.dark) .chips button.active{
 .eyebrow-bg{
   color:#252A2F;
   font-weight:900;
-  letter-spacing:.10em;
+  letter-spacing:.08em;
 }
 .eyebrow-rest{
   color:var(--muted);
   font-weight:800;
+  letter-spacing:.12em;
 }
 body.dark .eyebrow-bg{
   color:#D7DADF;
