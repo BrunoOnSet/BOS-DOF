@@ -1,26 +1,20 @@
-PDC — Full Frame / Super 35
+SET TOOLS / DOF — V3
 
-Nouveautés V2
-- Sélecteur de format capteur : Full Frame / Super 35
-- Calcul de profondeur de champ adapté au format choisi
-- Bloc de repères plein format :
-  - focale équivalente en Full Frame
-  - distance à adopter en Full Frame en gardant la même focale pour conserver le même cadre
+Direction artistique V1
+- Univers SET TOOLS
+- Palette graphite / blanc cassé
+- Accent ambre #FF9D3B
+- Logo Bruno Guillard utilisé comme marque de fabricant
+- Signature : Made for the set · Bruno Guillard
+- Chiffres et données au centre de l'interface
+- Ligne de mesure comme élément graphique récurrent
 
-Hypothèses
+Calcul
 - Full Frame : cercle de confusion 0,029 mm
 - Super 35 : cercle de confusion 0,019 mm
-- Facteur de crop Super 35 vers Full Frame : 1,5×
+- Crop Super 35 vers Full Frame : 1,5×
 
 Mise à jour
-1. Remplace les anciens fichiers du dépôt par ceux-ci.
+1. Remplace les fichiers du dépôt GitHub App-PDC par ceux de ce dossier.
 2. GitHub Pages redéploiera automatiquement.
-3. Sur le téléphone, si l’ancienne version reste en cache, ferme l’app puis relance-la.
-
-V2.1
-- Ajustement des cercles de confusion pour mieux correspondre aux valeurs de DOF Simulator.
-
-V2.2
-- Correction de l'état visuel du sélecteur Full Frame / Super 35.
-- Le format actif passe maintenant correctement en blanc.
-- Aucun changement dans les calculs de profondeur de champ.
+3. Le cache a été renommé en set-tools-dof-v3 pour forcer la mise à jour de l'application.

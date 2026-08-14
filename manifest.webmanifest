@@ -1,10 +1,10 @@
 {
-  "name": "PDC — Full Frame / Super 35",
-  "short_name": "PDC",
+  "name": "SET TOOLS / DOF",
+  "short_name": "SET · DOF",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b0b0c",
-  "theme_color": "#0b0b0c",
+  "background_color": "#0B0C0E",
+  "theme_color": "#0B0C0E",
   "lang": "fr",
   "icons": [
     {

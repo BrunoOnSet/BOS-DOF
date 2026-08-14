@@ -79,21 +79,23 @@ function calculate() {
   const fmt = FORMATS[currentSensor];
   const COC = fmt.coc;
 
-  const f = parseFR(inputs.focal.value);        // mm
+  const f = parseFR(inputs.focal.value);
   const N = parseFR(inputs.aperture.value);
-  const sM = parseFR(inputs.distance.value);    // m
+  const sM = parseFR(inputs.distance.value);
 
   $("formatBadge").textContent = fmt.name;
-  $("footerText").textContent = `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · préréglage ${fmt.name.toLowerCase()}`;
+  $("footerText").textContent =
+    `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · ${fmt.name}`;
 
   if (!(f > 0 && N > 0 && sM > 0)) {
-    ["dof","range","near","far","front","back","hyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"].forEach(id => $(id).textContent = "—");
+    ["dof","range","near","far","front","back","hyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
+      .forEach(id => $(id).textContent = "—");
     return;
   }
 
   updateEquivalentInfo(f, sM);
 
-  const s = sM * 1000; // mm
+  const s = sM * 1000;
   const H = (f * f) / (N * COC) + f;
 
   const near = (H * s) / (H + (s - f));
@@ -122,7 +124,7 @@ function calculate() {
   updateActiveChips();
 }
 
-document.querySelectorAll(".chips[data-target] button").forEach(btn => {
+document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEach(btn => {
   btn.addEventListener("click", () => {
     const target = btn.closest(".chips").dataset.target;
     inputs[target].value = btn.textContent;

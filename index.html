@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b0c" />
+  <meta name="theme-color" content="#0B0C0E" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="PDC" />
-  <title>Profondeur de champ</title>
+  <meta name="apple-mobile-web-app-title" content="SET · DOF" />
+  <title>SET TOOLS / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="style.css" />
@@ -16,17 +16,22 @@
   <main class="app">
     <header class="top">
       <div>
-        <div class="eyebrow">FULL FRAME · SUPER 35</div>
+        <div class="eyebrow"><span class="eyebrow-mark"></span>SET TOOLS / DOF</div>
         <h1>Profondeur de champ</h1>
       </div>
-      <button class="info" id="infoBtn" aria-label="Informations">i</button>
+      <img class="brand-logo top-logo" src="logo-bruno-guillard.jpg" alt="Bruno Guillard" />
     </header>
 
     <section class="panel input-panel">
+      <div class="panel-head">
+        <div class="panel-kicker">RÉGLAGES</div>
+        <button class="info" id="infoBtn" aria-label="Informations">i</button>
+      </div>
+
       <div class="field">
         <div class="label-row">
           <label>Format capteur</label>
-          <span class="unit">sélection</span>
+          <span class="unit">format</span>
         </div>
         <div class="chips sensor-chips" data-target="sensor">
           <button class="active" data-value="ff">Full Frame</button>
@@ -91,8 +96,9 @@
       <div class="dof" id="dof">—</div>
       <div class="range" id="range">—</div>
 
-      <div class="visual">
+      <div class="visual" aria-hidden="true">
         <div class="line"></div>
+        <div class="zone"></div>
         <div class="near-mark"></div>
         <div class="focus-mark"></div>
         <div class="far-mark"></div>
@@ -126,18 +132,25 @@
       </div>
     </section>
 
-    <footer id="footerText">
-      Cercle de confusion : 0,030 mm · préréglage plein format
+    <footer>
+      <div id="footerText" class="technical-footer">
+        Cercle de confusion : 0,029 mm · Full Frame
+      </div>
+      <div class="signature">
+        <img class="brand-logo footer-logo" src="logo-bruno-guillard.jpg" alt="" />
+        <span>Made for the set · Bruno Guillard</span>
+      </div>
     </footer>
   </main>
 
   <dialog id="infoDialog">
     <div class="dialog-inner">
       <button id="closeDialog" class="close" aria-label="Fermer">×</button>
+      <div class="dialog-kicker">SET TOOLS / DOF</div>
       <h2>À propos du calcul</h2>
-      <p>L’application permet désormais de choisir entre <strong>Full Frame</strong> et <strong>Super 35</strong>.</p>
+      <p>L’application permet de choisir entre <strong>Full Frame</strong> et <strong>Super 35</strong>.</p>
       <p>Le calcul utilise un cercle de confusion de <strong>0,029 mm</strong> en Full Frame et <strong>0,019 mm</strong> en Super 35, avec un facteur de crop de <strong>1,5×</strong>.</p>
-      <p>Le bloc « Repères plein format » indique l’équivalent en Full Frame et la distance à adopter en Full Frame si tu gardes la même focale pour conserver le même cadre.</p>
+      <p>Le bloc « Repères plein format » indique l’équivalent de focale en Full Frame et la distance à adopter en Full Frame si tu gardes la même focale pour conserver le même cadre.</p>
       <p>Si tu renseignes un T-stop, le résultat reste une approximation : la profondeur de champ dépend théoriquement du f-number optique.</p>
     </div>
   </dialog>
