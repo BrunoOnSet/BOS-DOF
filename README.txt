@@ -96,3 +96,11 @@ V4.1
 - Signature "Made for the set · Bruno Guillard" rendue cliquable vers le même site.
 - Les liens s'ouvrent dans un nouvel onglet afin de conserver l'application ouverte.
 - Version visible : v4.1
+
+V4.2 — Light mode contrast
+- Correction du CSS : les boutons utilisent désormais réellement les variables du thème.
+- Light : option active en pétrole clair/pastel #A8C9CF.
+- Light : texte des options non sélectionnées assombri #2F353A.
+- Light : contour des options non sélectionnées légèrement renforcé.
+- Dark : rendu inchangé.
+- Version visible : v4.2
