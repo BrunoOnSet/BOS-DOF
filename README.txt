@@ -67,3 +67,12 @@ V3.7
 - Fin contour pour mieux dissocier le titre du reste de l'interface.
 - Logo et ligne BG SET TOOLS / DOF conservés et mieux intégrés.
 - Aucun changement dans les calculs.
+
+V3.8 — LIGHT / DARK
+- Mode clair désormais utilisé par défaut.
+- Ajout d'un bouton DARK / LIGHT dans l'en-tête.
+- Le choix est mémorisé sur l'appareil.
+- Palette claire pensée spécifiquement pour BG SET TOOLS, avec accent pétrole #2F5B66.
+- Mode sombre conservé pour les plateaux ou environnements peu lumineux.
+- Logo automatiquement adapté au fond clair / sombre.
+- Aucun changement dans les calculs.

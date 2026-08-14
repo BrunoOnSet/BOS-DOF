@@ -152,6 +152,30 @@ dialog.addEventListener("click", (e) => {
 });
 
 
+
+// Theme: light by default, dark on demand.
+const themeToggle = document.getElementById("themeToggle");
+const themeColorMeta = document.getElementById("themeColor");
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+  document.body.classList.toggle("dark", isDark);
+  themeToggle.textContent = isDark ? "LIGHT" : "DARK";
+  themeToggle.setAttribute("aria-label", isDark ? "Passer en mode clair" : "Passer en mode sombre");
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", isDark ? "#0B0C0E" : "#F3F1EC");
+  }
+}
+
+const savedTheme = localStorage.getItem("bg-set-tools-theme") || "light";
+applyTheme(savedTheme);
+
+themeToggle.addEventListener("click", () => {
+  const nextTheme = document.body.classList.contains("dark") ? "light" : "dark";
+  localStorage.setItem("bg-set-tools-theme", nextTheme);
+  applyTheme(nextTheme);
+});
+
 // TIPS page navigation
 const tipsPage = document.getElementById("tipsPage");
 const mainApp = document.getElementById("mainApp");

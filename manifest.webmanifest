@@ -3,8 +3,8 @@
   "short_name": "BG · DOF",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0B0C0E",
-  "theme_color": "#0B0C0E",
+  "background_color": "#F3F1EC",
+  "theme_color": "#F3F1EC",
   "lang": "fr",
   "icons": [
     {
