@@ -1,4 +1,4 @@
-const CACHE = "bg-set-tools-dof-v3.4";
+const CACHE = "bg-set-tools-dof-v3.7";
 const ASSETS = [
   "./",
   "./index.html",

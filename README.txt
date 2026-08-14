@@ -45,3 +45,25 @@ V3.4 — BG SET TOOLS
 - Signature conservée : Made for the set · Bruno Guillard.
 - Monogramme Bruno Guillard conservé dans la ligne d'identité.
 - Aucun changement dans les calculs ni dans l'ergonomie.
+
+V3.5 — TIPS
+- Ajout d'une page TIPS accessible depuis l'en-tête.
+- Définitions pédagogiques :
+  cercle de confusion, diaphragme f/, T-stop, focale, distance de MAP.
+- Ajout d'un rappel sur la nature conventionnelle de la profondeur de champ.
+- Correction du libellé 'f / T' en 'f/' dans l'interface.
+- Aucun changement dans les formules de calcul.
+
+V3.6
+- Mise en valeur renforcée de la zone "Profondeur de champ".
+- Nouveau hero clair : fond blanc cassé + texte sombre pour une lecture immédiate.
+- Valeur principale de PDC agrandie.
+- Logo de la ligne d'identité augmenté pour être plus lisible.
+- Aucun changement dans les calculs.
+
+V3.7
+- En-tête transformé en bloc d'identité encadré.
+- Fond graphite sombre distinct du fond général.
+- Fin contour pour mieux dissocier le titre du reste de l'interface.
+- Logo et ligne BG SET TOOLS / DOF conservés et mieux intégrés.
+- Aucun changement dans les calculs.

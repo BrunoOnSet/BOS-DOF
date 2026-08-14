@@ -151,6 +151,28 @@ dialog.addEventListener("click", (e) => {
   if (e.target === dialog) dialog.close();
 });
 
+
+// TIPS page navigation
+const tipsPage = document.getElementById("tipsPage");
+const mainApp = document.getElementById("mainApp");
+const tipsBtn = document.getElementById("tipsBtn");
+const tipsBackBtn = document.getElementById("tipsBackBtn");
+
+function openTips() {
+  mainApp.hidden = true;
+  tipsPage.hidden = false;
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function closeTips() {
+  tipsPage.hidden = true;
+  mainApp.hidden = false;
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+tipsBtn.addEventListener("click", openTips);
+tipsBackBtn.addEventListener("click", closeTips);
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").catch(() => {});

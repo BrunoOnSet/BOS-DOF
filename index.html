@@ -13,13 +13,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
+  <main class="app" id="mainApp">
     <header class="top">
       <div>
-        <div class="eyebrow">
-          <span class="eyebrow-mark"></span>
-          <span>BG SET TOOLS / DOF</span>
-          <img class="brand-logo inline-logo" src="logo-bruno-guillard.png" alt="Bruno Guillard" />
+        <div class="eyebrow-row">
+          <div class="eyebrow">
+            <span class="eyebrow-mark"></span>
+            <span>BG SET TOOLS / DOF</span>
+            <img class="brand-logo inline-logo" src="logo-bruno-guillard.png" alt="Bruno Guillard" />
+          </div>
+          <button class="tips-link" id="tipsBtn" type="button">TIPS</button>
         </div>
         <h1>Profondeur de champ</h1>
       </div>
@@ -57,7 +60,7 @@
       <div class="field">
         <div class="label-row">
           <label for="aperture">Diaph</label>
-          <span class="unit">f / T</span>
+          <span class="unit">f/</span>
         </div>
         <input id="aperture" inputmode="decimal" type="text" value="2.8" autocomplete="off" />
         <div class="chips" data-target="aperture">
@@ -94,20 +97,22 @@
     </section>
 
     <section class="result">
-      <div class="result-label">PROFONDEUR DE CHAMP</div>
-      <div class="format-badge" id="formatBadge">Full Frame</div>
-      <div class="dof" id="dof">—</div>
-      <div class="range" id="range">—</div>
+      <div class="result-hero">
+        <div class="result-label">PROFONDEUR DE CHAMP</div>
+        <div class="format-badge" id="formatBadge">Full Frame</div>
+        <div class="dof" id="dof">—</div>
+        <div class="range" id="range">—</div>
 
-      <div class="visual" aria-hidden="true">
-        <div class="line"></div>
-        <div class="zone"></div>
-        <div class="near-mark"></div>
-        <div class="focus-mark"></div>
-        <div class="far-mark"></div>
-        <div class="visual-label near" id="frontLabel">—</div>
-        <div class="visual-label focus">MAP</div>
-        <div class="visual-label far" id="backLabel">—</div>
+        <div class="visual" aria-hidden="true">
+          <div class="line"></div>
+          <div class="zone"></div>
+          <div class="near-mark"></div>
+          <div class="focus-mark"></div>
+          <div class="far-mark"></div>
+          <div class="visual-label near" id="frontLabel">—</div>
+          <div class="visual-label focus">MAP</div>
+          <div class="visual-label far" id="backLabel">—</div>
+        </div>
       </div>
 
       <div class="cards">
@@ -145,6 +150,84 @@
       </div>
     </footer>
   </main>
+
+
+  <section class="tips-page" id="tipsPage" hidden>
+    <div class="tips-topbar">
+      <button class="back-btn" id="tipsBackBtn" type="button">← DOF</button>
+      <div class="tips-title-wrap">
+        <div class="tips-kicker">BG SET TOOLS</div>
+        <h2>TIPS</h2>
+      </div>
+    </div>
+
+    <div class="tips-intro">
+      Quelques repères simples pour comprendre ce que calcule l’app — et surtout ce qu’elle ne calcule pas.
+    </div>
+
+    <article class="tip-card">
+      <div class="tip-number">01</div>
+      <div>
+        <h3>Le cercle de confusion</h3>
+        <p>Un point situé hors du plan de mise au point n’est pas reproduit comme un point parfait, mais comme un petit disque flou.</p>
+        <p>Le <strong>cercle de confusion</strong> est la taille maximale de ce disque que l’on accepte encore comme « suffisamment net ». Plus cette valeur est petite, plus le critère de netteté est exigeant et plus la profondeur de champ calculée diminue.</p>
+        <div class="tip-note">Dans cette app : 0,029 mm en Full Frame · 0,019 mm en Super 35.</div>
+      </div>
+    </article>
+
+    <article class="tip-card">
+      <div class="tip-number">02</div>
+      <div>
+        <h3>Le diaphragme — f/</h3>
+        <p>Le nombre f/ décrit l’ouverture géométrique de l’objectif. Il dépend de la focale et du diamètre de la pupille d’entrée.</p>
+        <p>À cadrage et distance identiques, <strong>ouvrir</strong> le diaphragme (ex. f/2) réduit la profondeur de champ ; <strong>fermer</strong> (ex. f/8) l’augmente.</p>
+        <div class="tip-note">C’est le f-number qui est utilisé pour le calcul de profondeur de champ.</div>
+      </div>
+    </article>
+
+    <article class="tip-card">
+      <div class="tip-number">03</div>
+      <div>
+        <h3>Le T-stop</h3>
+        <p>Le T-stop mesure la <strong>lumière réellement transmise</strong> par l’objectif après les pertes internes. C’est particulièrement utile pour l’exposition et pour faire correspondre plusieurs optiques cinéma.</p>
+        <p>Un T2.8 n’est donc pas forcément exactement équivalent à f/2.8 du point de vue géométrique.</p>
+        <div class="tip-note">Pour la PDC, on utilise le f-number. Entrer un T-stop à la place reste une approximation.</div>
+      </div>
+    </article>
+
+    <article class="tip-card">
+      <div class="tip-number">04</div>
+      <div>
+        <h3>La focale</h3>
+        <p>La focale, exprimée en millimètres, caractérise l’objectif. Elle influence l’angle de champ et le grossissement.</p>
+        <p>À même position caméra, une focale plus longue donne un cadre plus serré. À même distance et même diaphragme, elle réduit aussi la profondeur de champ calculée.</p>
+        <div class="tip-note">Le « 50 mm équiv. 75 mm » en Super 35 décrit surtout un angle de champ équivalent — la focale physique reste 50 mm.</div>
+      </div>
+    </article>
+
+    <article class="tip-card">
+      <div class="tip-number">05</div>
+      <div>
+        <h3>La distance de mise au point</h3>
+        <p>La distance de MAP est la distance entre le plan du capteur et le plan sur lequel l’objectif fait la mise au point.</p>
+        <p>Plus le sujet est proche, plus la profondeur de champ diminue fortement. À l’inverse, elle augmente quand la distance de mise au point augmente.</p>
+      </div>
+    </article>
+
+    <article class="tip-card">
+      <div class="tip-number">06</div>
+      <div>
+        <h3>Le bon réflexe</h3>
+        <p>Une valeur de PDC n’est jamais une frontière magique entre « net » et « flou ». C’est une convention basée sur un niveau de netteté acceptable.</p>
+        <p>Pour une image très définie, une grande projection, un recadrage important ou une mise au point critique, il faut considérer la PDC comme un <strong>repère</strong>, pas comme une garantie absolue.</p>
+      </div>
+    </article>
+
+    <footer class="tips-footer">
+      <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
+      <span>Made for the set · Bruno Guillard</span>
+    </footer>
+  </section>
 
   <dialog id="infoDialog">
     <div class="dialog-inner">
