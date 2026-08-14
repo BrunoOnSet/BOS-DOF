@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0b0b0c" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="FX6 PDC" />
-  <title>FX6 — Profondeur de champ</title>
+  <meta name="apple-mobile-web-app-title" content="PDC" />
+  <title>Profondeur de champ</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="style.css" />
@@ -16,13 +16,24 @@
   <main class="app">
     <header class="top">
       <div>
-        <div class="eyebrow">SONY FX6 · FULL FRAME</div>
+        <div class="eyebrow">FULL FRAME · SUPER 35</div>
         <h1>Profondeur de champ</h1>
       </div>
       <button class="info" id="infoBtn" aria-label="Informations">i</button>
     </header>
 
     <section class="panel input-panel">
+      <div class="field">
+        <div class="label-row">
+          <label>Format capteur</label>
+          <span class="unit">sélection</span>
+        </div>
+        <div class="chips sensor-chips" data-target="sensor">
+          <button class="active" data-value="ff">Full Frame</button>
+          <button data-value="s35">Super 35</button>
+        </div>
+      </div>
+
       <div class="field">
         <div class="label-row">
           <label for="focal">Focale</label>
@@ -58,10 +69,25 @@
           <button>3</button><button>5</button><button>10</button>
         </div>
       </div>
+
+      <div class="mini-panel">
+        <div class="mini-title">REPÈRES PLEIN FORMAT</div>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <span>Équiv. focale Full Frame</span>
+            <strong id="ffEquivalent">—</strong>
+          </div>
+          <div class="mini-card">
+            <span>Même cadre en Full Frame<br>avec la même focale</span>
+            <strong id="ffDistanceSameFocal">—</strong>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="result">
       <div class="result-label">PROFONDEUR DE CHAMP</div>
+      <div class="format-badge" id="formatBadge">Full Frame</div>
       <div class="dof" id="dof">—</div>
       <div class="range" id="range">—</div>
 
@@ -100,8 +126,8 @@
       </div>
     </section>
 
-    <footer>
-      Cercle de confusion : 0,030 mm · préréglage plein format FX6
+    <footer id="footerText">
+      Cercle de confusion : 0,030 mm · préréglage plein format
     </footer>
   </main>
 
@@ -109,9 +135,10 @@
     <div class="dialog-inner">
       <button id="closeDialog" class="close" aria-label="Fermer">×</button>
       <h2>À propos du calcul</h2>
-      <p>Le calcul utilise un cercle de confusion de 0,030 mm, valeur courante pour le plein format 24×36.</p>
-      <p>Si tu renseignes un T-stop, le résultat est une approximation : la profondeur de champ dépend théoriquement du f-number optique.</p>
-      <p>Les valeurs sont destinées à aider rapidement sur le plateau, pas à remplacer les repères précis d'une optique ou un test caméra.</p>
+      <p>L’application permet désormais de choisir entre <strong>Full Frame</strong> et <strong>Super 35</strong>.</p>
+      <p>Le calcul utilise un cercle de confusion de <strong>0,029 mm</strong> en Full Frame et <strong>0,019 mm</strong> en Super 35, avec un facteur de crop de <strong>1,5×</strong>.</p>
+      <p>Le bloc « Repères plein format » indique l’équivalent en Full Frame et la distance à adopter en Full Frame si tu gardes la même focale pour conserver le même cadre.</p>
+      <p>Si tu renseignes un T-stop, le résultat reste une approximation : la profondeur de champ dépend théoriquement du f-number optique.</p>
     </div>
   </dialog>
 

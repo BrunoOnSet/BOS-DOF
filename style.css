@@ -18,7 +18,7 @@ button{cursor:pointer}
 h1{font-size:28px;line-height:1.05;margin:6px 0 0;letter-spacing:-.03em}
 .info,.close{border:1px solid var(--line);background:var(--panel);color:var(--text);width:34px;height:34px;border-radius:50%;font-weight:700}
 .panel{background:var(--panel);border:1px solid #242428;border-radius:22px;padding:18px}
-.field+.field{margin-top:22px}
+.field+.field,.mini-panel{margin-top:22px}
 .label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
 label{font-size:13px;font-weight:700}
 .unit{font-size:12px;color:var(--muted)}
@@ -34,9 +34,34 @@ input:focus{border-color:#6d6d73}
   border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700
 }
 .chips button.active{background:var(--text);color:#111;border-color:var(--text)}
+.sensor-chips{padding-top:0}
+.sensor-chips button{padding:10px 16px}
+.mini-panel{
+  border-top:1px solid #242428;
+  padding-top:18px;
+}
+.mini-title{
+  font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:800;margin-bottom:10px
+}
+.mini-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px
+}
+.mini-card{
+  background:#101012;border:1px solid var(--line);border-radius:14px;padding:12px
+}
+.mini-card span{
+  display:block;font-size:11px;color:var(--muted);line-height:1.35;margin-bottom:6px
+}
+.mini-card strong{
+  display:block;font-size:17px;line-height:1.2
+}
 .result{padding:26px 2px 0;text-align:center}
 .result-label{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:800}
-.dof{font-size:54px;line-height:1;margin-top:8px;font-weight:900;letter-spacing:-.055em}
+.format-badge{
+  display:inline-block;margin-top:10px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;
+  font-size:12px;color:#d2d2d6;background:var(--panel)
+}
+.dof{font-size:54px;line-height:1;margin-top:12px;font-weight:900;letter-spacing:-.055em}
 .range{margin-top:8px;color:#c7c7cc;font-size:14px}
 .visual{height:86px;position:relative;margin:24px 18px 12px}
 .line{position:absolute;left:0;right:0;top:35px;height:2px;background:linear-gradient(90deg,#3c3c42 0%,#fff 50%,#3c3c42 100%)}
@@ -57,6 +82,9 @@ dialog::backdrop{background:rgba(0,0,0,.68);backdrop-filter:blur(6px)}
 .dialog-inner h2{margin:0 38px 14px 0;font-size:22px}
 .dialog-inner p{color:#c6c6ca;line-height:1.5;font-size:14px}
 .close{position:absolute;right:18px;top:18px;font-size:20px;line-height:1}
+@media (max-width:430px){
+  .mini-grid{grid-template-columns:1fr}
+}
 @media (max-width:380px){
   .dof{font-size:46px}
   input{font-size:28px;height:58px}

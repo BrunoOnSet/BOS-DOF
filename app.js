@@ -1,4 +1,15 @@
-const COC = 0.030; // mm — full frame preset
+const FORMATS = {
+  ff: {
+    name: "Full Frame",
+    coc: 0.029,
+    cropToFF: 1
+  },
+  s35: {
+    name: "Super 35",
+    coc: 0.019,
+    cropToFF: 1.5
+  }
+};
 
 const $ = (id) => document.getElementById(id);
 const inputs = {
@@ -7,8 +18,16 @@ const inputs = {
   distance: $("distance")
 };
 
+let currentSensor = "ff";
+
 function parseFR(v) {
   return Number(String(v).replace(",", ".").trim());
+}
+
+function roundSmart(value) {
+  if (value >= 100) return Math.round(value);
+  if (value >= 10) return Math.round(value * 10) / 10;
+  return Math.round(value * 100) / 100;
 }
 
 function formatM(m) {
@@ -26,25 +45,51 @@ function formatDepth(m) {
   return `${m.toFixed(1).replace(".", ",")} m`;
 }
 
+function formatFocal(mm) {
+  const value = roundSmart(mm).toString().replace(".", ",");
+  return `${value} mm`;
+}
+
 function updateActiveChips() {
-  document.querySelectorAll(".chips").forEach(group => {
+  document.querySelectorAll(".chips[data-target]").forEach(group => {
     const target = group.dataset.target;
     const val = parseFR(inputs[target].value);
     group.querySelectorAll("button").forEach(btn => {
       btn.classList.toggle("active", Math.abs(parseFR(btn.textContent) - val) < 0.0001);
     });
   });
+
+  document.querySelectorAll(".sensor-chips button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.value === currentSensor);
+  });
+}
+
+function updateEquivalentInfo(focal, distanceM) {
+  const crop = FORMATS[currentSensor].cropToFF;
+  const ffFocal = focal * crop;
+  const ffDistanceSameFocal = distanceM / crop;
+
+  $("ffEquivalent").textContent = formatFocal(ffFocal);
+  $("ffDistanceSameFocal").textContent = formatM(ffDistanceSameFocal);
 }
 
 function calculate() {
+  const fmt = FORMATS[currentSensor];
+  const COC = fmt.coc;
+
   const f = parseFR(inputs.focal.value);        // mm
   const N = parseFR(inputs.aperture.value);
-  const sM = parseFR(inputs.distance.value);   // m
+  const sM = parseFR(inputs.distance.value);    // m
+
+  $("formatBadge").textContent = fmt.name;
+  $("footerText").textContent = `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · préréglage ${fmt.name.toLowerCase()}`;
 
   if (!(f > 0 && N > 0 && sM > 0)) {
-    ["dof","range","near","far","front","back","hyper","frontLabel","backLabel"].forEach(id => $(id).textContent = "—");
+    ["dof","range","near","far","front","back","hyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"].forEach(id => $(id).textContent = "—");
     return;
   }
+
+  updateEquivalentInfo(f, sM);
 
   const s = sM * 1000; // mm
   const H = (f * f) / (N * COC) + f;
@@ -75,10 +120,17 @@ function calculate() {
   updateActiveChips();
 }
 
-document.querySelectorAll(".chips button").forEach(btn => {
+document.querySelectorAll(".chips[data-target] button").forEach(btn => {
   btn.addEventListener("click", () => {
     const target = btn.closest(".chips").dataset.target;
     inputs[target].value = btn.textContent;
+    calculate();
+  });
+});
+
+document.querySelectorAll(".sensor-chips button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentSensor = btn.dataset.value;
     calculate();
   });
 });
