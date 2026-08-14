@@ -1,9 +1,9 @@
-const CACHE = "bg-set-tools-dof-v3.8";
+const CACHE = "bg-set-tools-dof-v3.9";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css",
-  "./app.js",
+  "./style.css?v=3.9",
+  "./app.js?v=3.9",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
@@ -11,7 +11,9 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE).then(cache => cache.addAll(ASSETS))
+  );
   self.skipWaiting();
 });
 
@@ -25,7 +27,38 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const req = event.request;
+
+  if (req.method !== "GET") return;
+
+  // Always prefer the newest online version for page/CSS/JS.
+  if (
+    req.mode === "navigate" ||
+    req.destination === "document" ||
+    req.destination === "style" ||
+    req.destination === "script"
+  ) {
+    event.respondWith(
+      fetch(req)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(req, copy));
+          return response;
+        })
+        .catch(() => caches.match(req).then(r => r || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  // Images/icons: cache first is fine.
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
+    caches.match(req).then(cached => {
+      if (cached) return cached;
+      return fetch(req).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(req, copy));
+        return response;
+      });
+    })
   );
 });

@@ -76,3 +76,10 @@ V3.8 — LIGHT / DARK
 - Mode sombre conservé pour les plateaux ou environnements peu lumineux.
 - Logo automatiquement adapté au fond clair / sombre.
 - Aucun changement dans les calculs.
+
+V3.9 — CACHE FIX
+- Correction durable du système de mise à jour PWA.
+- En ligne : HTML/CSS/JS sont chargés depuis GitHub en priorité.
+- Hors ligne : l'application continue d'utiliser le cache.
+- Ajout de paramètres de version sur CSS/JS pour éviter les anciens fichiers.
+- Ajout discret de "v3.9" dans le footer pour vérifier la version installée.
