@@ -170,3 +170,8 @@ V5.2
 - Suppression des traces résiduelles du grand rond précédent.
 - Icône recentrée et carré redessiné proprement.
 - Cache PWA mis à jour en v5.2.
+
+V5.3
+- short_name PWA raccourci en "DOF - BST" pour un affichage plus lisible sous l’icône.
+- Nom pensé pour éviter la troncature sur l’écran d’accueil.
+- Cache PWA mis à jour en v5.3.
