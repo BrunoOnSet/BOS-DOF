@@ -1,4 +1,4 @@
-const CACHE = "pdc-fullframe-s35-v2.1";
+const CACHE = "pdc-fullframe-s35-v2.2";
 const ASSETS = [
   "./",
   "./index.html",

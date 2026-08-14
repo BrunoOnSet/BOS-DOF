@@ -51,8 +51,10 @@ function formatFocal(mm) {
 }
 
 function updateActiveChips() {
-  document.querySelectorAll(".chips[data-target]").forEach(group => {
+  document.querySelectorAll(".chips[data-target]:not(.sensor-chips)").forEach(group => {
     const target = group.dataset.target;
+    if (!inputs[target]) return;
+
     const val = parseFR(inputs[target].value);
     group.querySelectorAll("button").forEach(btn => {
       btn.classList.toggle("active", Math.abs(parseFR(btn.textContent) - val) < 0.0001);

@@ -19,3 +19,8 @@ Mise à jour
 
 V2.1
 - Ajustement des cercles de confusion pour mieux correspondre aux valeurs de DOF Simulator.
+
+V2.2
+- Correction de l'état visuel du sélecteur Full Frame / Super 35.
+- Le format actif passe maintenant correctement en blanc.
+- Aucun changement dans les calculs de profondeur de champ.
