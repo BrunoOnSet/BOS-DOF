@@ -125,3 +125,17 @@ V4.5 — BRUNO SET TOOLS
 - La ligne d'identité reste cliquable vers brunoguillard.com.
 - Signature conservée : Made for the set · Bruno Guillard.
 - Aucun changement dans les calculs ni la DA.
+
+V4.6 — App icon redesign
+- Nouvelle icône d'application plus lisible.
+- Texte : BRUNO SET TOOLS en haut, DOF en dessous.
+- Fond bleu inspiré de l'application.
+- Symbole diaphragme/iris stylisé en bas.
+- Aucun changement dans le fonctionnement de l'application.
+- Version visible : v4.6
+
+V4.7 — Final app icon
+- L’icône choisie et modifiée par Bruno a été intégrée comme icône officielle.
+- Mise à jour des fichiers icon-192.png et icon-512.png.
+- Aucun changement dans l’interface ni dans les calculs.
+- Version visible : v4.7
