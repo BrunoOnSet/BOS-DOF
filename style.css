@@ -18,9 +18,9 @@
   --hero-text:#111315;
   --hero-muted:#4D535A;
   --technical:#7C8186;
-  --chip-text:#2F353A;
-  --chip-active-bg:#A8C9CF;
-  --chip-active-text:#172126;
+  --chip-text:#4A5158;
+  --chip-active-bg:#92B8C0;
+  --chip-active-text:#182126;
   --chip-bg:#E7E7E3;
 }
 
@@ -493,4 +493,33 @@ body:not(.dark) .chips button:not(.active){
 
 body:not(.dark) .chips button.active{
   box-shadow:inset 0 0 0 1px rgba(47,91,102,.10);
+}
+
+
+/* V4.4 — cleaner top branding */
+.eyebrow-link{
+  text-decoration:none;
+  color:inherit;
+}
+.eyebrow-link:active{
+  opacity:.72;
+}
+.eyebrow-bg{
+  color:#252A2F;
+  font-weight:900;
+  letter-spacing:.10em;
+}
+.eyebrow-rest{
+  color:var(--muted);
+  font-weight:800;
+}
+body.dark .eyebrow-bg{
+  color:#D7DADF;
+}
+body.dark .eyebrow-rest{
+  color:#9EA3AA;
+}
+.inline-brand-link,
+.inline-logo{
+  display:none !important;
 }

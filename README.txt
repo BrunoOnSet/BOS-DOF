@@ -104,3 +104,24 @@ V4.2 — Light mode contrast
 - Light : contour des options non sélectionnées légèrement renforcé.
 - Dark : rendu inchangé.
 - Version visible : v4.2
+
+V4.3 — Light fine tuning
+- Light : couleur active légèrement plus dense/sombre (#92B8C0).
+- Light : texte/chiffres non sélectionnés en gris foncé (#4A5158), plus doux que du noir.
+- Aucun changement dans les calculs.
+- Version visible : v4.3
+
+V4.4 — Header cleanup
+- Suppression du logo en haut de l'application.
+- La ligne "BG SET TOOLS / DOF" est désormais entièrement cliquable vers https://www.brunoguillard.com/
+- "BG" rendu plus sombre / plus affirmé dans la ligne d'identité.
+- Footer cliquable conservé.
+- Version visible : v4.4
+
+V4.5 — BRUNO SET TOOLS
+- Nom de gamme renommé : BRUNO SET TOOLS.
+- Application : BRUNO SET TOOLS / DOF.
+- Nom court d'installation : BRUNO · DOF.
+- La ligne d'identité reste cliquable vers brunoguillard.com.
+- Signature conservée : Made for the set · Bruno Guillard.
+- Aucun changement dans les calculs ni la DA.
