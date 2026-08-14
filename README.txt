@@ -152,3 +152,21 @@ V4.9
 - Conservation de l’icône DOF validée.
 - Aucun autre changement dans l’interface ni dans les calculs.
 - Version visible : v4.9
+
+V5.0 — FAMILY ICON SYSTEM
+- DOF devient le master visuel officiel de la famille BRUNO SET TOOLS.
+- Icônes 512 px et 192 px régénérées depuis le même master.
+- Convention de nom : DOF · BRUNO.
+- Alignement prévu avec EXPO : mêmes positions, mêmes proportions, même bloc BRUNO / SET TOOLS.
+- Cache PWA : v5.0
+
+V5.1
+- Symbole central DOF réduit pour matcher plus précisément l'échelle du pictogramme EXPO.
+- Structure générale inchangée ; harmonisation renforcée côte à côte.
+- Cache PWA mis à jour en v5.1.
+
+V5.2
+- Nettoyage complet du carré autour du symbole DOF.
+- Suppression des traces résiduelles du grand rond précédent.
+- Icône recentrée et carré redessiné proprement.
+- Cache PWA mis à jour en v5.2.
