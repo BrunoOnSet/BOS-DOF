@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0b0c" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FX6 PDC" />
+  <title>FX6 — Profondeur de champ</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div>
+        <div class="eyebrow">SONY FX6 · FULL FRAME</div>
+        <h1>Profondeur de champ</h1>
+      </div>
+      <button class="info" id="infoBtn" aria-label="Informations">i</button>
+    </header>
+
+    <section class="panel input-panel">
+      <div class="field">
+        <div class="label-row">
+          <label for="focal">Focale</label>
+          <span class="unit">mm</span>
+        </div>
+        <input id="focal" inputmode="decimal" type="text" value="50" autocomplete="off" />
+        <div class="chips" data-target="focal">
+          <button>18</button><button>24</button><button>28</button><button>35</button>
+          <button class="active">50</button><button>85</button><button>135</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="aperture">Diaph</label>
+          <span class="unit">f / T</span>
+        </div>
+        <input id="aperture" inputmode="decimal" type="text" value="2.8" autocomplete="off" />
+        <div class="chips" data-target="aperture">
+          <button>1.4</button><button>2</button><button class="active">2.8</button><button>4</button>
+          <button>5.6</button><button>8</button><button>11</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="distance">Distance de MAP</label>
+          <span class="unit">m</span>
+        </div>
+        <input id="distance" inputmode="decimal" type="text" value="2.50" autocomplete="off" />
+        <div class="chips" data-target="distance">
+          <button>0.5</button><button>1</button><button>1.5</button><button class="active">2.5</button>
+          <button>3</button><button>5</button><button>10</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="result">
+      <div class="result-label">PROFONDEUR DE CHAMP</div>
+      <div class="dof" id="dof">—</div>
+      <div class="range" id="range">—</div>
+
+      <div class="visual">
+        <div class="line"></div>
+        <div class="near-mark"></div>
+        <div class="focus-mark"></div>
+        <div class="far-mark"></div>
+        <div class="visual-label near" id="frontLabel">—</div>
+        <div class="visual-label focus">MAP</div>
+        <div class="visual-label far" id="backLabel">—</div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <span>Limite proche</span>
+          <strong id="near">—</strong>
+        </div>
+        <div class="card">
+          <span>Limite lointaine</span>
+          <strong id="far">—</strong>
+        </div>
+        <div class="card">
+          <span>Devant le point</span>
+          <strong id="front">—</strong>
+        </div>
+        <div class="card">
+          <span>Derrière le point</span>
+          <strong id="back">—</strong>
+        </div>
+      </div>
+
+      <div class="hyper">
+        <span>Hyperfocale</span>
+        <strong id="hyper">—</strong>
+      </div>
+    </section>
+
+    <footer>
+      Cercle de confusion : 0,030 mm · préréglage plein format FX6
+    </footer>
+  </main>
+
+  <dialog id="infoDialog">
+    <div class="dialog-inner">
+      <button id="closeDialog" class="close" aria-label="Fermer">×</button>
+      <h2>À propos du calcul</h2>
+      <p>Le calcul utilise un cercle de confusion de 0,030 mm, valeur courante pour le plein format 24×36.</p>
+      <p>Si tu renseignes un T-stop, le résultat est une approximation : la profondeur de champ dépend théoriquement du f-number optique.</p>
+      <p>Les valeurs sont destinées à aider rapidement sur le plateau, pas à remplacer les repères précis d'une optique ou un test caméra.</p>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
