@@ -18,6 +18,10 @@
   --hero-text:#111315;
   --hero-muted:#4D535A;
   --technical:#7C8186;
+  --chip-text:#4D5660;
+  --chip-active-bg:#6E98A1;
+  --chip-active-text:#F7F7F4;
+  --chip-bg:#ECEBE7;
 }
 
 body.dark{
@@ -39,6 +43,10 @@ body.dark{
   --hero-text:#111315;
   --hero-muted:#3F4650;
   --technical:#666B72;
+  --chip-text:#D4D6D8;
+  --chip-active-bg:#2F5B66;
+  --chip-active-text:#F3F3F0;
+  --chip-bg:#1C1F23;
 }
 html,body{
   margin:0;background:var(--bg);color:var(--text);
@@ -260,16 +268,23 @@ dialog::backdrop{
   gap:12px;
   flex-wrap:wrap;
 }
-.tips-link{
-  border:0;
-  background:transparent;
-  color:var(--accent);
-  font-size:10px;
-  letter-spacing:.14em;
-  font-weight:900;
-  padding:2px 0;
+ .utility-row{
+  display:flex;
+  justify-content:flex-start;
+  margin:-4px 0 14px;
+  padding:0 2px;
 }
-.tips-link:active{opacity:.7}
+.utility-link{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:9px;
+  letter-spacing:.12em;
+  font-weight:900;
+}
+.utility-link:active{transform:translateY(1px)}
 
 .tips-page{
   max-width:620px;
@@ -427,4 +442,37 @@ body:not(.dark) .mini-card{
   margin-left:3px;
   opacity:.55;
   font-size:9px;
+}
+
+
+/* V4.0 — light mode readability + separate TIPS */
+@media (max-width:430px){
+  .utility-link{
+    padding:6px 9px;
+    font-size:8px;
+  }
+}
+
+
+/* V4.1 — clickable Bruno Guillard branding */
+.brand-link{
+  color:inherit;
+  text-decoration:none;
+}
+.inline-brand-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.footer-brand-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  color:inherit;
+  text-decoration:none;
+}
+.brand-link:active{
+  opacity:.68;
 }

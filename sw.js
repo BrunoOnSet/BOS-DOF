@@ -1,9 +1,9 @@
-const CACHE = "bg-set-tools-dof-v3.9";
+const CACHE = "bg-set-tools-dof-v4.1";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=3.9",
-  "./app.js?v=3.9",
+  "./style.css?v=4.1",
+  "./app.js?v=4.1",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",

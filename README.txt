@@ -83,3 +83,16 @@ V3.9 — CACHE FIX
 - Hors ligne : l'application continue d'utiliser le cache.
 - Ajout de paramètres de version sur CSS/JS pour éviter les anciens fichiers.
 - Ajout discret de "v3.9" dans le footer pour vérifier la version installée.
+
+V4.0
+- Mode clair : surlignage des options actives éclairci.
+- Mode clair : boutons/chiffres non sélectionnés assombris pour améliorer la lisibilité.
+- Bouton TIPS déplacé sous le bloc titre, dans un petit cadre distinct.
+- Texte pédagogique sur le diaphragme réécrit selon les dernières consignes.
+- Version visible dans le footer : v4.0
+
+V4.1
+- Logo BG en haut rendu cliquable vers https://www.brunoguillard.com/
+- Signature "Made for the set · Bruno Guillard" rendue cliquable vers le même site.
+- Les liens s'ouvrent dans un nouvel onglet afin de conserver l'application ouverte.
+- Version visible : v4.1
