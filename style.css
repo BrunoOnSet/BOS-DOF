@@ -80,12 +80,7 @@ button{cursor:pointer}
 .eyebrow-mark{
   width:18px;height:2px;background:var(--accent);display:inline-block;border-radius:2px
 }
-h1{
-  font-size:28px;
-  line-height:1.05;
-  margin:10px 0 0;
-  letter-spacing:-.03em
-}
+
 .brand-logo{
   display:block;object-fit:contain;background:transparent
 }
@@ -530,6 +525,6 @@ body.dark .eyebrow-rest{
 .top-inner{width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.top-title{min-width:0;cursor:pointer}
 .tool-eyebrow{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.12em;font-weight:850;white-space:nowrap}
 .eyebrow-logo{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:24px;padding:0 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.04em;line-height:1;flex:0 0 auto}.eyebrow-brand{font-weight:900;color:var(--text)}.bos-letter{color:var(--accent)}
-.topbar h1{font-size:27px;line-height:1.05;margin:10px 0 0;letter-spacing:-.03em}.mode-btn,.firmware-pill,.utility-note{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:7px 10px;font-size:9px;letter-spacing:.12em;font-weight:900;white-space:nowrap}
+.topbar h1{font-size:27px;line-height:1.05;margin:10px 0 0;letter-spacing:-.03em;font-weight:900}.mode-btn,.firmware-pill,.utility-note{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:7px 10px;font-size:9px;letter-spacing:.12em;font-weight:900;white-space:nowrap}
 .mode-btn:hover{border-color:var(--accent)}.utility-row{display:flex;align-items:center;gap:7px;margin:-1px 0 14px;padding:0 2px}.utility-note{background:transparent;color:var(--muted)}
 .top-title .tool-eyebrow{text-decoration:none;color:inherit}
