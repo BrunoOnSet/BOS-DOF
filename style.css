@@ -526,18 +526,23 @@ body.dark .eyebrow-rest{
 }
 
 
-/* V BOS — brand header */
-.brand-stack{display:flex;flex-direction:column;gap:10px;}
+
+
+/* V BOS — brand header tuned to match FX3 Guide */
+.brand-stack{display:flex;flex-direction:column;gap:8px;}
 .brandline{display:inline-flex;align-items:center;gap:10px;width:max-content;text-decoration:none;color:inherit;}
 .brandline:active{opacity:.72;}
-.bos-pill{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:0 12px;border-radius:999px;background:#FFFFFF;border:1px solid rgba(47,91,102,.18);color:var(--accent);font-size:14px;line-height:1;letter-spacing:.12em;font-weight:900;box-shadow:0 1px 0 rgba(0,0,0,.03);}
-.brand-name{font-size:13px;line-height:1;letter-spacing:.18em;font-weight:850;color:var(--text);}
-.brand-stack h1{margin:0;font-size:38px;line-height:1;letter-spacing:-.045em;}
-body.dark .bos-pill{background:#F3F3F0;color:var(--accent);border-color:rgba(255,255,255,.08);}
+.bos-pill{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:0 12px;border-radius:999px;background:#E8EFF2;border:1px solid #CAD9E0;color:#2F5B66;font-size:14px;line-height:1;letter-spacing:.12em;font-weight:900;box-shadow:none;}
+.brand-name{font-size:13px;line-height:1;letter-spacing:.17em;font-weight:850;color:var(--text);font-family:inherit;}
+.brand-accent{color:#2F5B66;font-weight:900;}
+.brand-stack h1{margin:0;font-size:28px;line-height:1.05;letter-spacing:-.04em;font-weight:800;}
+body.dark .bos-pill{background:rgba(47,91,102,.26);border-color:rgba(89,126,136,.55);color:#A8C8D3;}
 body.dark .brand-name{color:#D8DBDE;}
+body.dark .brand-accent{color:#7FB7C8;}
+@media (min-width:768px){.brand-stack h1{font-size:32px;}}
 @media (max-width:430px){
   .brandline{gap:8px;}
   .bos-pill{min-width:38px;height:26px;padding:0 10px;font-size:13px;}
   .brand-name{font-size:12px;letter-spacing:.16em;}
-  .brand-stack h1{font-size:32px;}
+  .brand-stack h1{font-size:24px;}
 }
