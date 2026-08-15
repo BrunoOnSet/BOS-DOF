@@ -38,9 +38,9 @@ V3.3
 - Suppression du gros logo séparé en haut à droite.
 - Aucun changement dans les calculs.
 
-V3.4 — BG SET TOOLS
-- Nom de gamme figé : BG SET TOOLS.
-- Application : BG SET TOOLS / DOF.
+V3.4 — BRUNO ONSET
+- Nom de gamme figé : BRUNO ONSET.
+- Application : BRUNO ONSET / DOF.
 - Nom court d'installation : BG · DOF.
 - Signature conservée : Made for the set · Bruno Guillard.
 - Monogramme Bruno Guillard conservé dans la ligne d'identité.
@@ -65,14 +65,14 @@ V3.7
 - En-tête transformé en bloc d'identité encadré.
 - Fond graphite sombre distinct du fond général.
 - Fin contour pour mieux dissocier le titre du reste de l'interface.
-- Logo et ligne BG SET TOOLS / DOF conservés et mieux intégrés.
+- Logo et ligne BRUNO ONSET / DOF conservés et mieux intégrés.
 - Aucun changement dans les calculs.
 
 V3.8 — LIGHT / DARK
 - Mode clair désormais utilisé par défaut.
 - Ajout d'un bouton DARK / LIGHT dans l'en-tête.
 - Le choix est mémorisé sur l'appareil.
-- Palette claire pensée spécifiquement pour BG SET TOOLS, avec accent pétrole #2F5B66.
+- Palette claire pensée spécifiquement pour BRUNO ONSET, avec accent pétrole #2F5B66.
 - Mode sombre conservé pour les plateaux ou environnements peu lumineux.
 - Logo automatiquement adapté au fond clair / sombre.
 - Aucun changement dans les calculs.
@@ -113,14 +113,14 @@ V4.3 — Light fine tuning
 
 V4.4 — Header cleanup
 - Suppression du logo en haut de l'application.
-- La ligne "BG SET TOOLS / DOF" est désormais entièrement cliquable vers https://www.brunoguillard.com/
+- La ligne "BRUNO ONSET / DOF" est désormais entièrement cliquable vers https://www.brunoguillard.com/
 - "BG" rendu plus sombre / plus affirmé dans la ligne d'identité.
 - Footer cliquable conservé.
 - Version visible : v4.4
 
-V4.5 — BRUNO SET TOOLS
-- Nom de gamme renommé : BRUNO SET TOOLS.
-- Application : BRUNO SET TOOLS / DOF.
+V4.5 — BRUNO ONSET
+- Nom de gamme renommé : BRUNO ONSET.
+- Application : BRUNO ONSET / DOF.
 - Nom court d'installation : BRUNO · DOF.
 - La ligne d'identité reste cliquable vers brunoguillard.com.
 - Signature conservée : Made for the set · Bruno Guillard.
@@ -128,7 +128,7 @@ V4.5 — BRUNO SET TOOLS
 
 V4.6 — App icon redesign
 - Nouvelle icône d'application plus lisible.
-- Texte : BRUNO SET TOOLS en haut, DOF en dessous.
+- Texte : BRUNO ONSET en haut, DOF en dessous.
 - Fond bleu inspiré de l'application.
 - Symbole diaphragme/iris stylisé en bas.
 - Aucun changement dans le fonctionnement de l'application.
@@ -142,7 +142,7 @@ V4.7 — Final app icon
 
 V4.8
 - Nom court d'installation modifié : DOF · BRUNO
-- Ligne d'identité revue : "BRUNO SET TOOLS" est désormais d'une seule couleur, "/ DOF" reste distinct.
+- Ligne d'identité revue : "BRUNO ONSET" est désormais d'une seule couleur, "/ DOF" reste distinct.
 - Mode clair : chiffres / options non sélectionnés légèrement éclaircis.
 - Aucun changement dans les calculs.
 - Version visible : v4.8
@@ -154,7 +154,7 @@ V4.9
 - Version visible : v4.9
 
 V5.0 — FAMILY ICON SYSTEM
-- DOF devient le master visuel officiel de la famille BRUNO SET TOOLS.
+- DOF devient le master visuel officiel de la famille BRUNO ONSET.
 - Icônes 512 px et 192 px régénérées depuis le même master.
 - Convention de nom : DOF · BRUNO.
 - Alignement prévu avec EXPO : mêmes positions, mêmes proportions, même bloc BRUNO / SET TOOLS.

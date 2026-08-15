@@ -6,25 +6,22 @@
   <meta name="theme-color" id="themeColor" content="#F3F1EC" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="DOF · BRUNO" />
-  <title>BRUNO SET TOOLS / DOF</title>
+  <meta name="apple-mobile-web-app-title" content="DOF · BOS" />
+  <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=5.3" />
+  <link rel="stylesheet" href="style.css?v=5.4" />
 </head>
 <body>
   <main class="app" id="mainApp">
     <header class="top">
       <div class="top-inner">
-        <div>
-          <div class="eyebrow-row">
-            <a class="eyebrow eyebrow-link" href="https://www.brunoguillard.com/" target="_blank" rel="noopener noreferrer" aria-label="Site de Bruno Guillard">
-              <span class="eyebrow-mark"></span>
-              <span class="eyebrow-bg">BRUNO SET TOOLS</span>
-              <span class="eyebrow-rest">/ DOF</span>
-            </a>
-          </div>
-          <h1>Profondeur de champ</h1>
+        <div class="brand-stack">
+          <a class="brandline" href="https://www.brunoguillard.com/" target="_blank" rel="noopener noreferrer" aria-label="Site de Bruno Guillard">
+            <span class="bos-pill">BOS</span>
+            <span class="brand-name">BRUNO ONSET</span>
+          </a>
+          <h1>DOF</h1>
         </div>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Changer de thème">DARK</button>
       </div>
@@ -240,7 +237,7 @@
   <dialog id="infoDialog">
     <div class="dialog-inner">
       <button id="closeDialog" class="close" aria-label="Fermer">×</button>
-      <div class="dialog-kicker">BRUNO SET TOOLS / DOF</div>
+      <div class="dialog-kicker">BRUNO ONSET / DOF</div>
       <h2>À propos du calcul</h2>
       <p>L’application permet de choisir entre <strong>Full Frame</strong> et <strong>Super 35</strong>.</p>
       <p>Le calcul utilise un cercle de confusion de <strong>0,029 mm</strong> en Full Frame et <strong>0,019 mm</strong> en Super 35, avec un facteur de crop de <strong>1,5×</strong>.</p>
@@ -249,6 +246,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=5.3"></script>
+  <script src="app.js?v=5.4"></script>
 </body>
 </html>

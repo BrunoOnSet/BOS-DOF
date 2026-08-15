@@ -524,3 +524,20 @@ body.dark .eyebrow-rest{
 .inline-logo{
   display:none !important;
 }
+
+
+/* V BOS — brand header */
+.brand-stack{display:flex;flex-direction:column;gap:10px;}
+.brandline{display:inline-flex;align-items:center;gap:10px;width:max-content;text-decoration:none;color:inherit;}
+.brandline:active{opacity:.72;}
+.bos-pill{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:0 12px;border-radius:999px;background:#FFFFFF;border:1px solid rgba(47,91,102,.18);color:var(--accent);font-size:14px;line-height:1;letter-spacing:.12em;font-weight:900;box-shadow:0 1px 0 rgba(0,0,0,.03);}
+.brand-name{font-size:13px;line-height:1;letter-spacing:.18em;font-weight:850;color:var(--text);}
+.brand-stack h1{margin:0;font-size:38px;line-height:1;letter-spacing:-.045em;}
+body.dark .bos-pill{background:#F3F3F0;color:var(--accent);border-color:rgba(255,255,255,.08);}
+body.dark .brand-name{color:#D8DBDE;}
+@media (max-width:430px){
+  .brandline{gap:8px;}
+  .bos-pill{min-width:38px;height:26px;padding:0 10px;font-size:13px;}
+  .brand-name{font-size:12px;letter-spacing:.16em;}
+  .brand-stack h1{font-size:32px;}
+}
