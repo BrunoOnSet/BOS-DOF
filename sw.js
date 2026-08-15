@@ -1,9 +1,9 @@
-const CACHE = "bruno-onset-dof-v56-v5.6";
+const CACHE = "bruno_onset_dof_v58-v5.8";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=5.6",
-  "./app.js?v=5.6",
+  "./style.css?v=5.8",
+  "./app.js?v=5.8",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",

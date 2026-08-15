@@ -9,8 +9,8 @@
   --accent:#2F5B66;
   --accent-soft:rgba(47,91,102,.14);
 
-  --header-bg:#E7E9E7;
-  --header-border:#D0D3D1;
+  --header-bg:#EBE7DE;
+  --header-border:#D3CDC2;
   --field-bg:#FAFAF8;
   --card-border:#D7D9D6;
   --hero-bg:#FFFFFF;
@@ -525,24 +525,11 @@ body.dark .eyebrow-rest{
   display:none !important;
 }
 
-
-
-
-/* V BOS — brand header tuned to match FX3 Guide */
-.brand-stack{display:flex;flex-direction:column;gap:8px;}
-.brandline{display:inline-flex;align-items:center;gap:10px;width:max-content;text-decoration:none;color:inherit;}
-.brandline:active{opacity:.72;}
-.bos-pill{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:28px;padding:0 12px;border-radius:999px;background:#E8EFF2;border:1px solid #CAD9E0;color:#2F5B66;font-size:14px;line-height:1;letter-spacing:.12em;font-weight:900;box-shadow:none;}
-.brand-name{font-size:13px;line-height:1;letter-spacing:.17em;font-weight:850;color:var(--text);font-family:inherit;}
-.brand-accent{color:#2F5B66;font-weight:900;}
-.brand-stack h1{margin:0;font-size:28px;line-height:1.05;letter-spacing:-.04em;font-weight:800;}
-body.dark .bos-pill{background:rgba(47,91,102,.26);border-color:rgba(89,126,136,.55);color:#A8C8D3;}
-body.dark .brand-name{color:#D8DBDE;}
-body.dark .brand-accent{color:#7FB7C8;}
-@media (min-width:768px){.brand-stack h1{font-size:32px;}}
-@media (max-width:430px){
-  .brandline{gap:8px;}
-  .bos-pill{min-width:38px;height:26px;padding:0 10px;font-size:13px;}
-  .brand-name{font-size:12px;letter-spacing:.16em;}
-  .brand-stack h1{font-size:24px;}
-}
+/* Header: same construction as EXPO / MEDIA */
+.topbar{background:var(--header-bg);border:1px solid var(--header-border);border-radius:22px;padding:14px 16px 15px;margin-bottom:14px}
+.top-inner{width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.top-title{min-width:0;cursor:pointer}
+.tool-eyebrow{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.12em;font-weight:850;white-space:nowrap}
+.eyebrow-logo{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:24px;padding:0 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.04em;line-height:1;flex:0 0 auto}.eyebrow-brand{font-weight:900;color:var(--text)}.bos-letter{color:var(--accent)}
+.topbar h1{font-size:27px;line-height:1.05;margin:10px 0 0;letter-spacing:-.03em}.mode-btn,.firmware-pill,.utility-note{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;padding:7px 10px;font-size:9px;letter-spacing:.12em;font-weight:900;white-space:nowrap}
+.mode-btn:hover{border-color:var(--accent)}.utility-row{display:flex;align-items:center;gap:7px;margin:-1px 0 14px;padding:0 2px}.utility-note{background:transparent;color:var(--muted)}
+.top-title .tool-eyebrow{text-decoration:none;color:inherit}
