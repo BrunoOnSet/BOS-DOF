@@ -78,6 +78,99 @@ function setStatus(card, label, isNet) {
   label.textContent = isNet ? "NET" : "HORS PDC";
 }
 
+
+function setSvgX(id, x, attrs = ["x1", "x2"]) {
+  const el = $(id);
+  if (!el) return;
+  attrs.forEach(attr => el.setAttribute(attr, x.toFixed(1)));
+}
+
+function setSubjectTopView(groupId, prefix, x, y, distanceM, isNet, upper = true) {
+  const group = $(groupId);
+  if (!group) return;
+  group.classList.toggle("is-net", isNet);
+  group.classList.toggle("is-out", !isNet);
+
+  const dot = $(`${prefix}Dot`);
+  const stem = $(`${prefix}Stem`);
+  const number = $(`${prefix}Number`);
+  const label = $(`${prefix}Label`);
+
+  dot.setAttribute("cx", x.toFixed(1));
+  dot.setAttribute("cy", y.toFixed(1));
+  number.setAttribute("x", x.toFixed(1));
+  number.setAttribute("y", (y + 4).toFixed(1));
+  label.setAttribute("x", x.toFixed(1));
+  label.setAttribute("y", upper ? "24" : "145");
+  label.textContent = `${prefix === "tvSubject1" ? "S1" : "S2"} · ${formatM(distanceM)}`;
+
+  stem.setAttribute("x1", x.toFixed(1));
+  stem.setAttribute("x2", x.toFixed(1));
+  stem.setAttribute("y1", upper ? (y + 15).toFixed(1) : "80");
+  stem.setAttribute("y2", upper ? "80" : (y - 15).toFixed(1));
+}
+
+function clearTopView() {
+  const zone = $("tvDofZone");
+  if (zone) zone.setAttribute("width", "0");
+  $("topViewCaption").textContent = "Réglages incomplets";
+  $("tvSubject1Label").textContent = "S1 · —";
+  $("tvSubject2Label").textContent = "S2 · —";
+}
+
+function updateTopView(s1M, s2M, focusM, nearM, farM) {
+  const x0 = 58;
+  const x1 = 528;
+  const width = x1 - x0;
+
+  const values = [s1M, focusM, nearM].filter(v => Number.isFinite(v) && v > 0);
+  if (subject2Enabled && Number.isFinite(s2M) && s2M > 0) values.push(s2M);
+  if (Number.isFinite(farM) && farM > 0) values.push(farM);
+
+  let maxView = Math.max(1, ...values);
+  if (Number.isFinite(farM)) {
+    maxView *= 1.12;
+  } else {
+    maxView = Math.max(maxView * 1.25, focusM * 1.8, s1M * 1.35);
+  }
+
+  const px = (distanceM) => {
+    const normalized = Math.max(0, Math.min(1, distanceM / maxView));
+    return x0 + normalized * width;
+  };
+
+  const nearX = px(nearM);
+  const farX = Number.isFinite(farM) ? px(farM) : x1;
+  const focusX = px(focusM);
+  const s1X = px(s1M);
+  const s2X = px(s2M);
+
+  const zone = $("tvDofZone");
+  zone.setAttribute("x", nearX.toFixed(1));
+  zone.setAttribute("width", Math.max(2, farX - nearX).toFixed(1));
+
+  setSvgX("tvNearMark", nearX);
+  setSvgX("tvFarMark", farX);
+  setSvgX("tvFocusMark", focusX);
+
+  $("tvNearLabel").setAttribute("x", nearX.toFixed(1));
+  $("tvFarLabel").setAttribute("x", farX.toFixed(1));
+  $("tvMapLabel").setAttribute("x", focusX.toFixed(1));
+  $("tvFarLabel").textContent = Number.isFinite(farM) ? "LOINTAINE" : "∞";
+
+  const s1Net = isInsideDof(s1M, nearM, farM);
+  const s2Net = subject2Enabled ? isInsideDof(s2M, nearM, farM) : false;
+  setSubjectTopView("tvSubject1", "tvSubject1", s1X, 45, s1M, s1Net, true);
+
+  const s2Group = $("tvSubject2");
+  s2Group.style.display = subject2Enabled ? "" : "none";
+  if (subject2Enabled) {
+    setSubjectTopView("tvSubject2", "tvSubject2", s2X, 112, s2M, s2Net, false);
+  }
+
+  $("topViewCaption").textContent = `MAP ${formatM(focusM)} · PDC ${formatM(nearM)} → ${formatM(farM)}`;
+}
+
 function updateSubjectUI(s1, s2, focusM, nearM, farM) {
   const result = $("subjectsResult");
   if (!subject2Enabled) {
@@ -155,6 +248,7 @@ function calculate() {
     if (subject2Enabled) {
       $("subjectsSummary").textContent = "DISTANCE SUJET INVALIDE";
     }
+    clearTopView();
     return;
   }
 
@@ -188,6 +282,7 @@ function calculate() {
   $("backLabel").textContent = `+ ${formatDepth(backM)}`;
 
   updateSubjectUI(s1M, s2M, focusM, nearM, farM);
+  updateTopView(s1M, s2M, focusM, nearM, farM);
   updateActiveChips();
 }
 

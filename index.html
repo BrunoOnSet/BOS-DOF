@@ -10,7 +10,7 @@
   <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=5.12" />
+  <link rel="stylesheet" href="style.css?v=5.13" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -183,6 +183,57 @@
         </div>
       </div>
 
+      <details class="topview-panel" id="topViewPanel">
+        <summary>
+          <span>
+            <b>VUE DU DESSUS</b>
+            <small>Caméra · sujets · MAP · zone de PDC</small>
+          </span>
+          <span class="topview-chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="topview-content">
+          <div class="topview-caption" id="topViewCaption">—</div>
+          <svg class="topview-svg" id="topViewSvg" viewBox="0 0 560 160" role="img" aria-label="Schéma vu du dessus de la caméra, des sujets et de la profondeur de champ">
+            <line class="tv-axis" x1="48" y1="80" x2="532" y2="80"></line>
+            <rect class="tv-dof-zone" id="tvDofZone" x="120" y="62" width="260" height="36" rx="12"></rect>
+
+            <g class="tv-camera" aria-hidden="true">
+              <rect x="14" y="64" width="25" height="32" rx="5"></rect>
+              <path d="M39 70 L50 76 L50 84 L39 90 Z"></path>
+              <circle cx="26" cy="80" r="5"></circle>
+            </g>
+
+            <line class="tv-limit tv-near" id="tvNearMark" x1="120" y1="55" x2="120" y2="105"></line>
+            <line class="tv-focus" id="tvFocusMark" x1="250" y1="48" x2="250" y2="112"></line>
+            <line class="tv-limit tv-far" id="tvFarMark" x1="380" y1="55" x2="380" y2="105"></line>
+
+            <g class="tv-subject is-net" id="tvSubject1">
+              <line class="tv-subject-stem" id="tvSubject1Stem" x1="250" y1="64" x2="250" y2="80"></line>
+              <circle class="tv-subject-dot" id="tvSubject1Dot" cx="250" cy="48" r="15"></circle>
+              <text class="tv-subject-number" id="tvSubject1Number" x="250" y="52">1</text>
+              <text class="tv-subject-label" id="tvSubject1Label" x="250" y="24">S1 · —</text>
+            </g>
+
+            <g class="tv-subject is-net" id="tvSubject2" style="display:none">
+              <line class="tv-subject-stem" id="tvSubject2Stem" x1="330" y1="80" x2="330" y2="96"></line>
+              <circle class="tv-subject-dot" id="tvSubject2Dot" cx="330" cy="112" r="15"></circle>
+              <text class="tv-subject-number" id="tvSubject2Number" x="330" y="116">2</text>
+              <text class="tv-subject-label lower" id="tvSubject2Label" x="330" y="145">S2 · —</text>
+            </g>
+
+            <text class="tv-map-label" id="tvMapLabel" x="250" y="126">MAP</text>
+            <text class="tv-limit-label" id="tvNearLabel" x="120" y="118">PROCHE</text>
+            <text class="tv-limit-label" id="tvFarLabel" x="380" y="118">LOINTAINE</text>
+          </svg>
+          <div class="topview-legend">
+            <span><i class="legend-zone"></i> zone de PDC</span>
+            <span><i class="legend-map"></i> mise au point</span>
+            <span><i class="legend-net"></i> sujet net</span>
+            <span><i class="legend-out"></i> hors PDC</span>
+          </div>
+        </div>
+      </details>
+
       <div class="cards">
         <div class="card">
           <span>Limite proche</span>
@@ -217,7 +268,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.12</span>
+        <span class="app-version">v5.13</span>
       </div>
     </footer>
   </main>
@@ -323,6 +374,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=5.12"></script>
+  <script src="app.js?v=5.13"></script>
 </body>
 </html>

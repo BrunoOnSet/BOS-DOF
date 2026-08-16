@@ -186,3 +186,11 @@ V5.12 — DEUX SUJETS
 - Résumé direct : LES DEUX SONT NETS ou LES DEUX NE TIENNENT PAS DANS LA PDC.
 - La MAP revient automatiquement sur Sujet 1 lorsqu'on retire Sujet 2.
 - Tip dédié ajouté.
+
+
+V5.13
+- Ajout d’une VUE DU DESSUS repliable dans le résultat.
+- Le schéma affiche la caméra, Sujet 1, Sujet 2 si actif, la MAP et la zone de profondeur de champ.
+- Les sujets sont indiqués NET / HORS PDC par couleur.
+- La vue reste purement pédagogique : aucune logique de cadrage ou de déplacement libre.
+- Version visible : v5.13.
