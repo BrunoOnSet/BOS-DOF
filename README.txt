@@ -175,3 +175,14 @@ V5.8
 - short_name PWA raccourci en "DOF - BST" pour un affichage plus lisible sous l’icône.
 - Nom pensé pour éviter la troncature sur l’écran d’accueil.
 - Cache PWA mis à jour en v5.8.
+
+
+V5.12 — DEUX SUJETS
+- Sujet 1 devient la distance principale de référence.
+- Sujet 2 optionnel, désactivé par défaut pour conserver une app rapide à un seul sujet.
+- Distance Sujet 2 libre + raccourcis ±0,1 m / ±0,5 m.
+- Trois positions de mise au point : Sujet 1, Sujet 2 ou mi-distance entre les deux.
+- Verdict immédiat NET / HORS PDC pour chaque sujet selon les limites de PDC calculées.
+- Résumé direct : LES DEUX SONT NETS ou LES DEUX NE TIENNENT PAS DANS LA PDC.
+- La MAP revient automatiquement sur Sujet 1 lorsqu'on retire Sujet 2.
+- Tip dédié ajouté.
