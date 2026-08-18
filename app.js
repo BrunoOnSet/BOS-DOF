@@ -515,6 +515,20 @@ focusModeGroup.addEventListener("click", (event) => {
   calculate();
 });
 
+
+// V5.18 — panneau caméra repliable, même comportement que FRAME.
+const dofCameraSettingsPanel = document.getElementById("dofCameraSettingsPanel");
+const dofCameraSettingsToggle = document.getElementById("dofCameraSettingsToggle");
+const dofCameraSettingsContent = document.getElementById("dofCameraSettingsContent");
+if (dofCameraSettingsPanel && dofCameraSettingsToggle && dofCameraSettingsContent) {
+  dofCameraSettingsToggle.addEventListener("click", () => {
+    const willOpen = dofCameraSettingsPanel.classList.contains("collapsed");
+    dofCameraSettingsPanel.classList.toggle("collapsed", !willOpen);
+    dofCameraSettingsContent.hidden = !willOpen;
+    dofCameraSettingsToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
+  });
+}
+
 // Theme: light by default, dark on demand.
 const themeToggle = document.getElementById("themeToggle");
 const themeColorMeta = document.getElementById("themeColor");

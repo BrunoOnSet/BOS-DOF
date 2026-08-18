@@ -224,3 +224,6 @@ V5.17 — MANNEQUINS FRAME DANS DOF
 - Choix de MAP Sujet 1 / Entre les deux / Sujet 2 inchangé.
 - Vue du dessus DOF conservée.
 - BOS Camera DB conservée.
+
+
+V5.18 — Réglages visuellement alignés sur FRAME V3.21 : panneau caméra repliable, champs compacts, chips et sélecteur de MAP uniformisés. Logique DOF et mannequin V5.17 conservés.

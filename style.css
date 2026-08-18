@@ -1032,3 +1032,139 @@ body.dark .dof-preview-stage{border-color:#30343A}
   .dof-people-preview-head{align-items:flex-end}
   .dof-people-preview-note{max-width:235px}
 }
+
+/* ============================================================
+   BOS DOF V5.18 — réglages alignés sur FRAME V3.21
+   Même langage de composants, logique DOF inchangée.
+   ============================================================ */
+.method-panel{
+  margin-bottom:12px;
+}
+.compact-head{margin-bottom:0 !important}
+.collapsible-head{display:flex;align-items:center;gap:10px}
+.collapse-toggle{
+  flex:1;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer
+}
+.collapse-toggle .panel-kicker{margin:0}
+.collapse-chevron{
+  display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;
+  color:var(--muted);font-size:16px;line-height:1;transition:transform .18s ease,color .18s ease
+}
+.method-panel:not(.collapsed) .collapse-chevron{transform:rotate(180deg);color:var(--text)}
+.method-content{margin-top:10px}
+.method-panel.collapsed .method-content{margin-top:0}
+.camera-row{margin-bottom:0}
+.method-label{
+  display:block;margin-bottom:6px;font-size:11px;color:var(--muted);font-weight:800
+}
+.brand-chips{margin-bottom:9px;flex-wrap:wrap;overflow:visible}
+.camera-brand-chips button{
+  min-height:0;padding:8px 14px;font-size:11px;color:var(--muted)
+}
+.camera-brand-chips button.active{color:var(--chip-active-text)}
+body.dark .camera-brand-chips button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.camera-model-label{display:block;margin-top:2px;margin-bottom:6px}
+.camera-model-select{
+  height:46px !important;border-radius:14px !important;background:var(--field-bg) !important;
+  color:var(--text) !important;padding:0 42px 0 13px !important;font-size:13px !important;font-weight:850 !important
+}
+.camera-inline-sensor{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:6px;padding:0 2px
+}
+.camera-inline-sensor span{
+  color:var(--muted);font-size:7px;font-weight:850;letter-spacing:.10em
+}
+.camera-inline-sensor strong{
+  color:var(--muted);font-size:9px;font-weight:800;white-space:nowrap;text-align:right
+}
+
+.dof-controls-panel .panel-head{margin-bottom:14px}
+.controls-head{align-items:center}
+.dof-setting-block + .dof-setting-block{margin-top:16px}
+.dof-setting-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px
+}
+.dof-setting-head>span{
+  color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.11em
+}
+.dof-setting-head small{
+  color:var(--muted);font-size:8px;font-weight:800;text-align:right
+}
+.frame-chip-strip{
+  height:auto !important;display:flex !important;gap:7px !important;overflow-x:auto !important;
+  padding:0 0 9px !important;scrollbar-width:none
+}
+.frame-chip-strip::-webkit-scrollbar{display:none}
+.frame-chip-strip button{
+  flex:0 0 auto !important;min-width:0 !important;height:auto !important;
+  border:1px solid var(--line) !important;background:var(--chip-bg) !important;color:var(--chip-text) !important;
+  border-radius:999px !important;padding:7px 11px !important;font-size:12px !important;font-weight:780 !important;
+  box-shadow:none !important
+}
+.frame-chip-strip button.active{
+  background:var(--chip-active-bg) !important;color:var(--chip-active-text) !important;border-color:var(--chip-active-bg) !important
+}
+body.dark .frame-chip-strip button.active{background:var(--accent) !important;color:#F3F3F0 !important;border-color:var(--accent) !important}
+body:not(.dark) .frame-chip-strip button:not(.active){border-color:#C5C8C5 !important}
+
+.frame-field{display:block}
+.frame-field>span{
+  display:block;margin-bottom:5px;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.11em
+}
+.frame-field>div{
+  display:flex;align-items:center;border:1px solid var(--line);border-radius:13px;background:var(--field-bg);overflow:hidden
+}
+.frame-field input{
+  min-width:0;width:100%;height:auto;border:0 !important;border-radius:0 !important;outline:0;background:transparent !important;
+  color:var(--text);padding:11px 10px;font-size:15px !important;font-weight:850;letter-spacing:0;box-shadow:none !important
+}
+.frame-field input:focus{box-shadow:none !important}
+.frame-field>div:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.frame-field em{padding-right:10px;color:var(--muted);font-style:normal;font-size:10px;font-weight:750}
+.dof-free-field{max-width:220px}
+.dof-primary-fields{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)
+}
+.dof-primary-fields .dof-setting-block{margin-top:0}
+.dof-primary-fields .compact-strip{min-height:39px}
+.dof-primary-fields .field-help{margin:7px 2px 0}
+
+.frame-subjects-panel{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--line);border-left:0;border-right:0;border-bottom:0;border-radius:0;background:transparent
+}
+.frame-subjects-panel .subjects-panel-head{padding:0}
+.frame-subjects-panel .subject2-controls{
+  margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)
+}
+.subject2-frame-field{margin-bottom:10px}
+.subject-nudge-label{font-size:8px !important;font-weight:900 !important;letter-spacing:.11em !important}
+.subject-nudges{gap:7px}
+.subject-nudges button{
+  border:1px solid var(--line);background:var(--chip-bg);color:var(--chip-text);
+  border-radius:999px;padding:7px 10px;font-size:10px;font-weight:800
+}
+.focus-choice{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.focus-setting-head{margin-bottom:8px}
+.frame-segmented{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:4px;border:1px solid var(--line);
+  border-radius:14px;background:var(--field-bg)
+}
+.frame-segmented button{
+  border:0 !important;border-radius:10px !important;background:transparent !important;color:var(--muted) !important;
+  min-height:36px;padding:8px 7px;font-size:9px;font-weight:900
+}
+.frame-segmented button.active{
+  background:var(--chip-active-bg) !important;color:var(--chip-active-text) !important;box-shadow:none
+}
+body.dark .frame-segmented button.active{background:var(--accent) !important;color:#fff !important}
+
+.dof-people-preview{margin-top:18px}
+
+@media (max-width:520px){
+  .dof-primary-fields{grid-template-columns:1fr}
+  .dof-free-field{max-width:none}
+  .frame-segmented{grid-template-columns:1fr 1fr 1fr}
+  .frame-segmented button{font-size:8px;padding:8px 4px}
+}
