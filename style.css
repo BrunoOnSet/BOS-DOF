@@ -880,3 +880,12 @@ body.dark .tv-subject.is-out .tv-subject-label{fill:#E6A19C}
 .camera-select-button{width:100%;min-height:62px;border:1px solid var(--line);border-radius:14px;background:var(--field-bg);color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;text-align:left;}
 .camera-select-button span{display:flex;flex-direction:column;gap:4px;min-width:0}.camera-select-button strong{font-size:18px;font-weight:900}.camera-select-button small{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.03em}.camera-select-button>b{font-size:15px;color:var(--muted)}
 .camera-picker-list{display:flex;flex-direction:column;gap:7px;max-height:min(58vh,520px);overflow:auto;padding:4px 2px 8px}.camera-group-title{font-size:10px;letter-spacing:.14em;font-weight:900;color:var(--accent);padding:12px 4px 2px}.camera-group-title:first-child{padding-top:2px}.camera-choice{border:1px solid var(--line);background:var(--field-bg);color:var(--text);border-radius:13px;padding:11px 12px;text-align:left}.camera-choice strong{display:block;font-size:13px}.camera-choice small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.camera-choice.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.camera-db-help{margin-top:-4px!important;margin-bottom:12px!important}.camera-dialog{max-height:82vh}
+
+/* V5.15 — le sélecteur caméra suit réellement le thème de DOF */
+.camera-dialog{
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--line);
+}
+.camera-dialog .dialog-inner p{color:var(--muted)}
+.camera-dialog .close{background:var(--panel2);color:var(--text);border-color:var(--line)}

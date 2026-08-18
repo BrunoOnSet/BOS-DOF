@@ -201,3 +201,8 @@ V5.14 — BOS CAMERA DB TEST
 - Liste commune chargée depuis : https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json
 - Cache local + fallback embarqué pour le hors-ligne.
 - Une mise à jour de cameras.json peut alimenter DOF sans republier l'app.
+
+
+V5.15 — CAMERA PICKER THEME FIX
+- Le panneau de sélection caméra suit maintenant le thème LIGHT/DARK de DOF.
+- La BOS Camera DB commune reste inchangée.
