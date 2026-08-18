@@ -290,22 +290,35 @@ function updatePeoplePreview(s1M, s2M, focusM, nearM, farM) {
   s1El.style.left = subject2Enabled ? "35%" : "50%";
   s2El.style.left = "67%";
 
-  // S1 stays our visual reference. S2 scales only from its relative camera distance.
-  // This illustrates foreground/background without adding any FRAME framing controls.
+  // S1 reste la référence visuelle. S2 traduit seulement son écart de distance caméra.
+  // La perspective est volontairement adoucie pour rester lisible dans DOF :
+  // on compresse le rapport de distance afin que S2 rétrécisse moins vite qu'en V5.18.
+  // Surtout, la réduction se fait autour du CENTRE du mannequin : quand S2 est derrière,
+  // sa tête descend légèrement ET ses pieds remontent au lieu de rester collés au sol.
   const baseHeight = stage.clientWidth <= 440 ? 180 : 201;
   const baseWidth = baseHeight * (310 / 1300);
+  const baseBottom = 15;
   s1El.style.height = `${baseHeight}px`;
   s1El.style.width = `${baseWidth}px`;
+  s1El.style.bottom = `${baseBottom}px`;
 
   if (subject2Enabled && s1Valid && s2Valid) {
-    const relativeScale = Math.max(0.55, Math.min(1.55, s1M / s2M));
-    s2El.style.height = `${baseHeight * relativeScale}px`;
-    s2El.style.width = `${baseWidth * relativeScale}px`;
+    const distanceRatio = s1M / s2M;
+    const softenedScale = Math.pow(distanceRatio, 0.55);
+    const relativeScale = Math.max(0.68, Math.min(1.35, softenedScale));
+    const scaledHeight = baseHeight * relativeScale;
+    const scaledWidth = baseWidth * relativeScale;
+    const centeredBottom = baseBottom + (baseHeight - scaledHeight) / 2;
+
+    s2El.style.height = `${scaledHeight}px`;
+    s2El.style.width = `${scaledWidth}px`;
+    s2El.style.bottom = `${centeredBottom}px`;
     s2El.style.zIndex = s2M < s1M ? "4" : "3";
     s1El.style.zIndex = s2M < s1M ? "3" : "4";
   } else {
     s2El.style.height = `${baseHeight}px`;
     s2El.style.width = `${baseWidth}px`;
+    s2El.style.bottom = `${baseBottom}px`;
   }
 
   if (boundsValid && s1Valid) {
@@ -516,7 +529,7 @@ focusModeGroup.addEventListener("click", (event) => {
 });
 
 
-// V5.18 — panneau caméra repliable, même comportement que FRAME.
+// V5.19 — panneau caméra repliable + perspective visuelle corrigée.
 const dofCameraSettingsPanel = document.getElementById("dofCameraSettingsPanel");
 const dofCameraSettingsToggle = document.getElementById("dofCameraSettingsToggle");
 const dofCameraSettingsContent = document.getElementById("dofCameraSettingsContent");

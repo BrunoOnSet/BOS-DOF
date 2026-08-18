@@ -978,7 +978,7 @@ body.dark .tv-subject.is-out .tv-subject-label{fill:#E6A19C}
   transform:translateX(-50%);
   transform-origin:bottom center;
   pointer-events:none;
-  transition:left .18s ease,width .18s ease,height .18s ease,opacity .18s ease,filter .18s ease;
+  transition:left .18s ease,width .18s ease,height .18s ease,bottom .18s ease,opacity .18s ease,filter .18s ease;
 }
 .dof-preview-person{
   display:block;
@@ -1006,8 +1006,16 @@ body.dark .tv-subject.is-out .tv-subject-label{fill:#E6A19C}
   box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
 .dof-preview-subject.is-out .dof-preview-badge{background:rgba(159,59,54,.92)}
-.dof-preview-subject.is-out .dof-preview-person{opacity:.68}
-.dof-preview-subject-2.is-out .dof-preview-person{opacity:.68}
+/* Hors PDC : le mannequin reste à sa couleur normale mais devient réellement flou.
+   Le badge reste net afin que le verdict soit toujours immédiatement lisible. */
+.dof-preview-subject.is-out .dof-preview-person{
+  opacity:1;
+  filter:blur(2.6px) drop-shadow(0 8px 8px rgba(0,0,0,.12));
+}
+.dof-preview-subject-2.is-out .dof-preview-person{
+  opacity:1;
+  filter:hue-rotate(188deg) saturate(.75) brightness(.98) blur(2.6px) drop-shadow(0 8px 8px rgba(0,0,0,.12));
+}
 .dof-preview-distance{
   position:absolute;
   z-index:6;
@@ -1127,8 +1135,15 @@ body:not(.dark) .frame-chip-strip button:not(.active){border-color:#C5C8C5 !impo
 .dof-primary-fields{
   display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)
 }
-.dof-primary-fields .dof-setting-block{margin-top:0}
-.dof-primary-fields .compact-strip{min-height:39px}
+.dof-primary-fields .dof-setting-block{margin-top:0;min-width:0}
+/* Les raccourcis doivent rester contenus dans leur demi-colonne :
+   on les laisse revenir à la ligne au lieu de déborder horizontalement. */
+.dof-primary-fields .compact-strip{
+  min-height:39px;
+  width:100%;max-width:100%;box-sizing:border-box;
+  flex-wrap:wrap !important;
+  overflow-x:visible !important;
+}
 .dof-primary-fields .field-help{margin:7px 2px 0}
 
 .frame-subjects-panel{
@@ -1168,3 +1183,7 @@ body.dark .frame-segmented button.active{background:var(--accent) !important;col
   .frame-segmented{grid-template-columns:1fr 1fr 1fr}
   .frame-segmented button{font-size:8px;padding:8px 4px}
 }
+
+/* ============================================================
+   BOS DOF V5.19 — correction distance + flou PDC + perspective centrée
+   ============================================================ */

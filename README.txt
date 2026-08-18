@@ -227,3 +227,5 @@ V5.17 — MANNEQUINS FRAME DANS DOF
 
 
 V5.18 — Réglages visuellement alignés sur FRAME V3.21 : panneau caméra repliable, champs compacts, chips et sélecteur de MAP uniformisés. Logique DOF et mannequin V5.17 conservés.
+
+V5.19 — Correction du débordement des raccourcis de distance caméra. Mannequins hors PDC affichés en flou gaussien plutôt que grisés. Perspective du Sujet 2 adoucie et redimensionnement centré : en s’éloignant, tête et pieds se rapprochent du centre du Sujet 1.
