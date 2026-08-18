@@ -194,3 +194,10 @@ V5.13
 - Les sujets sont indiqués NET / HORS PDC par couleur.
 - La vue reste purement pédagogique : aucune logique de cadrage ou de déplacement libre.
 - Version visible : v5.13.
+
+
+V5.14 — BOS CAMERA DB TEST
+- Sélection caméra à la place du simple choix Full Frame / Super 35.
+- Liste commune chargée depuis : https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json
+- Cache local + fallback embarqué pour le hors-ligne.
+- Une mise à jour de cameras.json peut alimenter DOF sans republier l'app.

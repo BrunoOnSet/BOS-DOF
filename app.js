@@ -1,15 +1,56 @@
-const FORMATS = {
-  ff: {
-    name: "Full Frame",
-    coc: 0.029,
-    cropToFF: 1
-  },
-  s35: {
-    name: "Super 35",
-    coc: 0.019,
-    cropToFF: 1.5
-  }
-};
+const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json";
+const CAMERA_DB_CACHE_KEY="bos-camera-db-cache-v1";
+const DOF_CAMERA_KEY='bos-dof-camera-id-v1';
+const FALLBACK_CAMERA_DB={"schemaVersion":1,"databaseVersion":"1.0","updated":"2026-08-18","cameras":[{"id":"fx30","name":"Sony FX30","brand":"Sony","group":"SONY","sensorWidthMm":23.3,"dof":{"label":"Super 35 / APS-C","cocMm":0.019,"cropToFF":1.5}},{"id":"fx3","name":"Sony FX3","brand":"Sony","group":"SONY","sensorWidthMm":35.6,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"fx5","name":"Sony FX5","brand":"Sony","group":"SONY","sensorWidthMm":35.9,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"fx6","name":"Sony FX6","brand":"Sony","group":"SONY","sensorWidthMm":35.6,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"vraptor","name":"RED V-RAPTOR VV","brand":"RED","group":"ARRI / RED","sensorWidthMm":40.96,"dof":{"label":"Vista Vision","cocMm":0.033,"cropToFF":0.88}},{"id":"miniLF","name":"ARRI ALEXA Mini LF","brand":"ARRI","group":"ARRI / RED","sensorWidthMm":36.7,"dof":{"label":"Large Format","cocMm":0.03,"cropToFF":0.98}},{"id":"alexa35","name":"ARRI ALEXA 35","brand":"ARRI","group":"ARRI / RED","sensorWidthMm":27.99,"dof":{"label":"Super 35","cocMm":0.023,"cropToFF":1.29}},{"id":"ff","name":"Full Frame 36 mm","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":36.0,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"s35","name":"Super 35","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":24.89,"dof":{"label":"Super 35","cocMm":0.019,"cropToFF":1.5}},{"id":"apsc","name":"APS-C","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":23.5,"dof":{"label":"APS-C","cocMm":0.019,"cropToFF":1.53}},{"id":"mft","name":"Micro 4/3","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":17.3,"dof":{"label":"Micro 4/3","cocMm":0.014,"cropToFF":2.08}},{"id":"oneinch","name":"1 pouce","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":13.2,"dof":{"label":"1 pouce","cocMm":0.011,"cropToFF":2.73}}]};
+let cameraDb=FALLBACK_CAMERA_DB;
+let cameraPresets=[...FALLBACK_CAMERA_DB.cameras];
+let currentCameraId='ff';
+
+function validCameraDb(data){
+  return !!(data && Array.isArray(data.cameras) && data.cameras.some(c=>c?.id && c?.dof && Number(c.dof.cocMm)>0));
+}
+function setCameraDb(data){
+  if(!validCameraDb(data)) return false;
+  cameraDb=data;
+  cameraPresets=data.cameras.filter(c=>c?.id && c?.dof && Number(c.dof.cocMm)>0);
+  return !!cameraPresets.length;
+}
+function loadCachedCameraDb(){
+  try{const cached=JSON.parse(localStorage.getItem(CAMERA_DB_CACHE_KEY)||'null');if(cached)setCameraDb(cached)}catch(_ ){}
+}
+function currentCamera(){return cameraPresets.find(c=>c.id===currentCameraId)||cameraPresets.find(c=>c.id==='ff')||cameraPresets[0];}
+function currentFormat(){
+  const c=currentCamera();
+  return {name:`${c.name} · ${c.dof.label}`,label:c.dof.label,coc:Number(c.dof.cocMm),cropToFF:Number(c.dof.cropToFF)||1};
+}
+function setCurrentCamera(id,persist=true){
+  if(!cameraPresets.some(c=>c.id===id)) id='ff';
+  currentCameraId=id;
+  if(persist){try{localStorage.setItem(DOF_CAMERA_KEY,id)}catch(_ ){}}
+  renderCameraPicker(); updateCameraSelector(); calculate();
+}
+function updateCameraSelector(){
+  const c=currentCamera(); if(!c)return;
+  $('cameraSelectName').textContent=c.name;
+  $('cameraSelectFormat').textContent=`${c.dof.label} · CoC ${Number(c.dof.cocMm).toFixed(3).replace('.',',')} mm`;
+}
+function renderCameraPicker(){
+  const list=$('cameraPickerList'); if(!list)return; list.innerHTML=''; let group=null;
+  cameraPresets.forEach(c=>{
+    if(c.group!==group){group=c.group;const h=document.createElement('div');h.className='camera-group-title';h.textContent=group;list.appendChild(h);}
+    const b=document.createElement('button');b.type='button';b.className='camera-choice'+(c.id===currentCameraId?' active':'');
+    b.innerHTML=`<strong>${c.name}</strong><small>${c.dof.label} · largeur réf. ${Number(c.sensorWidthMm).toFixed(2).replace('.',',')} mm</small>`;
+    b.addEventListener('click',()=>{setCurrentCamera(c.id,true);$('cameraDialog').close();});list.appendChild(b);
+  });
+}
+async function refreshCameraDb(){
+  try{
+    const res=await fetch(CAMERA_DB_URL,{cache:'no-store'});if(!res.ok)throw new Error(String(res.status));const data=await res.json();if(!setCameraDb(data))throw new Error('invalid');
+    try{localStorage.setItem(CAMERA_DB_CACHE_KEY,JSON.stringify(data))}catch(_ ){}
+    if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId='ff';
+    renderCameraPicker();updateCameraSelector();calculate();
+  }catch(_ ){}
+}
 
 const $ = (id) => document.getElementById(id);
 const inputs = {
@@ -19,7 +60,6 @@ const inputs = {
   subject2Distance: $("subject2Distance")
 };
 
-let currentSensor = "ff";
 let subject2Enabled = false;
 let focusMode = "s1";
 
@@ -204,7 +244,7 @@ function updateSubjectUI(s1, s2, focusM, nearM, farM) {
 }
 
 function updateActiveChips() {
-  document.querySelectorAll(".chips[data-target]:not(.sensor-chips)").forEach(group => {
+  document.querySelectorAll(".chips[data-target]").forEach(group => {
     const target = group.dataset.target;
     if (!inputs[target]) return;
 
@@ -214,13 +254,10 @@ function updateActiveChips() {
     });
   });
 
-  document.querySelectorAll(".sensor-chips button").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.value === currentSensor);
-  });
 }
 
 function updateEquivalentInfo(focal, distanceM) {
-  const crop = FORMATS[currentSensor].cropToFF;
+  const crop = currentFormat().cropToFF;
   const ffFocal = focal * crop;
   const ffDistanceSameFocal = distanceM / crop;
 
@@ -229,7 +266,7 @@ function updateEquivalentInfo(focal, distanceM) {
 }
 
 function calculate() {
-  const fmt = FORMATS[currentSensor];
+  const fmt = currentFormat();
   const COC = fmt.coc;
 
   const f = parseFR(inputs.focal.value);
@@ -294,12 +331,6 @@ document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEa
   });
 });
 
-document.querySelectorAll(".sensor-chips button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    currentSensor = btn.dataset.value;
-    calculate();
-  });
-});
 
 Object.values(inputs).forEach(input => {
   input.addEventListener("input", calculate);
@@ -312,6 +343,11 @@ $("closeDialog").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (e) => {
   if (e.target === dialog) dialog.close();
 });
+
+const cameraDialog=$("cameraDialog");
+$("cameraSelectBtn").addEventListener("click",()=>{renderCameraPicker();cameraDialog.showModal();});
+$("closeCameraDialog").addEventListener("click",()=>cameraDialog.close());
+cameraDialog.addEventListener("click",e=>{if(e.target===cameraDialog)cameraDialog.close();});
 
 
 
@@ -404,4 +440,10 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+loadCachedCameraDb();
+try{currentCameraId=localStorage.getItem(DOF_CAMERA_KEY)||"ff";}catch(_){currentCameraId="ff";}
+if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId="ff";
+renderCameraPicker();
+updateCameraSelector();
 calculate();
+refreshCameraDb();
