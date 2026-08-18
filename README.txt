@@ -206,3 +206,10 @@ V5.14 — BOS CAMERA DB TEST
 V5.15 — CAMERA PICKER THEME FIX
 - Le panneau de sélection caméra suit maintenant le thème LIGHT/DARK de DOF.
 - La BOS Camera DB commune reste inchangée.
+
+
+V5.16 — CAMERA SELECTOR BOS
+- DOF reste relié à la base centrale : https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json
+- Sélection caméra harmonisée avec Bruno OnSet V5 : marque en boutons, puis modèle dans un menu déroulant.
+- Le dernier modèle choisi pour chaque marque est mémorisé localement.
+- Les données DOF (format / CoC) continuent de venir de la Camera DB centrale.

@@ -1,6 +1,7 @@
 const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json";
 const CAMERA_DB_CACHE_KEY="bos-camera-db-cache-v1";
 const DOF_CAMERA_KEY='bos-dof-camera-id-v1';
+const DOF_LAST_CAMERA_BY_BRAND_KEY='bos-dof-last-camera-by-brand-v1';
 const FALLBACK_CAMERA_DB={"schemaVersion":1,"databaseVersion":"1.0","updated":"2026-08-18","cameras":[{"id":"fx30","name":"Sony FX30","brand":"Sony","group":"SONY","sensorWidthMm":23.3,"dof":{"label":"Super 35 / APS-C","cocMm":0.019,"cropToFF":1.5}},{"id":"fx3","name":"Sony FX3","brand":"Sony","group":"SONY","sensorWidthMm":35.6,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"fx5","name":"Sony FX5","brand":"Sony","group":"SONY","sensorWidthMm":35.9,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"fx6","name":"Sony FX6","brand":"Sony","group":"SONY","sensorWidthMm":35.6,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"vraptor","name":"RED V-RAPTOR VV","brand":"RED","group":"ARRI / RED","sensorWidthMm":40.96,"dof":{"label":"Vista Vision","cocMm":0.033,"cropToFF":0.88}},{"id":"miniLF","name":"ARRI ALEXA Mini LF","brand":"ARRI","group":"ARRI / RED","sensorWidthMm":36.7,"dof":{"label":"Large Format","cocMm":0.03,"cropToFF":0.98}},{"id":"alexa35","name":"ARRI ALEXA 35","brand":"ARRI","group":"ARRI / RED","sensorWidthMm":27.99,"dof":{"label":"Super 35","cocMm":0.023,"cropToFF":1.29}},{"id":"ff","name":"Full Frame 36 mm","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":36.0,"dof":{"label":"Full Frame","cocMm":0.029,"cropToFF":1.0}},{"id":"s35","name":"Super 35","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":24.89,"dof":{"label":"Super 35","cocMm":0.019,"cropToFF":1.5}},{"id":"apsc","name":"APS-C","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":23.5,"dof":{"label":"APS-C","cocMm":0.019,"cropToFF":1.53}},{"id":"mft","name":"Micro 4/3","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":17.3,"dof":{"label":"Micro 4/3","cocMm":0.014,"cropToFF":2.08}},{"id":"oneinch","name":"1 pouce","brand":"Générique","group":"GÉNÉRIQUE","sensorWidthMm":13.2,"dof":{"label":"1 pouce","cocMm":0.011,"cropToFF":2.73}}]};
 let cameraDb=FALLBACK_CAMERA_DB;
 let cameraPresets=[...FALLBACK_CAMERA_DB.cameras];
@@ -23,32 +24,89 @@ function currentFormat(){
   const c=currentCamera();
   return {name:`${c.name} · ${c.dof.label}`,label:c.dof.label,coc:Number(c.dof.cocMm),cropToFF:Number(c.dof.cropToFF)||1};
 }
+function cameraBrand(c){
+  return String(c?.brand || c?.group || 'Autre').trim() || 'Autre';
+}
+function cameraShortLabel(c){
+  const name=String(c?.name || c?.id || '');
+  const brand=String(c?.brand || '').trim();
+  return brand && name.toLowerCase().startsWith((brand+' ').toLowerCase()) ? name.slice(brand.length+1) : name;
+}
+function cameraBrands(){
+  const seen=new Set(), brands=[];
+  cameraPresets.forEach(c=>{const brand=cameraBrand(c);if(!seen.has(brand)){seen.add(brand);brands.push(brand);}});
+  return brands;
+}
+function camerasForBrand(brand){return cameraPresets.filter(c=>cameraBrand(c)===brand);}
+function getLastCameraForBrand(brand){
+  try{
+    const saved=JSON.parse(localStorage.getItem(DOF_LAST_CAMERA_BY_BRAND_KEY)||'{}');
+    const id=saved?.[brand];
+    return camerasForBrand(brand).some(c=>c.id===id)?id:null;
+  }catch(_){return null;}
+}
+function rememberCameraForBrand(camera){
+  if(!camera)return;
+  try{
+    const saved=JSON.parse(localStorage.getItem(DOF_LAST_CAMERA_BY_BRAND_KEY)||'{}');
+    saved[cameraBrand(camera)]=camera.id;
+    localStorage.setItem(DOF_LAST_CAMERA_BY_BRAND_KEY,JSON.stringify(saved));
+  }catch(_ ){}
+}
 function setCurrentCamera(id,persist=true){
-  if(!cameraPresets.some(c=>c.id===id)) id='ff';
+  if(!cameraPresets.some(c=>c.id===id)) id=cameraPresets.find(c=>c.id==='ff')?.id || cameraPresets[0]?.id;
   currentCameraId=id;
+  const c=currentCamera();
+  if(c)rememberCameraForBrand(c);
   if(persist){try{localStorage.setItem(DOF_CAMERA_KEY,id)}catch(_ ){}}
-  renderCameraPicker(); updateCameraSelector(); calculate();
+  renderCameraSelect();
+  calculate();
 }
 function updateCameraSelector(){
   const c=currentCamera(); if(!c)return;
-  $('cameraSelectName').textContent=c.name;
-  $('cameraSelectFormat').textContent=`${c.dof.label} · CoC ${Number(c.dof.cocMm).toFixed(3).replace('.',',')} mm`;
+  const note=$('cameraSelectFormat');
+  if(note) note.textContent=`${c.dof.label} · CoC ${Number(c.dof.cocMm).toFixed(3).replace('.',',')} mm`;
 }
-function renderCameraPicker(){
-  const list=$('cameraPickerList'); if(!list)return; list.innerHTML=''; let group=null;
-  cameraPresets.forEach(c=>{
-    if(c.group!==group){group=c.group;const h=document.createElement('div');h.className='camera-group-title';h.textContent=group;list.appendChild(h);}
-    const b=document.createElement('button');b.type='button';b.className='camera-choice'+(c.id===currentCameraId?' active':'');
-    b.innerHTML=`<strong>${c.name}</strong><small>${c.dof.label} · largeur réf. ${Number(c.sensorWidthMm).toFixed(2).replace('.',',')} mm</small>`;
-    b.addEventListener('click',()=>{setCurrentCamera(c.id,true);$('cameraDialog').close();});list.appendChild(b);
+function renderCameraBrandButtons(){
+  const host=$('cameraBrandMode'); if(!host)return;
+  const activeBrand=cameraBrand(currentCamera());
+  host.innerHTML='';
+  cameraBrands().forEach(brand=>{
+    const b=document.createElement('button');
+    b.type='button'; b.dataset.camerabrand=brand; b.textContent=brand;
+    b.className=brand===activeBrand?'active':'';
+    host.appendChild(b);
   });
 }
+function renderCameraSelect(){
+  const select=$('cameraSelect'); if(!select)return;
+  const active=currentCamera(); if(!active)return;
+  const brand=cameraBrand(active);
+  const list=camerasForBrand(brand);
+  select.innerHTML='';
+  list.forEach(c=>{
+    const o=document.createElement('option');
+    o.value=c.id;o.textContent=cameraShortLabel(c);o.selected=c.id===currentCameraId;
+    select.appendChild(o);
+  });
+  select.value=currentCameraId;
+  select.title=select.options[select.selectedIndex]?.textContent || '';
+  renderCameraBrandButtons();
+  updateCameraSelector();
+}
+function changeCameraBrand(brand){
+  const remembered=getLastCameraForBrand(brand);
+  const first=camerasForBrand(brand)[0];
+  if(remembered)setCurrentCamera(remembered,true);
+  else if(first)setCurrentCamera(first.id,true);
+}
+
 async function refreshCameraDb(){
   try{
     const res=await fetch(CAMERA_DB_URL,{cache:'no-store'});if(!res.ok)throw new Error(String(res.status));const data=await res.json();if(!setCameraDb(data))throw new Error('invalid');
     try{localStorage.setItem(CAMERA_DB_CACHE_KEY,JSON.stringify(data))}catch(_ ){}
     if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId='ff';
-    renderCameraPicker();updateCameraSelector();calculate();
+    renderCameraSelect();calculate();
   }catch(_ ){}
 }
 
@@ -344,10 +402,13 @@ dialog.addEventListener("click", (e) => {
   if (e.target === dialog) dialog.close();
 });
 
-const cameraDialog=$("cameraDialog");
-$("cameraSelectBtn").addEventListener("click",()=>{renderCameraPicker();cameraDialog.showModal();});
-$("closeCameraDialog").addEventListener("click",()=>cameraDialog.close());
-cameraDialog.addEventListener("click",e=>{if(e.target===cameraDialog)cameraDialog.close();});
+$("cameraBrandMode").addEventListener("click",(event)=>{
+  const btn=event.target.closest("button[data-camerabrand]");
+  if(!btn)return;
+  changeCameraBrand(btn.dataset.camerabrand);
+});
+$("cameraSelect").addEventListener("change",(event)=>setCurrentCamera(event.target.value,true));
+
 
 
 
@@ -443,7 +504,6 @@ if ("serviceWorker" in navigator) {
 loadCachedCameraDb();
 try{currentCameraId=localStorage.getItem(DOF_CAMERA_KEY)||"ff";}catch(_){currentCameraId="ff";}
 if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId="ff";
-renderCameraPicker();
-updateCameraSelector();
+renderCameraSelect();
 calculate();
 refreshCameraDb();

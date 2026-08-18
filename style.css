@@ -876,16 +876,22 @@ body.dark .tv-subject.is-out .tv-subject-label{fill:#E6A19C}
 }
 
 
-/* V5.14 — BOS Camera DB */
-.camera-select-button{width:100%;min-height:62px;border:1px solid var(--line);border-radius:14px;background:var(--field-bg);color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;text-align:left;}
-.camera-select-button span{display:flex;flex-direction:column;gap:4px;min-width:0}.camera-select-button strong{font-size:18px;font-weight:900}.camera-select-button small{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.03em}.camera-select-button>b{font-size:15px;color:var(--muted)}
-.camera-picker-list{display:flex;flex-direction:column;gap:7px;max-height:min(58vh,520px);overflow:auto;padding:4px 2px 8px}.camera-group-title{font-size:10px;letter-spacing:.14em;font-weight:900;color:var(--accent);padding:12px 4px 2px}.camera-group-title:first-child{padding-top:2px}.camera-choice{border:1px solid var(--line);background:var(--field-bg);color:var(--text);border-radius:13px;padding:11px 12px;text-align:left}.camera-choice strong{display:block;font-size:13px}.camera-choice small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.camera-choice.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}.camera-db-help{margin-top:-4px!important;margin-bottom:12px!important}.camera-dialog{max-height:82vh}
 
-/* V5.15 — le sélecteur caméra suit réellement le thème de DOF */
-.camera-dialog{
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--line);
+/* V5.16 — sélection caméra BOS : marque puis modèle, comme Bruno OnSet */
+.camera-field{margin-bottom:24px}
+.camera-sub-label{display:block;color:var(--muted);font-size:11px;font-weight:750;margin:10px 0 6px 2px}
+.camera-brand-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.camera-brand-chips button{border:1px solid var(--line);background:var(--panel2);color:var(--text);min-height:36px;padding:0 12px;border-radius:999px;font-weight:850;font-size:12px;cursor:pointer}
+.camera-brand-chips button.active{background:var(--chip-active-bg);border-color:var(--chip-active-bg);color:var(--chip-active-text)}
+.camera-model-label{margin-top:2px}
+.camera-select-wrap{position:relative;width:100%}
+.camera-select-wrap::after{content:"⌄";position:absolute;right:14px;top:50%;transform:translateY(-55%);color:var(--muted);font-size:16px;font-weight:900;pointer-events:none}
+.camera-model-select{width:100%;min-width:0;height:46px;appearance:none;-webkit-appearance:none;border:1px solid var(--line);border-radius:14px;background:var(--field-bg);color:var(--text);padding:0 42px 0 13px;font:inherit;font-size:13px;font-weight:850;outline:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.camera-model-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.camera-model-select option{background:var(--panel);color:var(--text)}
+.camera-format-note{margin:7px 2px 0;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.02em}
+@media(max-width:430px){
+  .camera-brand-chips{gap:6px}
+  .camera-brand-chips button{min-height:34px;padding:0 10px;font-size:11px}
+  .camera-model-select{font-size:12px}
 }
-.camera-dialog .dialog-inner p{color:var(--muted)}
-.camera-dialog .close{background:var(--panel2);color:var(--text);border-color:var(--line)}
