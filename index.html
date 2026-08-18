@@ -10,7 +10,7 @@
   <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=5.16" />
+  <link rel="stylesheet" href="style.css?v=5.17" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -128,6 +128,35 @@
               <button type="button" data-focus="s2">SUJET 2</button>
             </div>
           </div>
+        </div>
+      </div>
+
+
+
+      <div class="dof-people-preview" id="dofPeoplePreview" aria-label="Aperçu visuel des sujets">
+        <div class="dof-people-preview-head">
+          <div>
+            <div class="mini-title">VISUEL SUJETS</div>
+            <div class="dof-people-preview-note">Même mannequin que FRAME · échelle relative aux distances</div>
+          </div>
+          <div class="dof-preview-focus" id="dofPreviewFocus">MAP · S1</div>
+        </div>
+        <div class="dof-preview-stage" id="dofPreviewStage">
+          <div class="dof-preview-wall"></div>
+          <div class="dof-preview-floor"></div>
+          <div class="dof-preview-ground"></div>
+
+          <div class="dof-preview-subject dof-preview-subject-1 is-net" id="dofPreviewSubject1">
+            <img class="dof-preview-person" src="assets/mannequin-preview.png" alt="Mannequin Sujet 1" />
+            <span class="dof-preview-badge" id="dofPreviewBadge1">S1 · NET</span>
+          </div>
+
+          <div class="dof-preview-subject dof-preview-subject-2 is-net" id="dofPreviewSubject2" hidden>
+            <img class="dof-preview-person" src="assets/mannequin-preview.png" alt="Mannequin Sujet 2" />
+            <span class="dof-preview-badge" id="dofPreviewBadge2">S2 · NET</span>
+          </div>
+
+          <div class="dof-preview-distance" id="dofPreviewDistance">S1 · 2,50 m</div>
         </div>
       </div>
 
@@ -271,7 +300,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.16</span>
+        <span class="app-version">v5.17</span>
       </div>
     </footer>
   </main>
@@ -377,6 +406,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=5.16"></script>
+  <script src="app.js?v=5.17"></script>
 </body>
 </html>

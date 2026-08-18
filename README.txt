@@ -213,3 +213,14 @@ V5.16 — CAMERA SELECTOR BOS
 - Sélection caméra harmonisée avec Bruno OnSet V5 : marque en boutons, puis modèle dans un menu déroulant.
 - Le dernier modèle choisi pour chaque marque est mémorisé localement.
 - Les données DOF (format / CoC) continuent de venir de la Camera DB centrale.
+
+
+V5.17 — MANNEQUINS FRAME DANS DOF
+- Réutilisation bit pour bit de assets/mannequin-preview.png depuis BOS_FRAME_V3_21_CLEAN_ASSET.
+- Aucun réglage FRAME ajouté à DOF.
+- Sujet 1 toujours visible ; Sujet 2 apparaît avec + SUJET 2.
+- La taille apparente de Sujet 2 varie uniquement selon sa distance relative à Sujet 1.
+- Badge NET / HORS PDC directement sur chaque mannequin.
+- Choix de MAP Sujet 1 / Entre les deux / Sujet 2 inchangé.
+- Vue du dessus DOF conservée.
+- BOS Camera DB conservée.

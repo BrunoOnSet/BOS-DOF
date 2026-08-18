@@ -1,4 +1,4 @@
-const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoOnSet/BOS-CAMERA-DB/main/cameras.json";
+const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json";
 const CAMERA_DB_CACHE_KEY="bos-camera-db-cache-v1";
 const DOF_CAMERA_KEY='bos-dof-camera-id-v1';
 const DOF_LAST_CAMERA_BY_BRAND_KEY='bos-dof-last-camera-by-brand-v1';
@@ -269,6 +269,68 @@ function updateTopView(s1M, s2M, focusM, nearM, farM) {
   $("topViewCaption").textContent = `MAP ${formatM(focusM)} · PDC ${formatM(nearM)} → ${formatM(farM)}`;
 }
 
+function setPreviewSubjectState(el, badge, label, isNet) {
+  if (!el || !badge) return;
+  el.classList.toggle("is-net", isNet);
+  el.classList.toggle("is-out", !isNet);
+  badge.textContent = `${label} · ${isNet ? "NET" : "HORS PDC"}`;
+}
+
+function updatePeoplePreview(s1M, s2M, focusM, nearM, farM) {
+  const stage = $("dofPreviewStage");
+  const s1El = $("dofPreviewSubject1");
+  const s2El = $("dofPreviewSubject2");
+  if (!stage || !s1El || !s2El) return;
+
+  const s1Valid = Number.isFinite(s1M) && s1M > 0;
+  const s2Valid = Number.isFinite(s2M) && s2M > 0;
+  const boundsValid = Number.isFinite(nearM) && nearM > 0 && (Number.isFinite(farM) || farM === Infinity);
+
+  s2El.hidden = !subject2Enabled;
+  s1El.style.left = subject2Enabled ? "35%" : "50%";
+  s2El.style.left = "67%";
+
+  // S1 stays our visual reference. S2 scales only from its relative camera distance.
+  // This illustrates foreground/background without adding any FRAME framing controls.
+  const baseHeight = stage.clientWidth <= 440 ? 180 : 201;
+  const baseWidth = baseHeight * (310 / 1300);
+  s1El.style.height = `${baseHeight}px`;
+  s1El.style.width = `${baseWidth}px`;
+
+  if (subject2Enabled && s1Valid && s2Valid) {
+    const relativeScale = Math.max(0.55, Math.min(1.55, s1M / s2M));
+    s2El.style.height = `${baseHeight * relativeScale}px`;
+    s2El.style.width = `${baseWidth * relativeScale}px`;
+    s2El.style.zIndex = s2M < s1M ? "4" : "3";
+    s1El.style.zIndex = s2M < s1M ? "3" : "4";
+  } else {
+    s2El.style.height = `${baseHeight}px`;
+    s2El.style.width = `${baseWidth}px`;
+  }
+
+  if (boundsValid && s1Valid) {
+    setPreviewSubjectState(s1El, $("dofPreviewBadge1"), "S1", isInsideDof(s1M, nearM, farM));
+  } else {
+    $("dofPreviewBadge1").textContent = "S1";
+    s1El.classList.remove("is-out");
+  }
+
+  if (subject2Enabled) {
+    if (boundsValid && s2Valid) {
+      setPreviewSubjectState(s2El, $("dofPreviewBadge2"), "S2", isInsideDof(s2M, nearM, farM));
+    } else {
+      $("dofPreviewBadge2").textContent = "S2";
+      s2El.classList.remove("is-out");
+    }
+  }
+
+  const focusText = subject2Enabled ? focusModeName().replace("Sujet ", "S") : "S1";
+  $("dofPreviewFocus").textContent = `MAP · ${focusText.toUpperCase()}`;
+  $("dofPreviewDistance").textContent = subject2Enabled
+    ? `S1 · ${formatM(s1M)}   /   S2 · ${formatM(s2M)} · écart ${formatM(Math.abs(s2M - s1M))}`
+    : `S1 · ${formatM(s1M)}`;
+}
+
 function updateSubjectUI(s1, s2, focusM, nearM, farM) {
   const result = $("subjectsResult");
   if (!subject2Enabled) {
@@ -343,6 +405,7 @@ function calculate() {
     if (subject2Enabled) {
       $("subjectsSummary").textContent = "DISTANCE SUJET INVALIDE";
     }
+    updatePeoplePreview(s1M, s2M, focusM, NaN, NaN);
     clearTopView();
     return;
   }
@@ -377,6 +440,7 @@ function calculate() {
   $("backLabel").textContent = `+ ${formatDepth(backM)}`;
 
   updateSubjectUI(s1M, s2M, focusM, nearM, farM);
+  updatePeoplePreview(s1M, s2M, focusM, nearM, farM);
   updateTopView(s1M, s2M, focusM, nearM, farM);
   updateActiveChips();
 }
