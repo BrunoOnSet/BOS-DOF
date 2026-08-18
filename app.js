@@ -1,4 +1,4 @@
-const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json";
+const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoOnSet/BOS-CAMERA-DB/main/cameras.json";
 const CAMERA_DB_CACHE_KEY="bos-camera-db-cache-v1";
 const DOF_CAMERA_KEY='bos-dof-camera-id-v1';
 const DOF_LAST_CAMERA_BY_BRAND_KEY='bos-dof-last-camera-by-brand-v1';
