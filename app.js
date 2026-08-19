@@ -211,6 +211,10 @@ function setSubjectTopView(groupId, prefix, x, y, distanceM, isNet, upper = true
 function clearTopView() {
   const zone = $("tvDofZone");
   if (zone) zone.setAttribute("width", "0");
+  const blurBefore = $("tvBlurZoneBefore");
+  const blurAfter = $("tvBlurZoneAfter");
+  if (blurBefore) blurBefore.setAttribute("width", "0");
+  if (blurAfter) blurAfter.setAttribute("width", "0");
   $("topViewCaption").textContent = "Réglages incomplets";
   $("tvSubject1Label").textContent = "S1 · —";
   $("tvSubject2Label").textContent = "S2 · —";
@@ -247,6 +251,17 @@ function updateTopView(s1M, s2M, focusM, nearM, farM) {
   zone.setAttribute("x", nearX.toFixed(1));
   zone.setAttribute("width", Math.max(2, farX - nearX).toFixed(1));
 
+  const blurBefore = $("tvBlurZoneBefore");
+  const blurAfter = $("tvBlurZoneAfter");
+  if (blurBefore) {
+    blurBefore.setAttribute("x", x0.toFixed(1));
+    blurBefore.setAttribute("width", Math.max(0, nearX - x0).toFixed(1));
+  }
+  if (blurAfter) {
+    blurAfter.setAttribute("x", farX.toFixed(1));
+    blurAfter.setAttribute("width", Number.isFinite(farM) ? Math.max(0, x1 - farX).toFixed(1) : "0");
+  }
+
   setSvgX("tvNearMark", nearX);
   setSvgX("tvFarMark", farX);
   setSvgX("tvFocusMark", focusX);
@@ -266,7 +281,7 @@ function updateTopView(s1M, s2M, focusM, nearM, farM) {
     setSubjectTopView("tvSubject2", "tvSubject2", s2X, 112, s2M, s2Net, false);
   }
 
-  $("topViewCaption").textContent = `MAP ${formatM(focusM)} · PDC ${formatM(nearM)} → ${formatM(farM)}`;
+  $("topViewCaption").textContent = `MAP ${formatM(focusM)} · ZONE NETTE ${formatM(nearM)} → ${formatM(farM)}`;
 }
 
 function setPreviewSubjectState(el, badge, label, isNet) {
@@ -278,6 +293,7 @@ function setPreviewSubjectState(el, badge, label, isNet) {
 
 function updatePeoplePreview(s1M, s2M, focusM, nearM, farM) {
   const stage = $("dofPreviewStage");
+  if (!stage) return;
   const s1El = $("dofPreviewSubject1");
   const s2El = $("dofPreviewSubject2");
   if (!stage || !s1El || !s2El) return;

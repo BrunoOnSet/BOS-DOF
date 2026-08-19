@@ -726,7 +726,7 @@ body.dark .subject-status-card.is-out strong{
 }
 
 
-/* V5.13 — collapsible top-view DOF schematic */
+/* V5.21 — top-view only DOF schematic */
 .topview-panel{
   margin-top:14px;
   background:var(--panel);
@@ -735,38 +735,27 @@ body.dark .subject-status-card.is-out strong{
   overflow:hidden;
   text-align:left;
 }
-.topview-panel summary{
-  list-style:none;
+.topview-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
   padding:13px 15px;
-  cursor:pointer;
-  user-select:none;
 }
-.topview-panel summary::-webkit-details-marker{display:none}
-.topview-panel summary b{
+.topview-head b{
   display:block;
   color:var(--text);
   font-size:10px;
   letter-spacing:.14em;
   font-weight:900;
 }
-.topview-panel summary small{
+.topview-head small{
   display:block;
   margin-top:3px;
   color:var(--muted);
   font-size:9px;
   line-height:1.35;
 }
-.topview-chevron{
-  color:var(--muted);
-  font-size:17px;
-  line-height:1;
-  transition:transform .18s ease;
-}
-.topview-panel[open] .topview-chevron{transform:rotate(180deg)}
 .topview-content{
   border-top:1px solid var(--card-border);
   padding:12px 12px 13px;
@@ -782,7 +771,7 @@ body.dark .subject-status-card.is-out strong{
   display:block;
   width:100%;
   height:auto;
-  min-height:126px;
+  min-height:140px;
   background:var(--field-bg);
   border:1px solid var(--line);
   border-radius:14px;
@@ -791,8 +780,17 @@ body.dark .subject-status-card.is-out strong{
   stroke:var(--line);
   stroke-width:2;
 }
+.tv-blur-zone{
+  fill:rgba(128,136,146,.15);
+  stroke:rgba(128,136,146,.32);
+  stroke-width:1;
+}
+body.dark .tv-blur-zone{
+  fill:rgba(158,163,170,.16);
+  stroke:rgba(158,163,170,.34);
+}
 .tv-dof-zone{
-  fill:rgba(46,127,142,.15);
+  fill:rgba(46,127,142,.16);
   stroke:#2E7F8E;
   stroke-width:1.5;
 }
@@ -865,17 +863,20 @@ body.dark .tv-subject.is-out .tv-subject-label{fill:#E6A19C}
 }
 .topview-legend span{display:inline-flex;align-items:center;gap:5px}
 .topview-legend i{display:inline-block;flex:0 0 auto}
+.legend-blur{width:14px;height:7px;border-radius:3px;background:rgba(128,136,146,.2);border:1px solid rgba(128,136,146,.34)}
 .legend-zone{width:14px;height:7px;border-radius:3px;background:rgba(46,127,142,.18);border:1px solid #2E7F8E}
 .legend-map{width:2px;height:11px;background:#2E7F8E}
 .legend-net,.legend-out{width:8px;height:8px;border-radius:50%}
 .legend-net{background:#4D946F}
 .legend-out{background:#A9564E}
+.topview-disclaimer{
+  margin-top:9px;
+  text-align:center;
+}
 @media(max-width:430px){
-  .topview-svg{min-height:112px}
+  .topview-svg{min-height:128px}
   .topview-legend{gap:6px 9px}
 }
-
-
 
 /* V5.16 — sélection caméra BOS : marque puis modèle, comme Bruno OnSet */
 .camera-field{margin-bottom:24px}

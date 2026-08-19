@@ -229,3 +229,18 @@ V5.17 — MANNEQUINS FRAME DANS DOF
 V5.18 — Réglages visuellement alignés sur FRAME V3.21 : panneau caméra repliable, champs compacts, chips et sélecteur de MAP uniformisés. Logique DOF et mannequin V5.17 conservés.
 
 V5.19 — Correction du débordement des raccourcis de distance caméra. Mannequins hors PDC affichés en flou gaussien plutôt que grisés. Perspective du Sujet 2 adoucie et redimensionnement centré : en s’éloignant, tête et pieds se rapprochent du centre du Sujet 1.
+
+
+V5.20 — POSITIONNEMENT DOF VS FRAME
+- Le visuel sujets est désormais assumé comme une simulation de netteté.
+- Nouveau libellé : « SIMULATION DE NETTETÉ ».
+- Mention explicite : visuel indicatif, ne remplace pas FRAME.
+- Le schéma du dessus devient « SCHÉMA DE PROFONDEUR » avec sous-titre indiquant qu’il ne s’agit pas d’un cadre exact.
+- Aucun changement dans les calculs.
+
+
+V5.21 — DOF TOP VIEW ONLY
+- Suppression du visuel mannequin face caméra.
+- Le schéma de profondeur devient le visuel principal de l’app.
+- Ajout d’une zone floue avant, d’une zone nette (PDC) et d’une zone floue arrière.
+- Positionnement assumé : DOF = lecture technique de la profondeur, FRAME = cadrage.
