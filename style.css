@@ -1205,3 +1205,69 @@ body.dark .frame-segmented button.active{background:var(--accent) !important;col
   .dof-primary-fields .compact-strip{padding-bottom:7px !important}
   .dof-primary-fields .compact-strip button{padding:7px 11px !important}
 }
+
+
+/* ============================================================
+   BOS DOF V5.23 — ULTRA COMPACT
+   ============================================================ */
+.camera-collapse-title{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.camera-collapse-title strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:0;text-transform:none}
+.method-panel:not(.collapsed) .camera-collapse-title strong{opacity:.7}
+
+.compact-setting-block{margin-top:13px}
+.compact-setting-block:first-of-type{margin-top:0}
+.compact-setting-block + .compact-setting-block{padding-top:11px;border-top:1px solid var(--line)}
+.quick-setting-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:8px;width:100%;min-width:0}
+.quick-setting-row .frame-chip-strip{min-width:0;width:100%;margin:0;padding:0 0 3px !important;flex-wrap:nowrap !important;overflow-x:auto !important;overflow-y:hidden !important;-webkit-overflow-scrolling:touch}
+.free-value-btn{flex:0 0 auto;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:7px 10px;font-size:9px;font-weight:900;letter-spacing:.07em;white-space:nowrap;min-height:33px}
+.free-value-btn.active{background:var(--chip-active-bg);border-color:var(--chip-active-bg);color:var(--chip-active-text)}
+body.dark .free-value-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.dof-setting-head{margin-bottom:6px}
+.dof-setting-head small{font-size:9px;color:var(--text);font-weight:850}
+
+.subject-card{margin-top:14px;border:1px solid var(--line);border-radius:15px;background:var(--panel);overflow:hidden}
+.subject-card.is-active{border-color:rgba(47,91,102,.35)}
+.subject-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 9px}
+.subject-collapse-toggle{min-width:0;border:0;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:3px 4px;cursor:pointer}
+.subject-collapse-toggle:disabled{cursor:default}
+.subject-collapse-toggle b{display:block;font-size:9px;letter-spacing:.13em;font-weight:900}
+.subject-collapse-toggle small{display:block;margin-top:3px;color:var(--muted);font-size:9px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:310px}
+.subject-collapse-toggle small.is-net{color:#347456}.subject-collapse-toggle small.is-out{color:#92463F}
+body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject-collapse-toggle small.is-out{color:#E6A19C}
+.subject-collapse-chevron{font-size:16px;color:var(--muted);transition:transform .18s ease}
+.subject-card.is-active:not(.is-collapsed) .subject-collapse-chevron{transform:rotate(180deg)}
+.subject-card .subject-toggle{margin:0;padding:7px 9px;font-size:8px}
+.subject-card .subject2-controls{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;background:var(--panel2);padding:11px}
+
+.topview-main{margin-top:14px !important}
+.topview-main summary{list-style:none;cursor:pointer;user-select:none}
+.topview-main summary::-webkit-details-marker{display:none}
+.topview-main .topview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px}
+.topview-main .topview-chevron{color:var(--muted);font-size:16px;line-height:1;transition:transform .18s ease}
+.topview-main[open] .topview-chevron{transform:rotate(180deg)}
+.topview-main .topview-content{padding-top:9px}
+.topview-main:not([open]){background:var(--panel)}
+
+.custom-value-dialog{width:min(360px,calc(100vw - 28px));border:1px solid var(--line);border-radius:18px;padding:0;background:var(--panel);color:var(--text)}
+.custom-value-dialog::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}
+.custom-value-inner{position:relative;padding:20px}
+.custom-value-inner h2{margin:0 38px 15px 0;font-size:21px}
+.custom-value-field{display:flex;align-items:center;border:1px solid var(--line);border-radius:14px;background:var(--field-bg);overflow:hidden}
+.custom-value-field input{min-width:0;width:100%;height:54px;border:0!important;background:transparent!important;color:var(--text);padding:0 12px;font-size:24px;font-weight:900;outline:0;box-shadow:none!important}
+.custom-value-field span{padding-right:12px;color:var(--muted);font-size:12px;font-weight:850;white-space:nowrap}
+.custom-value-apply{width:100%;margin-top:12px;border:0;border-radius:13px;background:var(--accent);color:#fff;padding:12px;font-size:10px;font-weight:900;letter-spacing:.1em}
+
+/* the old two-subject result bubble is intentionally gone */
+.subjects-result{display:none!important}
+
+@media(max-width:520px){
+  .dof-controls-panel{padding-top:13px}
+  .compact-setting-block{margin-top:10px}
+  .compact-setting-block + .compact-setting-block{padding-top:9px}
+  .quick-setting-row{gap:6px}
+  .quick-setting-row .frame-chip-strip button{padding:6px 10px!important;font-size:11px!important}
+  .free-value-btn{padding:6px 8px;min-height:31px;font-size:8px}
+  .subject-card{margin-top:11px}
+  .subject-collapse-toggle small{max-width:205px}
+  .topview-main{margin-top:11px!important}
+}

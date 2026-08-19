@@ -251,3 +251,13 @@ V5.22 — CONTRÔLES COMPACTS
 - Sur mobile, les présélections DIAPH et SUJET 1 restent sur une seule ligne horizontale défilable, comme la focale.
 - Le schéma de profondeur est remonté juste après les réglages sujets afin d'être visible plus rapidement.
 - Aucun changement dans les calculs DOF ni dans la BOS Camera DB.
+
+
+V5.23 — ULTRA COMPACT
+- Focale, diaph et distance Sujet 1 tiennent chacun sur une seule ligne de présélections.
+- Bouton LIBRE fixé à droite de chaque ligne ; la saisie libre s’ouvre dans une fenêtre dédiée.
+- Le panneau Réglages caméra affiche le nom de la caméra sélectionnée même lorsqu’il est replié.
+- Sujet 2 devient une carte indépendante : activation et repli sont deux actions distinctes.
+- Une fois S2 actif, on peut replier sa carte sans le désactiver ; le résumé conserve distance + état NET/HORS PDC.
+- Suppression du bloc résultat « les deux sujets sont nets ».
+- Le Schéma de profondeur devient repliable et reste ouvert par défaut.

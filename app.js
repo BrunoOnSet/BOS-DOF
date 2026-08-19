@@ -66,6 +66,8 @@ function updateCameraSelector(){
   const c=currentCamera(); if(!c)return;
   const note=$('cameraSelectFormat');
   if(note) note.textContent=`${c.dof.label} · CoC ${Number(c.dof.cocMm).toFixed(3).replace('.',',')} mm`;
+  const summary=$('cameraSettingsSummary');
+  if(summary) summary.textContent=c.name || cameraShortLabel(c);
 }
 function renderCameraBrandButtons(){
   const host=$('cameraBrandMode'); if(!host)return;
@@ -216,6 +218,7 @@ function clearTopView() {
   if (blurBefore) blurBefore.setAttribute("width", "0");
   if (blurAfter) blurAfter.setAttribute("width", "0");
   $("topViewCaption").textContent = "Réglages incomplets";
+  if($("topViewSummary")) $("topViewSummary").textContent = "Réglages incomplets";
   $("tvSubject1Label").textContent = "S1 · —";
   $("tvSubject2Label").textContent = "S2 · —";
 }
@@ -282,6 +285,8 @@ function updateTopView(s1M, s2M, focusM, nearM, farM) {
   }
 
   $("topViewCaption").textContent = `MAP ${formatM(focusM)} · ZONE NETTE ${formatM(nearM)} → ${formatM(farM)}`;
+  const tvSummary=$("topViewSummary");
+  if(tvSummary) tvSummary.textContent = `PDC ${formatM(nearM)} → ${formatM(farM)}`;
 }
 
 function setPreviewSubjectState(el, badge, label, isNet) {
@@ -361,34 +366,22 @@ function updatePeoplePreview(s1M, s2M, focusM, nearM, farM) {
 }
 
 function updateSubjectUI(s1, s2, focusM, nearM, farM) {
-  const result = $("subjectsResult");
+  const summary = $("subject2Summary");
   if (!subject2Enabled) {
-    result.hidden = true;
+    if (summary) summary.textContent = "Non activé";
     $("focusDistanceLabel").textContent = `MAP auto · ${formatM(s1)}`;
     return;
   }
 
-  result.hidden = false;
-  const s1Net = isInsideDof(s1, nearM, farM);
-  const s2Net = isInsideDof(s2, nearM, farM);
-
-  $("subject1DistanceReadout").textContent = formatM(s1);
-  $("subject2DistanceReadout").textContent = formatM(s2);
-  $("focusReadout").textContent = `MAP ${formatM(focusM)}`;
+  const s2Valid = Number.isFinite(s2) && s2 > 0;
+  const s2Net = s2Valid && Number.isFinite(nearM) && nearM > 0 ? isInsideDof(s2, nearM, farM) : false;
   $("focusDistanceLabel").textContent = `${focusModeName()} · ${formatM(focusM)}`;
-  $("subjectsRangeNote").textContent = `PDC : ${formatM(nearM)} → ${formatM(farM)}`;
-
-  setStatus($("subject1StatusCard"), $("subject1Status"), s1Net);
-  setStatus($("subject2StatusCard"), $("subject2Status"), s2Net);
-
-  if (s1Net && s2Net) {
-    $("subjectsSummary").textContent = "LES DEUX SONT NETS";
-    result.classList.add("both-net");
-    result.classList.remove("not-both-net");
-  } else {
-    $("subjectsSummary").textContent = "LES DEUX NE TIENNENT PAS DANS LA PDC";
-    result.classList.remove("both-net");
-    result.classList.add("not-both-net");
+  if (summary) {
+    summary.textContent = s2Valid
+      ? `S2 · ${formatM(s2)} · ${s2Net ? "NET" : "HORS PDC"}`
+      : "S2 · distance invalide";
+    summary.classList.toggle("is-net", s2Valid && s2Net);
+    summary.classList.toggle("is-out", s2Valid && !s2Net);
   }
 }
 
@@ -398,11 +391,20 @@ function updateActiveChips() {
     if (!inputs[target]) return;
 
     const val = parseFR(inputs[target].value);
+    let presetMatched = false;
     group.querySelectorAll("button").forEach(btn => {
-      btn.classList.toggle("active", Math.abs(parseFR(btn.textContent) - val) < 0.0001);
+      const active = Math.abs(parseFR(btn.textContent) - val) < 0.0001;
+      btn.classList.toggle("active", active);
+      if(active) presetMatched = true;
     });
+    const libre = document.querySelector(`.free-value-btn[data-custom-target="${target}"]`);
+    if(libre) libre.classList.toggle("active", !presetMatched);
   });
 
+  const f=parseFR(inputs.focal.value), a=parseFR(inputs.aperture.value), d=parseFR(inputs.distance.value);
+  if($("focalCurrentValue")) $("focalCurrentValue").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
+  if($("apertureCurrentValue")) $("apertureCurrentValue").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
+  if($("distanceCurrentValue")) $("distanceCurrentValue").textContent = Number.isFinite(d) ? formatM(d) : "—";
 }
 
 function updateEquivalentInfo(focal, distanceM) {
@@ -431,8 +433,10 @@ function calculate() {
   if (!(f > 0 && N > 0 && s1M > 0 && focusM > 0) || (subject2Enabled && !(s2M > 0))) {
     ["dof","range","near","far","front","back","hyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
       .forEach(id => $(id).textContent = "—");
-    if (subject2Enabled) {
-      $("subjectsSummary").textContent = "DISTANCE SUJET INVALIDE";
+    if (subject2Enabled && $("subject2Summary")) {
+      $("subject2Summary").textContent = "S2 · distance invalide";
+      $("subject2Summary").classList.remove("is-net");
+      $("subject2Summary").classList.add("is-out");
     }
     updatePeoplePreview(s1M, s2M, focusM, NaN, NaN);
     clearTopView();
@@ -485,7 +489,7 @@ document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEa
 
 Object.values(inputs).forEach(input => {
   input.addEventListener("input", calculate);
-  input.addEventListener("focus", () => input.select());
+  if(input.type !== "hidden") input.addEventListener("focus", () => input.select());
 });
 
 const dialog = $("infoDialog");
@@ -506,25 +510,46 @@ $("cameraSelect").addEventListener("change",(event)=>setCurrentCamera(event.targ
 
 
 
-// Two-subject workflow
+// Two-subject workflow — active independently from collapsed/open state
 const subject2Toggle = $("subject2Toggle");
 const subject2Controls = $("subject2Controls");
+const subject2CollapseToggle = $("subject2CollapseToggle");
+const subject2Panel = $("subject2Panel");
 const focusModeGroup = $("focusMode");
+let subject2Collapsed = true;
+
+function renderSubject2Panel() {
+  const open = subject2Enabled && !subject2Collapsed;
+  subject2Controls.hidden = !open;
+  subject2CollapseToggle.disabled = !subject2Enabled;
+  subject2CollapseToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  subject2Panel.classList.toggle("is-active", subject2Enabled);
+  subject2Panel.classList.toggle("is-collapsed", subject2Enabled && subject2Collapsed);
+  subject2Toggle.textContent = subject2Enabled ? "RETIRER" : "+ SUJET 2";
+  subject2Toggle.classList.toggle("active", subject2Enabled);
+}
 
 function setSubject2Enabled(enabled) {
   subject2Enabled = enabled;
-  subject2Controls.hidden = !enabled;
-  subject2Toggle.setAttribute("aria-expanded", enabled ? "true" : "false");
-  subject2Toggle.textContent = enabled ? "− SUJET 2" : "+ SUJET 2";
-  subject2Toggle.classList.toggle("active", enabled);
-  if (!enabled) focusMode = "s1";
+  if (enabled) subject2Collapsed = false;
+  else {
+    subject2Collapsed = true;
+    focusMode = "s1";
+    if($("subject2Summary")) $("subject2Summary").textContent = "Non activé";
+  }
   focusModeGroup.querySelectorAll("button").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.focus === focusMode);
   });
+  renderSubject2Panel();
   calculate();
 }
 
 subject2Toggle.addEventListener("click", () => setSubject2Enabled(!subject2Enabled));
+subject2CollapseToggle.addEventListener("click", () => {
+  if(!subject2Enabled) return;
+  subject2Collapsed = !subject2Collapsed;
+  renderSubject2Panel();
+});
 
 $("subject2Nudges").addEventListener("click", (event) => {
   const btn = event.target.closest("button[data-delta]");
@@ -545,7 +570,46 @@ focusModeGroup.addEventListener("click", (event) => {
 });
 
 
-// V5.22 — panneau caméra repliable + contrôles compacts + schéma rapproché.
+// V5.23 — saisie libre en fenêtre pour garder une seule ligne par réglage.
+const customValueDialog = $("customValueDialog");
+const customValueForm = $("customValueForm");
+const customValueInput = $("customValueInput");
+const customValueTitle = $("customValueTitle");
+const customValueUnit = $("customValueUnit");
+let customValueTarget = null;
+const customMeta = {
+  focal:{title:"Focale libre",unit:"mm",min:1},
+  aperture:{title:"Diaph libre",unit:"f/",min:0.1},
+  distance:{title:"Distance Sujet 1",unit:"m",min:0.1}
+};
+
+document.querySelectorAll(".free-value-btn[data-custom-target]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const target=btn.dataset.customTarget;
+    if(!inputs[target]) return;
+    customValueTarget=target;
+    const meta=customMeta[target];
+    customValueTitle.textContent=meta.title;
+    customValueUnit.textContent=meta.unit;
+    customValueInput.value=String(inputs[target].value).replace(".",",");
+    customValueDialog.showModal();
+    setTimeout(()=>{customValueInput.focus();customValueInput.select();},40);
+  });
+});
+$("customValueClose").addEventListener("click",()=>customValueDialog.close());
+customValueDialog.addEventListener("click",e=>{if(e.target===customValueDialog)customValueDialog.close();});
+customValueForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(!customValueTarget) return;
+  const value=parseFR(customValueInput.value);
+  const meta=customMeta[customValueTarget];
+  if(!(value>=meta.min)){customValueInput.focus();return;}
+  inputs[customValueTarget].value=String(value);
+  customValueDialog.close();
+  calculate();
+});
+
+// V5.23 — panneau caméra repliable + contrôles ultra compacts + schéma repliable.
 const dofCameraSettingsPanel = document.getElementById("dofCameraSettingsPanel");
 const dofCameraSettingsToggle = document.getElementById("dofCameraSettingsToggle");
 const dofCameraSettingsContent = document.getElementById("dofCameraSettingsContent");
