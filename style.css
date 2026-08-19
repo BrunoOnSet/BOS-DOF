@@ -720,7 +720,8 @@ body.dark .subject-status-card.is-out strong{
   border-color:rgba(166,74,67,.32);
 }
 @media(max-width:430px){
-  .subject-nudges{grid-template-columns:1fr 1fr}
+  .subject-nudges{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+  .subject-nudges button{padding:7px 2px;font-size:10px;white-space:nowrap}
   .focus-mode{grid-template-columns:1fr}
   .focus-mode button{padding:9px 7px}
 }

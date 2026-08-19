@@ -430,9 +430,13 @@ function calculate() {
   $("footerText").textContent =
     `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · ${fmt.name}`;
 
+  // Toujours synchroniser l'état visuel des presets avec la valeur courante,
+  // même si un autre réglage est momentanément invalide.
+  updateActiveChips();
+
   if (!(f > 0 && N > 0 && s1M > 0 && focusM > 0) || (subject2Enabled && !(s2M > 0))) {
-    ["dof","range","near","far","front","back","hyper","heroHyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
-      .forEach(id => $(id).textContent = "—");
+    ["dof","range","heroHyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
+      .forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
     if (subject2Enabled && $("subject2Summary")) {
       $("subject2Summary").textContent = "S2 · distance invalide";
       $("subject2Summary").classList.remove("is-net");
@@ -464,11 +468,6 @@ function calculate() {
 
   $("dof").textContent = formatDepth(dofM);
   $("range").textContent = `${formatM(nearM)} → ${formatM(farM)}`;
-  $("near").textContent = formatM(nearM);
-  $("far").textContent = formatM(farM);
-  $("front").textContent = formatDepth(frontM);
-  $("back").textContent = formatDepth(backM);
-  $("hyper").textContent = formatM(hyperM);
   $("heroHyper").textContent = `Hyperfocale ${formatM(hyperM)}`;
   $("frontLabel").textContent = `− ${formatDepth(frontM)}`;
   $("backLabel").textContent = `+ ${formatDepth(backM)}`;
@@ -481,8 +480,15 @@ function calculate() {
 
 document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEach(btn => {
   btn.addEventListener("click", () => {
-    const target = btn.closest(".chips").dataset.target;
-    inputs[target].value = btn.textContent;
+    const group = btn.closest(".chips");
+    const target = group.dataset.target;
+    inputs[target].value = btn.textContent.trim();
+
+    // Feedback immédiat : la sélection bleue suit le bouton touché.
+    group.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+    const libre = document.querySelector(`.free-value-btn[data-custom-target="${target}"]`);
+    if (libre) libre.classList.remove("active");
+
     calculate();
   });
 });
@@ -607,6 +613,7 @@ customValueForm.addEventListener("submit",e=>{
   if(!(value>=meta.min)){customValueInput.focus();return;}
   inputs[customValueTarget].value=String(value);
   customValueDialog.close();
+  updateActiveChips();
   calculate();
 });
 

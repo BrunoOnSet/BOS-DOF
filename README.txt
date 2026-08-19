@@ -287,3 +287,15 @@ V5.27 — PLAGES ÉTENDUES
 - Presets focale étendus de 14 mm à 200 mm : 14 / 18 / 21 / 24 / 28 / 35 / 50 / 70 / 85 / 105 / 135 / 200.
 - Presets diaphragme étendus de f/1.0 à f/22 : 1.0 / 1.4 / 2 / 2.8 / 4 / 5.6 / 8 / 11 / 16 / 22.
 - Les presets restent sur une seule ligne horizontale défilable avec LIBRE toujours accessible.
+
+
+V5.28 — HYPERFOCALE FIX
+- Correction du calcul interrompu après suppression des anciennes cartes de résultats.
+- Les anciens éléments Limite proche / lointaine / Devant / Derrière / Hyperfocale ne sont plus appelés par le JavaScript.
+- L'hyperfocale s'affiche maintenant correctement dans le panneau principal PDC.
+
+V5.30 — ACTIVE SELECTION FIX
+- Correction de la sélection visuelle des presets Focale / Diaph / Distance caméra.
+- La puce bleue suit désormais immédiatement la valeur choisie.
+- Une valeur LIBRE correspondant exactement à un preset réactive ce preset.
+- Une valeur LIBRE hors preset retire correctement l'état actif des presets.
