@@ -244,3 +244,10 @@ V5.21 — DOF TOP VIEW ONLY
 - Le schéma de profondeur devient le visuel principal de l’app.
 - Ajout d’une zone floue avant, d’une zone nette (PDC) et d’une zone floue arrière.
 - Positionnement assumé : DOF = lecture technique de la profondeur, FRAME = cadrage.
+
+
+V5.22 — CONTRÔLES COMPACTS
+- DIAPH et SUJET 1 passent sur deux lignes séparées pleine largeur.
+- Sur mobile, les présélections DIAPH et SUJET 1 restent sur une seule ligne horizontale défilable, comme la focale.
+- Le schéma de profondeur est remonté juste après les réglages sujets afin d'être visible plus rapidement.
+- Aucun changement dans les calculs DOF ni dans la BOS Camera DB.

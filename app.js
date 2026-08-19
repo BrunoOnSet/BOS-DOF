@@ -545,7 +545,7 @@ focusModeGroup.addEventListener("click", (event) => {
 });
 
 
-// V5.19 — panneau caméra repliable + perspective visuelle corrigée.
+// V5.22 — panneau caméra repliable + contrôles compacts + schéma rapproché.
 const dofCameraSettingsPanel = document.getElementById("dofCameraSettingsPanel");
 const dofCameraSettingsToggle = document.getElementById("dofCameraSettingsToggle");
 const dofCameraSettingsContent = document.getElementById("dofCameraSettingsContent");

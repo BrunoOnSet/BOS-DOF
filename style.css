@@ -1134,17 +1134,22 @@ body:not(.dark) .frame-chip-strip button:not(.active){border-color:#C5C8C5 !impo
 .frame-field em{padding-right:10px;color:var(--muted);font-style:normal;font-size:10px;font-weight:750}
 .dof-free-field{max-width:220px}
 .dof-primary-fields{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)
+  display:flex;flex-direction:column;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)
 }
 .dof-primary-fields .dof-setting-block{margin-top:0;min-width:0}
-/* Les raccourcis doivent rester contenus dans leur demi-colonne :
-   on les laisse revenir à la ligne au lieu de déborder horizontalement. */
+/* DIAPH et SUJET 1 occupent chacun toute la largeur.
+   Leurs présélections restent sur une seule ligne horizontale scrollable, comme la focale. */
 .dof-primary-fields .compact-strip{
   min-height:39px;
   width:100%;max-width:100%;box-sizing:border-box;
-  flex-wrap:wrap !important;
-  overflow-x:visible !important;
+  flex-wrap:nowrap !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
 }
+.dof-primary-fields .compact-strip button{scroll-snap-align:start}
+
 .dof-primary-fields .field-help{margin:7px 2px 0}
 
 .frame-subjects-panel{
@@ -1179,7 +1184,6 @@ body.dark .frame-segmented button.active{background:var(--accent) !important;col
 .dof-people-preview{margin-top:18px}
 
 @media (max-width:520px){
-  .dof-primary-fields{grid-template-columns:1fr}
   .dof-free-field{max-width:none}
   .frame-segmented{grid-template-columns:1fr 1fr 1fr}
   .frame-segmented button{font-size:8px;padding:8px 4px}
@@ -1188,3 +1192,16 @@ body.dark .frame-segmented button.active{background:var(--accent) !important;col
 /* ============================================================
    BOS DOF V5.19 — correction distance + flou PDC + perspective centrée
    ============================================================ */
+
+
+/* V5.22 — compact controls / schema brought forward */
+.dof-controls-panel .topview-main{
+  margin-top:18px;
+  border-color:var(--line);
+}
+.dof-controls-panel .topview-main + .mini-panel{margin-top:18px}
+@media(max-width:520px){
+  .dof-primary-fields{gap:14px}
+  .dof-primary-fields .compact-strip{padding-bottom:7px !important}
+  .dof-primary-fields .compact-strip button{padding:7px 11px !important}
+}

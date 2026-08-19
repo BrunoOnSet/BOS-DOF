@@ -1,14 +1,13 @@
-const CACHE = "bos-dof-v5.21";
+const CACHE = "bos-dof-v5.22";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=5.21",
-  "./app.js?v=5.21",
+  "./style.css?v=5.22",
+  "./app.js?v=5.22",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
-  "./logo-bruno-guillard.png",
-  "./assets/mannequin-preview.png"
+  "./logo-bruno-guillard.png"
 ];
 
 self.addEventListener("install", (event) => {
