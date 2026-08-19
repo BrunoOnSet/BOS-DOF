@@ -10,7 +10,7 @@
   <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=5.23" />
+  <link rel="stylesheet" href="style.css?v=5.25" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -105,6 +105,27 @@
           <button class="free-value-btn" type="button" data-custom-target="distance">LIBRE</button>
         </div>
         <input id="distance" type="hidden" value="2.50" />
+      </div>
+
+
+      <div class="primary-dof-result">
+      <div class="result-hero">
+        <div class="result-label">PROFONDEUR DE CHAMP</div>
+        <div class="format-badge" id="formatBadge">Full Frame</div>
+        <div class="dof" id="dof">—</div>
+        <div class="range" id="range">—</div>
+
+        <div class="visual" aria-hidden="true">
+          <div class="line"></div>
+          <div class="zone"></div>
+          <div class="near-mark"></div>
+          <div class="focus-mark"></div>
+          <div class="far-mark"></div>
+          <div class="visual-label near" id="frontLabel">—</div>
+          <div class="visual-label focus">MAP</div>
+          <div class="visual-label far" id="backLabel">—</div>
+        </div>
+      </div>
       </div>
 
       <div class="subject-card" id="subject2Panel">
@@ -224,23 +245,6 @@
     </section>
 
     <section class="result">
-      <div class="result-hero">
-        <div class="result-label">PROFONDEUR DE CHAMP</div>
-        <div class="format-badge" id="formatBadge">Full Frame</div>
-        <div class="dof" id="dof">—</div>
-        <div class="range" id="range">—</div>
-
-        <div class="visual" aria-hidden="true">
-          <div class="line"></div>
-          <div class="zone"></div>
-          <div class="near-mark"></div>
-          <div class="focus-mark"></div>
-          <div class="far-mark"></div>
-          <div class="visual-label near" id="frontLabel">—</div>
-          <div class="visual-label focus">MAP</div>
-          <div class="visual-label far" id="backLabel">—</div>
-        </div>
-      </div>
 
       <div class="cards">
         <div class="card">
@@ -276,7 +280,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.23</span>
+        <span class="app-version">v5.25</span>
       </div>
     </footer>
   </main>
@@ -395,6 +399,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5.23"></script>
+  <script src="app.js?v=5.25"></script>
 </body>
 </html>

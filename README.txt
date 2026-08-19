@@ -261,3 +261,16 @@ V5.23 — ULTRA COMPACT
 - Une fois S2 actif, on peut replier sa carte sans le désactiver ; le résumé conserve distance + état NET/HORS PDC.
 - Suppression du bloc résultat « les deux sujets sont nets ».
 - Le Schéma de profondeur devient repliable et reste ouvert par défaut.
+
+
+V5.24 — RÉSULTAT PDC AVANT SUJET 2
+- La grande bulle « PROFONDEUR DE CHAMP » est remontée immédiatement après Sujet 1.
+- Elle apparaît désormais juste avant le bloc Sujet 2.
+- Sujet 2, schéma de profondeur et résultats détaillés conservent leur fonctionnement.
+- Aucun changement dans les calculs.
+
+
+V5.25 — PDC ULTRA COMPACTE
+- Bloc principal Profondeur de champ fortement réduit en hauteur.
+- Suppression du badge caméra/capteur dans ce bloc : la caméra reste lisible dans Réglages caméra.
+- Valeur PDC, plage et ligne MAP resserrées sans changer les calculs.

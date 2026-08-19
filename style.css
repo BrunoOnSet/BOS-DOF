@@ -1208,7 +1208,7 @@ body.dark .frame-segmented button.active{background:var(--accent) !important;col
 
 
 /* ============================================================
-   BOS DOF V5.23 — ULTRA COMPACT
+   BOS DOF V5.24 — ULTRA COMPACT
    ============================================================ */
 .camera-collapse-title{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
 .camera-collapse-title strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:0;text-transform:none}
@@ -1270,4 +1270,95 @@ body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject
   .subject-card{margin-top:11px}
   .subject-collapse-toggle small{max-width:205px}
   .topview-main{margin-top:11px!important}
+}
+
+
+/* V5.24 — résultat PDC remonté avant Sujet 2 */
+.primary-dof-result{
+  margin-top:16px;
+  margin-bottom:14px;
+}
+.primary-dof-result .result-hero{
+  margin:0;
+}
+.result .cards{
+  margin-top:0;
+}
+
+
+/* V5.25 — résultat PDC ultra compact */
+.primary-dof-result{
+  margin-top:12px;
+  margin-bottom:11px;
+}
+.primary-dof-result .result-hero{
+  border-radius:18px;
+  padding:13px 14px 10px;
+}
+.primary-dof-result .result-label{
+  font-size:9px;
+  letter-spacing:.16em;
+}
+.primary-dof-result .format-badge{
+  display:none !important;
+}
+.primary-dof-result .dof{
+  font-size:50px;
+  line-height:.92;
+  margin-top:7px;
+  letter-spacing:-.055em;
+}
+.primary-dof-result .range{
+  margin-top:5px;
+  font-size:13px;
+  line-height:1.1;
+}
+.primary-dof-result .visual{
+  height:50px;
+  margin:10px 16px 0;
+}
+.primary-dof-result .line{
+  top:18px;
+}
+.primary-dof-result .zone{
+  top:17px;
+}
+.primary-dof-result .near-mark,
+.primary-dof-result .focus-mark,
+.primary-dof-result .far-mark{
+  top:11px;
+  height:15px;
+}
+.primary-dof-result .focus-mark{
+  top:7px;
+  height:23px;
+}
+.primary-dof-result .visual-label{
+  top:31px;
+  font-size:9px;
+}
+@media(max-width:520px){
+  .primary-dof-result{
+    margin-top:10px;
+    margin-bottom:9px;
+  }
+  .primary-dof-result .result-hero{
+    padding:11px 11px 8px;
+    border-radius:17px;
+  }
+  .primary-dof-result .dof{
+    font-size:45px;
+    margin-top:6px;
+  }
+  .primary-dof-result .range{
+    font-size:12px;
+    margin-top:4px;
+  }
+  .primary-dof-result .visual{
+    height:46px;
+    margin:8px 11px 0;
+  }
+  .primary-dof-result .visual-label{
+    font-size:8px;
+  }
 }
