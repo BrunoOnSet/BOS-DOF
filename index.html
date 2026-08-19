@@ -10,7 +10,7 @@
   <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style.css?v=5.25" />
+  <link rel="stylesheet" href="style.css?v=5.27" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -69,8 +69,8 @@
         </div>
         <div class="quick-setting-row">
           <div class="chips frame-chip-strip compact-strip" data-target="focal">
-            <button>18</button><button>24</button><button>28</button><button>35</button>
-            <button class="active">50</button><button>85</button><button>105</button><button>135</button>
+            <button>14</button><button>18</button><button>21</button><button>24</button><button>28</button><button>35</button>
+            <button class="active">50</button><button>70</button><button>85</button><button>105</button><button>135</button><button>200</button>
           </div>
           <button class="free-value-btn" type="button" data-custom-target="focal">LIBRE</button>
         </div>
@@ -84,8 +84,8 @@
         </div>
         <div class="quick-setting-row">
           <div class="chips frame-chip-strip compact-strip" data-target="aperture">
-            <button>1.4</button><button>2</button><button class="active">2.8</button><button>4</button>
-            <button>5.6</button><button>8</button><button>11</button>
+            <button>1.0</button><button>1.4</button><button>2</button><button class="active">2.8</button><button>4</button>
+            <button>5.6</button><button>8</button><button>11</button><button>16</button><button>22</button>
           </div>
           <button class="free-value-btn" type="button" data-custom-target="aperture">LIBRE</button>
         </div>
@@ -94,7 +94,7 @@
 
       <div class="compact-setting-block">
         <div class="dof-setting-head">
-          <span>SUJET 1</span>
+          <span>SUJET 1 · DISTANCE CAMÉRA</span>
           <small id="distanceCurrentValue">2,50 m</small>
         </div>
         <div class="quick-setting-row">
@@ -113,7 +113,10 @@
         <div class="result-label">PROFONDEUR DE CHAMP</div>
         <div class="format-badge" id="formatBadge">Full Frame</div>
         <div class="dof" id="dof">—</div>
-        <div class="range" id="range">—</div>
+        <div class="range-row">
+          <div class="range" id="range">—</div>
+          <div class="hero-hyper" id="heroHyper">Hyperfocale —</div>
+        </div>
 
         <div class="visual" aria-hidden="true">
           <div class="line"></div>
@@ -244,33 +247,6 @@
       </div>
     </section>
 
-    <section class="result">
-
-      <div class="cards">
-        <div class="card">
-          <span>Limite proche</span>
-          <strong id="near">—</strong>
-        </div>
-        <div class="card">
-          <span>Limite lointaine</span>
-          <strong id="far">—</strong>
-        </div>
-        <div class="card">
-          <span>Devant le point</span>
-          <strong id="front">—</strong>
-        </div>
-        <div class="card">
-          <span>Derrière le point</span>
-          <strong id="back">—</strong>
-        </div>
-      </div>
-
-      <div class="hyper">
-        <span>Hyperfocale</span>
-        <strong id="hyper">—</strong>
-      </div>
-    </section>
-
     <footer>
       <div id="footerText" class="technical-footer">
         Cercle de confusion : 0,029 mm · Full Frame
@@ -280,7 +256,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.25</span>
+        <span class="app-version">v5.27</span>
       </div>
     </footer>
   </main>
@@ -399,6 +375,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5.25"></script>
+  <script src="app.js?v=5.27"></script>
 </body>
 </html>

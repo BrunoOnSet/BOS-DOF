@@ -431,7 +431,7 @@ function calculate() {
     `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · ${fmt.name}`;
 
   if (!(f > 0 && N > 0 && s1M > 0 && focusM > 0) || (subject2Enabled && !(s2M > 0))) {
-    ["dof","range","near","far","front","back","hyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
+    ["dof","range","near","far","front","back","hyper","heroHyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
       .forEach(id => $(id).textContent = "—");
     if (subject2Enabled && $("subject2Summary")) {
       $("subject2Summary").textContent = "S2 · distance invalide";
@@ -469,6 +469,7 @@ function calculate() {
   $("front").textContent = formatDepth(frontM);
   $("back").textContent = formatDepth(backM);
   $("hyper").textContent = formatM(hyperM);
+  $("heroHyper").textContent = `Hyperfocale ${formatM(hyperM)}`;
   $("frontLabel").textContent = `− ${formatDepth(frontM)}`;
   $("backLabel").textContent = `+ ${formatDepth(backM)}`;
 

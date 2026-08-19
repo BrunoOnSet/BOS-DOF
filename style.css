@@ -1362,3 +1362,34 @@ body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject
     font-size:8px;
   }
 }
+
+
+/* V5.26 — bloc bas retiré + hyperfocale intégrée dans la bulle PDC */
+.result{display:none!important;}
+.primary-dof-result .range-row{
+  margin-top:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.primary-dof-result .range{
+  margin-top:0;
+}
+.primary-dof-result .hero-hyper{
+  font-size:11px;
+  line-height:1.1;
+  color:var(--hero-muted);
+  font-weight:700;
+  white-space:nowrap;
+}
+@media(max-width:520px){
+  .primary-dof-result .range-row{
+    gap:8px;
+    margin-top:4px;
+  }
+  .primary-dof-result .hero-hyper{
+    font-size:10px;
+  }
+}

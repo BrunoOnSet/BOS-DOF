@@ -274,3 +274,16 @@ V5.25 — PDC ULTRA COMPACTE
 - Bloc principal Profondeur de champ fortement réduit en hauteur.
 - Suppression du badge caméra/capteur dans ce bloc : la caméra reste lisible dans Réglages caméra.
 - Valeur PDC, plage et ligne MAP resserrées sans changer les calculs.
+
+
+V5.26 — HYPERFOCALE INTÉGRÉE
+- Suppression du bloc bas récapitulatif (limite proche / lointaine / devant / derrière / hyperfocale).
+- L’hyperfocale est désormais affichée directement à côté de la plage 2,32 m → 2,72 m dans la bulle Profondeur de champ.
+- Le bloc résultat principal devient plus synthétique et évite les répétitions.
+
+
+V5.27 — PLAGES ÉTENDUES
+- Le réglage Sujet 1 est renommé « SUJET 1 · DISTANCE CAMÉRA » pour lever toute ambiguïté.
+- Presets focale étendus de 14 mm à 200 mm : 14 / 18 / 21 / 24 / 28 / 35 / 50 / 70 / 85 / 105 / 135 / 200.
+- Presets diaphragme étendus de f/1.0 à f/22 : 1.0 / 1.4 / 2 / 2.8 / 4 / 5.6 / 8 / 11 / 16 / 22.
+- Les presets restent sur une seule ligne horizontale défilable avec LIBRE toujours accessible.
