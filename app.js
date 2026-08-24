@@ -117,21 +117,35 @@ const inputs = {
   focal: $("focal"),
   aperture: $("aperture"),
   distance: $("distance"),
-  subject2Distance: $("subject2Distance")
+  subject2Distance: $("subject2Distance"),
+  interviewFocal: $("interviewFocal"),
+  interviewHeight: $("interviewHeight"),
+  interviewDepth: $("interviewDepth")
 };
 const apertureStops = [1, 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
 const rangeInputs = {
   focal: $("focalSlider"),
   aperture: $("apertureSlider"),
   distance: $("distanceSlider"),
-  subject2Distance: $("subject2DistanceSlider")
+  subject2Distance: $("subject2DistanceSlider"),
+  interviewFocal: $("interviewFocalSlider"),
+  interviewHeight: $("interviewHeightSlider"),
+  interviewDepth: $("interviewDepthSlider")
 };
 
 let subject2Enabled = false;
 let focusMode = "s1";
 let focusSafetyM = 0;
+let interviewShot = "chest";
 
 const practicalStops = [0.7,0.8,0.9,1,1.1,1.2,1.4,1.6,1.8,2,2.2,2.5,2.8,3.2,3.5,4,4.5,5,5.6,6.3,7.1,8,9,10,11,13,14,16,18,20,22,25,29,32];
+const interviewShots = {
+  full:{label:"Pied",heightRatio:1,frameFill:.82},
+  american:{label:"Américain",heightRatio:.74,frameFill:.82},
+  waist:{label:"Taille",heightRatio:.52,frameFill:.82},
+  chest:{label:"Poitrine",heightRatio:.34,frameFill:.82},
+  face:{label:"Serré visage",heightRatio:.16,frameFill:.78}
+};
 
 function parseFR(v) {
   return Number(String(v).replace(",", ".").trim());
@@ -196,6 +210,73 @@ function dofBounds(focalMm,aperture,cocMm,focusM){
   const nearMm=(H*s)/(H+(s-focalMm));
   const farMm=H>(s-focalMm)?(H*s)/(H-(s-focalMm)):Infinity;
   return {nearM:nearMm/1000,farM:Number.isFinite(farMm)?farMm/1000:Infinity};
+}
+
+function interviewDistanceForFrame(focalMm,personHeightM,shot,camera){
+  const widthMm=Number(camera?.sensorWidthMm)||36;
+  const nativeHeightMm=Number(camera?.sensorHeightMm||camera?.sensor?.heightMm)||0;
+  const sixteenNineHeight=widthMm*9/16;
+  const activeHeightMm=nativeHeightMm>0?Math.min(nativeHeightMm,sixteenNineHeight):sixteenNineHeight;
+  const visiblePersonM=personHeightM*shot.heightRatio;
+  const imageHeightMm=activeHeightMm*shot.frameFill;
+  const distanceMm=focalMm+(focalMm*visiblePersonM*1000)/imageHeightMm;
+  return {distanceM:distanceMm/1000,activeHeightMm,visiblePersonM};
+}
+
+function requiredApertureAtFocus(focalMm,cocMm,focusM,depthM){
+  const wantedNear=Math.max(.05,focusM-depthM/2);
+  const wantedFar=focusM+depthM/2;
+  const fits=aperture=>{
+    const bounds=dofBounds(focalMm,aperture,cocMm,focusM);
+    return bounds.nearM<=wantedNear+1e-9 && bounds.farM+1e-9>=wantedFar;
+  };
+  if(fits(.5)) return .5;
+  let high=1;
+  while(high<128 && !fits(high)) high*=2;
+  if(high>=128 && !fits(high)) return Infinity;
+  let low=.5;
+  for(let i=0;i<60;i++){
+    const mid=(low+high)/2;
+    if(fits(mid)) high=mid; else low=mid;
+  }
+  return high;
+}
+
+function renderInterviewPlanner(){
+  const focal=parseFR(inputs.interviewFocal.value);
+  const heightM=parseFR(inputs.interviewHeight.value);
+  const depthCm=parseFR(inputs.interviewDepth.value);
+  const shot=interviewShots[interviewShot]||interviewShots.chest;
+  const camera=currentCamera();
+  const coc=currentFormat().coc;
+  const apply=$("interviewApply");
+
+  if(!(focal>0 && heightM>0 && depthCm>0 && camera)){
+    $("interviewDistanceResult").textContent="—";
+    $("interviewApertureResult").textContent="—";
+    $("interviewResultDetail").textContent="Réglages incomplets.";
+    apply.disabled=true;
+    return;
+  }
+
+  const framing=interviewDistanceForFrame(focal,heightM,shot,camera);
+  const depthM=depthCm/100;
+  const exactAperture=requiredApertureAtFocus(focal,coc,framing.distanceM,depthM);
+  const practicalAperture=nextPracticalStop(exactAperture);
+  const halfDepth=depthM/2;
+
+  $("interviewDistanceResult").textContent=formatM(framing.distanceM);
+  $("interviewApertureResult").textContent=Number.isFinite(practicalAperture)?`f/${String(practicalAperture).replace(".",",")}`:"> f/32";
+  $("interviewResultDetail").textContent=Number.isFinite(practicalAperture)
+    ? `MAP sur la personne à ${formatM(framing.distanceM)} · zone utile ${formatM(framing.distanceM-halfDepth)} → ${formatM(framing.distanceM+halfDepth)}.`
+    : `La zone nette demandée nécessite de fermer au-delà de f/32 avec ce cadre.`;
+  $("interviewSummary").textContent=`${String(roundSmart(focal)).replace(".",",")} mm · ${shot.label} · PDC ${String(roundSmart(depthCm)).replace(".",",")} cm`;
+  $("interviewNote").textContent=`Estimation 16:9 · hauteur active ${framing.activeHeightMm.toFixed(1).replace(".",",")} mm · ${camera.name}. Confirmer le cadre exact dans FRAME.`;
+
+  apply.disabled=!Number.isFinite(practicalAperture);
+  apply.dataset.focal=String(focal);
+  apply.dataset.distance=String(framing.distanceM);
+  apply.dataset.aperture=Number.isFinite(practicalAperture)?String(practicalAperture):"";
 }
 
 function nextPracticalStop(value){
@@ -593,14 +674,21 @@ function updateActiveChips() {
   });
 
   const f=parseFR(inputs.focal.value), a=parseFR(inputs.aperture.value), d=parseFR(inputs.distance.value), d2=parseFR(inputs.subject2Distance.value);
+  const itwF=parseFR(inputs.interviewFocal.value),itwH=parseFR(inputs.interviewHeight.value),itwDepth=parseFR(inputs.interviewDepth.value);
   if($("focalCurrentValue")) $("focalCurrentValue").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
   if($("apertureCurrentValue")) $("apertureCurrentValue").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
   if($("distanceCurrentValue")) $("distanceCurrentValue").textContent = Number.isFinite(d) ? formatM(d) : "—";
   if($("subject2DistanceReadout")) $("subject2DistanceReadout").textContent = Number.isFinite(d2) ? formatM(d2) : "—";
+  if($("interviewFocalReadout")) $("interviewFocalReadout").textContent = Number.isFinite(itwF) ? `${String(roundSmart(itwF)).replace(".",",")} mm` : "—";
+  if($("interviewHeightReadout")) $("interviewHeightReadout").textContent = Number.isFinite(itwH) ? formatM(itwH) : "—";
+  if($("interviewDepthReadout")) $("interviewDepthReadout").textContent = Number.isFinite(itwDepth) ? `${String(roundSmart(itwDepth)).replace(".",",")} cm` : "—";
 
   if(rangeInputs.focal && Number.isFinite(f)) rangeInputs.focal.value=String(Math.max(9,Math.min(200,f)));
   if(rangeInputs.distance && Number.isFinite(d)) rangeInputs.distance.value=String(Math.max(.3,Math.min(15,d)));
   if(rangeInputs.subject2Distance && Number.isFinite(d2)) rangeInputs.subject2Distance.value=String(Math.max(.3,Math.min(15,d2)));
+  if(rangeInputs.interviewFocal && Number.isFinite(itwF)) rangeInputs.interviewFocal.value=String(Math.max(9,Math.min(200,itwF)));
+  if(rangeInputs.interviewHeight && Number.isFinite(itwH)) rangeInputs.interviewHeight.value=String(Math.max(1.5,Math.min(2.05,itwH)));
+  if(rangeInputs.interviewDepth && Number.isFinite(itwDepth)) rangeInputs.interviewDepth.value=String(Math.max(10,Math.min(60,itwDepth)));
   if(rangeInputs.aperture && Number.isFinite(a)){
     let nearest=0;
     apertureStops.forEach((stop,index)=>{
@@ -636,6 +724,7 @@ function calculate() {
   // Toujours synchroniser l'état visuel des presets avec la valeur courante,
   // même si un autre réglage est momentanément invalide.
   updateActiveChips();
+  renderInterviewPlanner();
 
   if (!(f > 0 && N > 0 && s1M > 0 && focusM > 0) || (subject2Enabled && !(s2M > 0))) {
     ["dof","range","heroHyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
@@ -716,6 +805,18 @@ if(rangeInputs.distance) rangeInputs.distance.addEventListener("input",()=>{
 });
 if(rangeInputs.subject2Distance) rangeInputs.subject2Distance.addEventListener("input",()=>{
   inputs.subject2Distance.value=rangeInputs.subject2Distance.value;
+  calculate();
+});
+if(rangeInputs.interviewFocal) rangeInputs.interviewFocal.addEventListener("input",()=>{
+  inputs.interviewFocal.value=rangeInputs.interviewFocal.value;
+  calculate();
+});
+if(rangeInputs.interviewHeight) rangeInputs.interviewHeight.addEventListener("input",()=>{
+  inputs.interviewHeight.value=rangeInputs.interviewHeight.value;
+  calculate();
+});
+if(rangeInputs.interviewDepth) rangeInputs.interviewDepth.addEventListener("input",()=>{
+  inputs.interviewDepth.value=rangeInputs.interviewDepth.value;
   calculate();
 });
 
@@ -850,7 +951,10 @@ const customMeta = {
   focal:{title:"Focale libre",unit:"mm",min:1},
   aperture:{title:"Diaph libre",unit:"f/",min:0.1},
   distance:{title:"Distance Sujet 1",unit:"m",min:0.1},
-  subject2Distance:{title:"Distance Sujet 2",unit:"m",min:0.1}
+  subject2Distance:{title:"Distance Sujet 2",unit:"m",min:0.1},
+  interviewFocal:{title:"Focale ITW",unit:"mm",min:1},
+  interviewHeight:{title:"Taille de la personne",unit:"m",min:0.5},
+  interviewDepth:{title:"Zone nette minimale",unit:"cm",min:1}
 };
 
 document.querySelectorAll("[data-custom-target]").forEach(btn=>{
@@ -892,6 +996,36 @@ if (dofCameraSettingsPanel && dofCameraSettingsToggle && dofCameraSettingsConten
     dofCameraSettingsToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
   });
 }
+
+const interviewPanel=$("interviewPanel");
+const interviewToggle=$("interviewToggle");
+const interviewContent=$("interviewContent");
+interviewToggle.addEventListener("click",()=>{
+  const willOpen=interviewPanel.classList.contains("collapsed");
+  interviewPanel.classList.toggle("collapsed",!willOpen);
+  interviewContent.hidden=!willOpen;
+  interviewToggle.setAttribute("aria-expanded",willOpen?"true":"false");
+});
+
+$("interviewShotMode").addEventListener("click",event=>{
+  const button=event.target.closest("button[data-interview-shot]");
+  if(!button) return;
+  interviewShot=button.dataset.interviewShot;
+  $("interviewShotMode").querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
+  calculate();
+});
+
+$("interviewApply").addEventListener("click",event=>{
+  const button=event.currentTarget;
+  const focal=Number(button.dataset.focal),distance=Number(button.dataset.distance),aperture=Number(button.dataset.aperture);
+  if(!(focal>0 && distance>0 && aperture>0)) return;
+  inputs.focal.value=String(focal);
+  inputs.distance.value=String(distance);
+  inputs.aperture.value=String(aperture);
+  updateActiveChips();
+  calculate();
+  document.querySelector(".dof-controls-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+});
 
 // Theme: light by default, dark on demand.
 const themeToggle = document.getElementById("themeToggle");

@@ -325,3 +325,15 @@ V5.33 — BARRE DE DISTANCE SUJET 2
 - Un clic sur cette valeur ouvre la saisie libre précise de la distance du Sujet 2.
 - Les boutons de rapprochement/éloignement et toutes les solutions du solveur restent synchronisés avec la barre.
 - Cache applicatif renouvelé pour charger correctement la V5.33.
+V5.34 — PLANIFICATEUR SPÉCIAL ITW
+
+- Ajout d’une bulle repliable « Spécial ITW » distincte du calcul principal.
+- Choix de la focale et du cadre : Pied, Américain, Taille, Poitrine ou Serré visage.
+- Taille de la personne réglable, avec 1,75 m par défaut.
+- Zone nette minimale réglable, avec 20 cm par défaut.
+- Calcul automatique de la distance caméra à partir du capteur sélectionné et d’un cadre 16:9.
+- Calcul du diaphragme pratique nécessaire pour conserver la zone nette demandée autour de la personne.
+- Affichage de la zone utile avant/arrière et rappel de la caméra utilisée.
+- Bouton pour transférer directement la focale, la distance et le diaphragme vers le calcul DOF principal.
+- La distance est une estimation de placement ; le cadre exact reste à confirmer dans FRAME.
+- Cache applicatif renouvelé pour charger correctement la V5.34.
