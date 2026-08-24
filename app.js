@@ -119,6 +119,12 @@ const inputs = {
   distance: $("distance"),
   subject2Distance: $("subject2Distance")
 };
+const apertureStops = [1, 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+const rangeInputs = {
+  focal: $("focalSlider"),
+  aperture: $("apertureSlider"),
+  distance: $("distanceSlider")
+};
 
 let subject2Enabled = false;
 let focusMode = "s1";
@@ -405,6 +411,16 @@ function updateActiveChips() {
   if($("focalCurrentValue")) $("focalCurrentValue").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
   if($("apertureCurrentValue")) $("apertureCurrentValue").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
   if($("distanceCurrentValue")) $("distanceCurrentValue").textContent = Number.isFinite(d) ? formatM(d) : "—";
+
+  if(rangeInputs.focal && Number.isFinite(f)) rangeInputs.focal.value=String(Math.max(9,Math.min(200,f)));
+  if(rangeInputs.distance && Number.isFinite(d)) rangeInputs.distance.value=String(Math.max(.3,Math.min(15,d)));
+  if(rangeInputs.aperture && Number.isFinite(a)){
+    let nearest=0;
+    apertureStops.forEach((stop,index)=>{
+      if(Math.abs(stop-a)<Math.abs(apertureStops[nearest]-a)) nearest=index;
+    });
+    rangeInputs.aperture.value=String(nearest);
+  }
 }
 
 function updateEquivalentInfo(focal, distanceM) {
@@ -491,6 +507,19 @@ document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEa
 
     calculate();
   });
+});
+
+if(rangeInputs.focal) rangeInputs.focal.addEventListener("input",()=>{
+  inputs.focal.value=rangeInputs.focal.value;
+  calculate();
+});
+if(rangeInputs.aperture) rangeInputs.aperture.addEventListener("input",()=>{
+  inputs.aperture.value=String(apertureStops[Number(rangeInputs.aperture.value)] ?? 2.8);
+  calculate();
+});
+if(rangeInputs.distance) rangeInputs.distance.addEventListener("input",()=>{
+  inputs.distance.value=rangeInputs.distance.value;
+  calculate();
 });
 
 
@@ -590,7 +619,7 @@ const customMeta = {
   distance:{title:"Distance Sujet 1",unit:"m",min:0.1}
 };
 
-document.querySelectorAll(".free-value-btn[data-custom-target]").forEach(btn=>{
+document.querySelectorAll("[data-custom-target]").forEach(btn=>{
   btn.addEventListener("click",()=>{
     const target=btn.dataset.customTarget;
     if(!inputs[target]) return;

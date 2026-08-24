@@ -299,3 +299,11 @@ V5.30 — ACTIVE SELECTION FIX
 - La puce bleue suit désormais immédiatement la valeur choisie.
 - Une valeur LIBRE correspondant exactement à un preset réactive ce preset.
 - Une valeur LIBRE hors preset retire correctement l'état actif des presets.
+V5.31 — DA BOS BRUNO ONSET V58
+
+- Harmonisation visuelle sur BOS_BRUNO_ONSET_V58 sans modifier la logique de calcul DOF.
+- Nouveau header Bruno OnSet avec le logo de la référence V58.
+- Focale, diaphragme et distance Sujet 1 passent sur des barres horizontales.
+- La valeur à droite de chaque barre reste cliquable pour une saisie libre précise.
+- Modes clair/sombre, fonds, cartes, bordures, boutons, espacements et hiérarchie rapprochés de la V58.
+- Cache applicatif renouvelé pour charger correctement cette version.
