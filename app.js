@@ -123,11 +123,15 @@ const apertureStops = [1, 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
 const rangeInputs = {
   focal: $("focalSlider"),
   aperture: $("apertureSlider"),
-  distance: $("distanceSlider")
+  distance: $("distanceSlider"),
+  subject2Distance: $("subject2DistanceSlider")
 };
 
 let subject2Enabled = false;
 let focusMode = "s1";
+let focusSafetyM = 0;
+
+const practicalStops = [0.7,0.8,0.9,1,1.1,1.2,1.4,1.6,1.8,2,2.2,2.5,2.8,3.2,3.5,4,4.5,5,5.6,6.3,7.1,8,9,10,11,13,14,16,18,20,22,25,29,32];
 
 function parseFR(v) {
   return Number(String(v).replace(",", ".").trim());
@@ -159,8 +163,89 @@ function formatFocal(mm) {
   return `${value} mm`;
 }
 
+function solverInterval(s1M,s2M,safetyM=focusSafetyM){
+  return {
+    nearM:Math.max(.05,Math.min(s1M,s2M)-safetyM),
+    farM:Math.max(s1M,s2M)+safetyM
+  };
+}
+
+function optimalFocusForPair(s1M,s2M,safetyM=focusSafetyM){
+  const interval=solverInterval(s1M,s2M,safetyM);
+  if(!(interval.nearM>0 && interval.farM>0)) return NaN;
+  if(Math.abs(interval.farM-interval.nearM)<1e-9) return interval.nearM;
+  return (2*interval.nearM*interval.farM)/(interval.nearM+interval.farM);
+}
+
+function requiredApertureForPair(focalMm,cocMm,s1M,s2M,safetyM=focusSafetyM){
+  const interval=solverInterval(s1M,s2M,safetyM);
+  const nearMm=interval.nearM*1000,farMm=interval.farM*1000;
+  const focusMm=optimalFocusForPair(s1M,s2M,safetyM)*1000;
+  if(!(focalMm>0 && cocMm>0 && nearMm>focalMm && farMm>=nearMm && focusMm>focalMm)) return Infinity;
+  if(Math.abs(farMm-nearMm)<1e-6) return 0;
+  const nearCap=nearMm*(focusMm-focalMm)/(focusMm-nearMm);
+  const farCap=farMm*(focusMm-focalMm)/(farMm-focusMm);
+  const hCap=Math.min(nearCap,farCap);
+  const denominator=cocMm*(hCap-focalMm);
+  return denominator>0 ? (focalMm*focalMm)/denominator : Infinity;
+}
+
+function dofBounds(focalMm,aperture,cocMm,focusM){
+  const s=focusM*1000;
+  const H=(focalMm*focalMm)/(aperture*cocMm)+focalMm;
+  const nearMm=(H*s)/(H+(s-focalMm));
+  const farMm=H>(s-focalMm)?(H*s)/(H-(s-focalMm)):Infinity;
+  return {nearM:nearMm/1000,farM:Number.isFinite(farMm)?farMm/1000:Infinity};
+}
+
+function nextPracticalStop(value){
+  if(!Number.isFinite(value)) return Infinity;
+  return practicalStops.find(stop=>stop+1e-8>=value) ?? Infinity;
+}
+
+function minimumRetreat(focalMm,aperture,cocMm,s1M,s2M,safetyM){
+  const fits=r=>requiredApertureForPair(focalMm,cocMm,s1M+r,s2M+r,safetyM)<=aperture+1e-9;
+  if(fits(0)) return 0;
+  let high=.25;
+  while(high<=50 && !fits(high)) high*=2;
+  if(high>50) return Infinity;
+  let low=0;
+  for(let i=0;i<60;i++){
+    const mid=(low+high)/2;
+    if(fits(mid)) high=mid; else low=mid;
+  }
+  return high;
+}
+
+function maximumUsableFocal(focalMm,aperture,cocMm,s1M,s2M,safetyM){
+  const fits=f=>requiredApertureForPair(f,cocMm,s1M,s2M,safetyM)<=aperture+1e-9;
+  if(fits(focalMm)) return focalMm;
+  const minimum=9;
+  if(!fits(minimum)) return NaN;
+  let low=minimum,high=focalMm;
+  for(let i=0;i<60;i++){
+    const mid=(low+high)/2;
+    if(fits(mid)) low=mid; else high=mid;
+  }
+  return low;
+}
+
+function stagingTargetForSubject2(focalMm,aperture,cocMm,s1M,s2M,safetyM){
+  const fits=target=>requiredApertureForPair(focalMm,cocMm,s1M,target,safetyM)<=aperture+1e-9;
+  if(fits(s2M)) return s2M;
+  if(!fits(s1M)) return NaN;
+  let low=0,high=1;
+  for(let i=0;i<60;i++){
+    const mid=(low+high)/2;
+    const target=s1M+(s2M-s1M)*mid;
+    if(fits(target)) low=mid; else high=mid;
+  }
+  return s1M+(s2M-s1M)*low;
+}
+
 function focusDistanceForSubjects(s1, s2) {
   if (!subject2Enabled || !(s2 > 0)) return s1;
+  if (focusMode === "optimal") return optimalFocusForPair(s1,s2);
   if (focusMode === "s2") return s2;
   if (focusMode === "mid") return (s1 + s2) / 2;
   return s1;
@@ -173,6 +258,7 @@ function isInsideDof(distanceM, nearM, farM) {
 }
 
 function focusModeName() {
+  if (focusMode === "optimal") return "MAP optimale";
   if (focusMode === "s2") return "Sujet 2";
   if (focusMode === "mid") return "Entre les deux";
   return "Sujet 1";
@@ -391,6 +477,105 @@ function updateSubjectUI(s1, s2, focusM, nearM, farM) {
   }
 }
 
+function setSolverOption(cardId,titleId,detailId,buttonId,title,detail,action,value,available=true){
+  const card=$(cardId),button=$(buttonId);
+  $(titleId).textContent=title;
+  $(detailId).textContent=detail;
+  card.classList.toggle("is-unavailable",!available);
+  button.disabled=!available;
+  button.dataset.solverAction=available?action:"";
+  button.dataset.solverValue=available?String(value):"";
+}
+
+function renderFocusSolver(focal,aperture,coc,s1M,s2M,focusM,nearM,farM){
+  const solver=$("focusSolver");
+  if(!solver || !subject2Enabled) return;
+  const interval=solverInterval(s1M,s2M);
+  const currentSafe=isInsideDof(interval.nearM,nearM,farM) && isInsideDof(interval.farM,nearM,farM);
+  const optimalFocus=optimalFocusForPair(s1M,s2M);
+  const required=requiredApertureForPair(focal,coc,s1M,s2M);
+  const recommendedStop=nextPracticalStop(required);
+  const primaryApply=$("solverPrimaryApply");
+
+  solver.classList.toggle("is-ok",currentSafe);
+  solver.classList.toggle("needs-solution",!currentSafe);
+  $("solverStatus").textContent=currentSafe
+    ? `Les deux sujets sont nets${focusSafetyM?` avec ${Math.round(focusSafetyM*100)} cm de marge`:""}`
+    : `Une correction est nécessaire${focusSafetyM?` pour garder ${Math.round(focusSafetyM*100)} cm de marge`:""}`;
+
+  let primaryTitle="",primaryDetail="",primaryAvailable=true;
+  if(currentSafe){
+    primaryTitle=`Réglage actuel validé`;
+    primaryDetail=`MAP ${formatM(focusM)} · zone utile ${formatM(interval.nearM)} → ${formatM(interval.farM)}`;
+    primaryApply.textContent="OPTIMISER LA MAP";
+    primaryApply.dataset.solverAction="optimal";
+    primaryApply.dataset.solverValue=String(aperture);
+  }else if(required<=aperture+1e-9){
+    primaryTitle=`Placer la MAP à ${formatM(optimalFocus)}`;
+    primaryDetail=`Le diaphragme f/${String(roundSmart(aperture)).replace(".",",")} suffit : aucun autre réglage à modifier.`;
+    primaryApply.textContent="APPLIQUER";
+    primaryApply.dataset.solverAction="optimal";
+    primaryApply.dataset.solverValue=String(aperture);
+  }else if(Number.isFinite(recommendedStop)){
+    const loss=Math.max(0,2*Math.log2(recommendedStop/aperture));
+    primaryTitle=`Fermer à f/${String(recommendedStop).replace(".",",")}`;
+    primaryDetail=`MAP ${formatM(optimalFocus)} · perte de lumière ${loss.toFixed(1).replace(".",",")} stop${loss>=1.05?"s":""}.`;
+    primaryApply.textContent="APPLIQUER";
+    primaryApply.dataset.solverAction="aperture";
+    primaryApply.dataset.solverValue=String(recommendedStop);
+  }else{
+    primaryTitle="Solution au-delà de f/32";
+    primaryDetail="Choisir une des alternatives ci-dessous.";
+    primaryAvailable=false;
+    primaryApply.textContent="INDISPONIBLE";
+    primaryApply.dataset.solverAction="";
+    primaryApply.dataset.solverValue="";
+  }
+  $("solverPrimaryTitle").textContent=primaryTitle;
+  $("solverPrimaryDetail").textContent=primaryDetail;
+  primaryApply.disabled=!primaryAvailable;
+
+  if(currentSafe){
+    setSolverOption("solverRetreatCard","solverRetreatTitle","solverRetreatDetail","solverRetreatApply","Aucun recul nécessaire","Les réglages actuels couvrent déjà les deux sujets.","retreat",0,false);
+    setSolverOption("solverFocalCard","solverFocalTitle","solverFocalDetail","solverFocalApply","Focale actuelle compatible","Aucun changement de focale nécessaire.","focal",focal,false);
+    setSolverOption("solverStagingCard","solverStagingTitle","solverStagingDetail","solverStagingApply","Positions actuelles compatibles","Aucun déplacement de comédien nécessaire.","staging",s2M,false);
+  }else if(required<=aperture+1e-9){
+    setSolverOption("solverRetreatCard","solverRetreatTitle","solverRetreatDetail","solverRetreatApply","Aucun recul nécessaire","Déplacer uniquement la mise au point suffit.","retreat",0,false);
+    setSolverOption("solverFocalCard","solverFocalTitle","solverFocalDetail","solverFocalApply","Conserver la focale","La focale actuelle convient avec la MAP optimale.","focal",focal,false);
+    setSolverOption("solverStagingCard","solverStagingTitle","solverStagingDetail","solverStagingApply","Conserver les positions","Aucun déplacement des sujets n’est nécessaire.","staging",s2M,false);
+  }else{
+    const retreat=minimumRetreat(focal,aperture,coc,s1M,s2M,focusSafetyM);
+    if(Number.isFinite(retreat)){
+      const safeRetreat=Math.ceil((retreat+0.0001)*100)/100;
+      setSolverOption("solverRetreatCard","solverRetreatTitle","solverRetreatDetail","solverRetreatApply",`Reculer la caméra de ${formatM(safeRetreat)}`,`Nouvelles distances : S1 ${formatM(s1M+safeRetreat)} · S2 ${formatM(s2M+safeRetreat)}. Le cadre sera plus large.`,"retreat",safeRetreat,true);
+    }else{
+      setSolverOption("solverRetreatCard","solverRetreatTitle","solverRetreatDetail","solverRetreatApply","Recul insuffisant","Aucune solution raisonnable avec le diaphragme actuel.","retreat",0,false);
+    }
+
+    const focalLimit=maximumUsableFocal(focal,aperture,coc,s1M,s2M,focusSafetyM);
+    if(Number.isFinite(focalLimit) && focalLimit<focal-.05){
+      const safeFocal=Math.max(9,Math.floor((focalLimit-0.001)*10)/10);
+      setSolverOption("solverFocalCard","solverFocalTitle","solverFocalDetail","solverFocalApply",`Passer à ${String(roundSmart(safeFocal)).replace(".",",")} mm maximum`,`Le cadre sera plus large ; le diaphragme reste à f/${String(roundSmart(aperture)).replace(".",",")}.`,"focal",safeFocal,true);
+    }else{
+      setSolverOption("solverFocalCard","solverFocalTitle","solverFocalDetail","solverFocalApply","Pas de focale compatible","Il faudrait descendre sous 9 mm avec les contraintes actuelles.","focal",0,false);
+    }
+
+    const stagingTarget=stagingTargetForSubject2(focal,aperture,coc,s1M,s2M,focusSafetyM);
+    if(Number.isFinite(stagingTarget) && Math.abs(stagingTarget-s2M)>.005){
+      const towardS1=s2M>s1M
+        ? Math.max(s1M,Math.floor((stagingTarget+1e-9)*100)/100)
+        : Math.min(s1M,Math.ceil((stagingTarget-1e-9)*100)/100);
+      const movement=Math.abs(s2M-towardS1);
+      const verb=s2M>s1M?"Avancer":"Reculer";
+      setSolverOption("solverStagingCard","solverStagingTitle","solverStagingDetail","solverStagingApply",`${verb} S2 de ${formatM(movement)}`,`Placer S2 à ${formatM(towardS1)} de la caméra, plus près du plan de S1.`,"staging",towardS1,true);
+    }else{
+      setSolverOption("solverStagingCard","solverStagingTitle","solverStagingDetail","solverStagingApply","Placement seul insuffisant","La marge demandée nécessite aussi un autre changement.","staging",0,false);
+    }
+  }
+
+  $("solverNote").textContent=`Calcul selon le CoC ${coc.toFixed(3).replace(".",",")} mm · MAP optimale ${formatM(optimalFocus)}${focusSafetyM?` · marge ${Math.round(focusSafetyM*100)} cm autour de chaque sujet`:""}.`;
+}
+
 function updateActiveChips() {
   document.querySelectorAll(".chips[data-target]").forEach(group => {
     const target = group.dataset.target;
@@ -407,13 +592,15 @@ function updateActiveChips() {
     if(libre) libre.classList.toggle("active", !presetMatched);
   });
 
-  const f=parseFR(inputs.focal.value), a=parseFR(inputs.aperture.value), d=parseFR(inputs.distance.value);
+  const f=parseFR(inputs.focal.value), a=parseFR(inputs.aperture.value), d=parseFR(inputs.distance.value), d2=parseFR(inputs.subject2Distance.value);
   if($("focalCurrentValue")) $("focalCurrentValue").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
   if($("apertureCurrentValue")) $("apertureCurrentValue").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
   if($("distanceCurrentValue")) $("distanceCurrentValue").textContent = Number.isFinite(d) ? formatM(d) : "—";
+  if($("subject2DistanceReadout")) $("subject2DistanceReadout").textContent = Number.isFinite(d2) ? formatM(d2) : "—";
 
   if(rangeInputs.focal && Number.isFinite(f)) rangeInputs.focal.value=String(Math.max(9,Math.min(200,f)));
   if(rangeInputs.distance && Number.isFinite(d)) rangeInputs.distance.value=String(Math.max(.3,Math.min(15,d)));
+  if(rangeInputs.subject2Distance && Number.isFinite(d2)) rangeInputs.subject2Distance.value=String(Math.max(.3,Math.min(15,d2)));
   if(rangeInputs.aperture && Number.isFinite(a)){
     let nearest=0;
     apertureStops.forEach((stop,index)=>{
@@ -459,6 +646,11 @@ function calculate() {
       $("subject2Summary").classList.add("is-out");
     }
     updatePeoplePreview(s1M, s2M, focusM, NaN, NaN);
+    if(subject2Enabled && $("solverStatus")){
+      $("solverStatus").textContent="Distances incomplètes";
+      $("solverPrimaryTitle").textContent="Renseigner les deux sujets";
+      $("solverPrimaryDetail").textContent="L’assistant calculera ensuite les solutions possibles.";
+    }
     clearTopView();
     return;
   }
@@ -489,6 +681,7 @@ function calculate() {
   $("backLabel").textContent = `+ ${formatDepth(backM)}`;
 
   updateSubjectUI(s1M, s2M, focusM, nearM, farM);
+  renderFocusSolver(f,N,COC,s1M,s2M,focusM,nearM,farM);
   updatePeoplePreview(s1M, s2M, focusM, nearM, farM);
   updateTopView(s1M, s2M, focusM, nearM, farM);
   updateActiveChips();
@@ -519,6 +712,10 @@ if(rangeInputs.aperture) rangeInputs.aperture.addEventListener("input",()=>{
 });
 if(rangeInputs.distance) rangeInputs.distance.addEventListener("input",()=>{
   inputs.distance.value=rangeInputs.distance.value;
+  calculate();
+});
+if(rangeInputs.subject2Distance) rangeInputs.subject2Distance.addEventListener("input",()=>{
+  inputs.subject2Distance.value=rangeInputs.subject2Distance.value;
   calculate();
 });
 
@@ -571,6 +768,8 @@ function setSubject2Enabled(enabled) {
   else {
     subject2Collapsed = true;
     focusMode = "s1";
+    focusSafetyM = 0;
+    if($("solverSafety")) $("solverSafety").querySelectorAll("button").forEach(button=>button.classList.toggle("active",button.dataset.safety==="0"));
     if($("subject2Summary")) $("subject2Summary").textContent = "Non activé";
   }
   focusModeGroup.querySelectorAll("button").forEach(btn => {
@@ -605,6 +804,40 @@ focusModeGroup.addEventListener("click", (event) => {
   calculate();
 });
 
+function activateOptimalFocus(){
+  focusMode="optimal";
+  focusModeGroup.querySelectorAll("button").forEach(button=>button.classList.toggle("active",button.dataset.focus==="optimal"));
+}
+
+$("solverSafety").addEventListener("click",event=>{
+  const button=event.target.closest("button[data-safety]");
+  if(!button) return;
+  focusSafetyM=Number(button.dataset.safety)||0;
+  $("solverSafety").querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
+  calculate();
+});
+
+$("focusSolver").addEventListener("click",event=>{
+  const button=event.target.closest("button[data-solver-action]");
+  if(!button || button.disabled) return;
+  const action=button.dataset.solverAction;
+  const value=Number(button.dataset.solverValue);
+  if(!action || !Number.isFinite(value)) return;
+
+  if(action==="aperture") inputs.aperture.value=String(value);
+  if(action==="retreat"){
+    const s1=parseFR(inputs.distance.value),s2=parseFR(inputs.subject2Distance.value);
+    inputs.distance.value=(s1+value).toFixed(2);
+    inputs.subject2Distance.value=(s2+value).toFixed(2).replace(".",",");
+  }
+  if(action==="focal") inputs.focal.value=String(value);
+  if(action==="staging") inputs.subject2Distance.value=value.toFixed(2).replace(".",",");
+
+  activateOptimalFocus();
+  updateActiveChips();
+  calculate();
+});
+
 
 // V5.23 — saisie libre en fenêtre pour garder une seule ligne par réglage.
 const customValueDialog = $("customValueDialog");
@@ -616,7 +849,8 @@ let customValueTarget = null;
 const customMeta = {
   focal:{title:"Focale libre",unit:"mm",min:1},
   aperture:{title:"Diaph libre",unit:"f/",min:0.1},
-  distance:{title:"Distance Sujet 1",unit:"m",min:0.1}
+  distance:{title:"Distance Sujet 1",unit:"m",min:0.1},
+  subject2Distance:{title:"Distance Sujet 2",unit:"m",min:0.1}
 };
 
 document.querySelectorAll("[data-custom-target]").forEach(btn=>{

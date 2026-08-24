@@ -307,3 +307,21 @@ V5.31 — DA BOS BRUNO ONSET V58
 - La valeur à droite de chaque barre reste cliquable pour une saisie libre précise.
 - Modes clair/sombre, fonds, cartes, bordures, boutons, espacements et hiérarchie rapprochés de la V58.
 - Cache applicatif renouvelé pour charger correctement cette version.
+V5.32 — ASSISTANT DE NETTETÉ DEUX SUJETS
+
+- L’activation du Sujet 2 ouvre désormais un assistant de résolution de netteté.
+- Calcul de la MAP optimale pour couvrir les deux sujets, avec une position mathématique plus précise que le simple milieu.
+- Proposition prioritaire : conserver le cadre et fermer au diaphragme pratique nécessaire.
+- Alternatives chiffrées : reculer la caméra, raccourcir la focale ou déplacer le Sujet 2 vers le plan du Sujet 1.
+- Chaque solution indique sa conséquence principale et peut être appliquée directement.
+- Ajout d’une marge de mouvement autour de chaque sujet : 0, 10 ou 20 cm.
+- Le calcul reste lié au cercle de confusion de la caméra sélectionnée dans BOS-CAMERA-DB.
+- FRAME reste l’application dédiée au cadrage ; DOF se spécialise dans la résolution des contraintes de netteté.
+- Cache applicatif renouvelé pour forcer le chargement de la V5.32.
+V5.33 — BARRE DE DISTANCE SUJET 2
+
+- La distance caméra du Sujet 2 utilise désormais une barre horizontale, cohérente avec les réglages principaux.
+- La valeur est placée à gauche de la barre comme demandé.
+- Un clic sur cette valeur ouvre la saisie libre précise de la distance du Sujet 2.
+- Les boutons de rapprochement/éloignement et toutes les solutions du solveur restent synchronisés avec la barre.
+- Cache applicatif renouvelé pour charger correctement la V5.33.
