@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5.34" />
+  <link rel="stylesheet" href="style.css?v=5.35" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -61,67 +61,15 @@
       </div>
     </section>
 
-    <section class="panel interview-panel collapsed" id="interviewPanel">
-      <div class="panel-head compact-head collapsible-head">
-        <button type="button" class="collapse-toggle" id="interviewToggle" aria-expanded="false" aria-controls="interviewContent">
-          <span class="camera-collapse-title"><span class="panel-kicker">SPÉCIAL ITW</span><strong id="interviewSummary">50 mm · Poitrine · PDC 20 cm</strong></span>
+    <section class="panel input-panel dof-controls-panel mode-panel" id="pdcPanel">
+      <div class="panel-head compact-head collapsible-head mode-panel-head">
+        <button type="button" class="collapse-toggle" id="pdcToggle" aria-expanded="true" aria-controls="pdcContent">
+          <span class="camera-collapse-title"><span class="panel-kicker">PDC</span><strong id="pdcSummary">50 mm · f/2,8 · 2,50 m</strong></span>
           <span class="collapse-chevron" aria-hidden="true">⌄</span>
         </button>
-      </div>
-
-      <div class="interview-content" id="interviewContent" hidden>
-        <p class="interview-intro">Choisir la focale et le cadre souhaités : DOF calcule le placement caméra et le diaphragme nécessaire pour conserver la zone nette demandée.</p>
-
-        <div class="interview-range-slider">
-          <span>FOCALE</span>
-          <input id="interviewFocalSlider" type="range" min="9" max="200" step="1" value="50" aria-label="Focale de l’interview" />
-          <button id="interviewFocalReadout" class="free-value-readout" type="button" data-custom-target="interviewFocal" title="Cliquer pour saisir une valeur libre">50 mm</button>
-        </div>
-        <input id="interviewFocal" type="hidden" value="50" />
-
-        <div class="interview-shot-block">
-          <span>CADRE SUR LA PERSONNE</span>
-          <div class="interview-shot-buttons" id="interviewShotMode">
-            <button type="button" data-interview-shot="full">PIED</button>
-            <button type="button" data-interview-shot="american">AMÉRICAIN</button>
-            <button type="button" data-interview-shot="waist">TAILLE</button>
-            <button type="button" class="active" data-interview-shot="chest">POITRINE</button>
-            <button type="button" data-interview-shot="face">SERRÉ VISAGE</button>
-          </div>
-        </div>
-
-        <div class="interview-range-slider">
-          <span>TAILLE PERSONNE</span>
-          <input id="interviewHeightSlider" type="range" min="1.50" max="2.05" step="0.01" value="1.75" aria-label="Taille de la personne" />
-          <button id="interviewHeightReadout" class="free-value-readout" type="button" data-custom-target="interviewHeight" title="Cliquer pour saisir une valeur libre">1,75 m</button>
-        </div>
-        <input id="interviewHeight" type="hidden" value="1.75" />
-
-        <div class="interview-range-slider">
-          <span>ZONE NETTE MIN.</span>
-          <input id="interviewDepthSlider" type="range" min="10" max="60" step="5" value="20" aria-label="Zone nette minimale" />
-          <button id="interviewDepthReadout" class="free-value-readout" type="button" data-custom-target="interviewDepth" title="Cliquer pour saisir une valeur libre">20 cm</button>
-        </div>
-        <input id="interviewDepth" type="hidden" value="20" />
-
-        <div class="interview-result">
-          <span class="interview-result-kicker">PLACEMENT CONSEILLÉ</span>
-          <div class="interview-result-grid">
-            <div><small>DISTANCE CAMÉRA</small><strong id="interviewDistanceResult">—</strong></div>
-            <div><small>DIAPHRAGME</small><strong id="interviewApertureResult">—</strong></div>
-          </div>
-          <p id="interviewResultDetail">—</p>
-          <button type="button" class="interview-apply" id="interviewApply">APPLIQUER AU CALCUL DOF</button>
-        </div>
-        <p class="interview-note" id="interviewNote">Estimation 16:9 à partir du capteur sélectionné. La distance exacte de cadrage reste à confirmer dans FRAME.</p>
-      </div>
-    </section>
-
-    <section class="panel input-panel dof-controls-panel">
-      <div class="panel-head controls-head">
-        <div class="panel-kicker">PROFONDEUR DE CHAMP</div>
         <button class="info" id="infoBtn" aria-label="Informations">i</button>
       </div>
+      <div class="mode-panel-content" id="pdcContent">
 
       <div class="compact-setting-block">
         <div class="dof-range-slider">
@@ -174,19 +122,109 @@
       </div>
       </div>
 
-      <div class="subject-card" id="subject2Panel">
-        <div class="subject-card-head">
-          <button class="subject-collapse-toggle" id="subject2CollapseToggle" type="button" aria-expanded="false" disabled>
-            <span>
-              <b>SUJET 2</b>
-              <small id="subject2Summary">Non activé</small>
-            </span>
-            <span class="subject-collapse-chevron" aria-hidden="true">⌄</span>
-          </button>
-          <button class="subject-toggle" id="subject2Toggle" type="button">+ SUJET 2</button>
+
+
+      <div class="mini-panel">
+        <div class="mini-title">REPÈRES PLEIN FORMAT</div>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <span>Équiv. focale Full Frame</span>
+            <strong id="ffEquivalent">—</strong>
+          </div>
+          <div class="mini-card">
+            <span>Même cadre en Full Frame<br>avec la même focale</span>
+            <strong id="ffDistanceSameFocal">—</strong>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="panel interview-panel collapsed" id="interviewPanel">
+      <div class="panel-head compact-head collapsible-head">
+        <button type="button" class="collapse-toggle" id="interviewToggle" aria-expanded="false" aria-controls="interviewContent">
+          <span class="camera-collapse-title"><span class="panel-kicker">ITW</span><strong id="interviewSummary">50 mm · Poitrine · PDC 20 cm</strong></span>
+          <span class="collapse-chevron" aria-hidden="true">⌄</span>
+        </button>
+      </div>
+
+      <div class="interview-content" id="interviewContent" hidden>
+        <p class="interview-intro">Choisir la focale et le cadre souhaités : DOF calcule le placement caméra et le diaphragme nécessaire pour conserver la zone nette demandée.</p>
+
+        <div class="interview-range-slider">
+          <span>FOCALE</span>
+          <input id="interviewFocalSlider" type="range" min="9" max="200" step="1" value="50" aria-label="Focale de l’interview" />
+          <button id="interviewFocalReadout" class="free-value-readout" type="button" data-custom-target="interviewFocal" title="Cliquer pour saisir une valeur libre">50 mm</button>
+        </div>
+        <input id="interviewFocal" type="hidden" value="50" />
+
+        <div class="interview-shot-block">
+          <span>CADRE SUR LA PERSONNE</span>
+          <div class="interview-shot-buttons" id="interviewShotMode">
+            <button type="button" data-interview-shot="full">PIED</button>
+            <button type="button" data-interview-shot="american">AMÉRICAIN</button>
+            <button type="button" data-interview-shot="waist">TAILLE</button>
+            <button type="button" class="active" data-interview-shot="chest">POITRINE</button>
+            <button type="button" data-interview-shot="face">SERRÉ VISAGE</button>
+          </div>
         </div>
 
-        <div id="subject2Controls" class="subject2-controls" hidden>
+        <div class="interview-range-slider">
+          <span>TAILLE PERSONNE</span>
+          <input id="interviewHeightSlider" type="range" min="1.50" max="2.05" step="0.01" value="1.75" aria-label="Taille de la personne" />
+          <button id="interviewHeightReadout" class="free-value-readout" type="button" data-custom-target="interviewHeight" title="Cliquer pour saisir une valeur libre">1,75 m</button>
+        </div>
+        <input id="interviewHeight" type="hidden" value="1.75" />
+
+        <div class="interview-range-slider">
+          <span>ZONE NETTE MIN.</span>
+          <input id="interviewDepthSlider" type="range" min="10" max="60" step="5" value="20" aria-label="Zone nette minimale" />
+          <button id="interviewDepthReadout" class="free-value-readout" type="button" data-custom-target="interviewDepth" title="Cliquer pour saisir une valeur libre">20 cm</button>
+        </div>
+        <input id="interviewDepth" type="hidden" value="20" />
+
+        <div class="interview-result">
+          <span class="interview-result-kicker">PLACEMENT CONSEILLÉ</span>
+          <div class="interview-result-grid">
+            <div><small>DISTANCE CAMÉRA</small><strong id="interviewDistanceResult">—</strong></div>
+            <div><small>DIAPHRAGME</small><strong id="interviewApertureResult">—</strong></div>
+          </div>
+          <p id="interviewResultDetail">—</p>
+          <button type="button" class="interview-apply" id="interviewApply">APPLIQUER AU CALCUL DOF</button>
+        </div>
+        <p class="interview-note" id="interviewNote">Estimation 16:9 à partir du capteur sélectionné. La distance exacte de cadrage reste à confirmer dans FRAME.</p>
+      </div>
+    </section>
+
+    <section class="panel two-subjects-panel mode-panel collapsed" id="twoSubjectsPanel">
+      <div class="panel-head compact-head collapsible-head mode-panel-head">
+        <button type="button" class="collapse-toggle" id="twoSubjectsToggle" aria-expanded="false" aria-controls="twoSubjectsContent">
+          <span class="camera-collapse-title"><span class="panel-kicker">2 SUJETS</span><strong id="twoSubjectsSummary">50 mm · f/2,8 · S1 2,50 m · S2 3,00 m</strong></span>
+          <span class="collapse-chevron" aria-hidden="true">⌄</span>
+        </button>
+      </div>
+      <div class="mode-panel-content two-subjects-content" id="twoSubjectsContent" hidden>
+        <div class="compact-setting-block">
+          <div class="dof-range-slider">
+            <span>FOCALE</span>
+            <input id="solverFocalSlider" type="range" min="9" max="200" step="1" value="50" aria-label="Focale pour deux sujets" />
+            <button id="solverFocalReadout" class="free-value-readout" type="button" data-custom-target="focal" title="Cliquer pour saisir une valeur libre">50 mm</button>
+          </div>
+        </div>
+        <div class="compact-setting-block">
+          <div class="dof-range-slider">
+            <span>DIAPH</span>
+            <input id="solverApertureSlider" type="range" min="0" max="9" step="1" value="3" aria-label="Diaphragme pour deux sujets" />
+            <button id="solverApertureReadout" class="free-value-readout" type="button" data-custom-target="aperture" title="Cliquer pour saisir une valeur libre">f/2,8</button>
+          </div>
+        </div>
+        <div class="compact-setting-block">
+          <div class="dof-range-slider dof-distance-slider">
+            <span>SUJET 1 · DISTANCE CAMÉRA</span>
+            <input id="solverDistance1Slider" type="range" min="0.30" max="15" step="0.10" value="2.50" aria-label="Distance caméra du sujet 1 pour deux sujets" />
+            <button id="solverDistance1Readout" class="free-value-readout" type="button" data-custom-target="distance" title="Cliquer pour saisir une valeur libre">2,50 m</button>
+          </div>
+        </div>
           <div class="subject2-range-block">
             <span>SUJET 2 · DISTANCE CAMÉRA</span>
             <div class="subject2-range-slider">
@@ -260,9 +298,6 @@
             </div>
             <p class="solver-note" id="solverNote">Calcul fondé sur le cercle de confusion de la caméra sélectionnée.</p>
           </section>
-        </div>
-      </div>
-
       <details class="topview-panel topview-main" id="topViewPanel" open>
         <summary class="topview-head">
           <span>
@@ -317,20 +352,6 @@
           <div class="field-help topview-disclaimer">DOF montre ici la logique de profondeur de champ. Pour vérifier le cadre réel, utiliser FRAME.</div>
         </div>
       </details>
-
-
-      <div class="mini-panel">
-        <div class="mini-title">REPÈRES PLEIN FORMAT</div>
-        <div class="mini-grid">
-          <div class="mini-card">
-            <span>Équiv. focale Full Frame</span>
-            <strong id="ffEquivalent">—</strong>
-          </div>
-          <div class="mini-card">
-            <span>Même cadre en Full Frame<br>avec la même focale</span>
-            <strong id="ffDistanceSameFocal">—</strong>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -343,7 +364,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.34</span>
+        <span class="app-version">v5.35</span>
       </div>
     </footer>
   </main>
@@ -462,6 +483,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5.34"></script>
+  <script src="app.js?v=5.35"></script>
 </body>
 </html>

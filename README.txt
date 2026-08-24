@@ -337,3 +337,14 @@ V5.34 — PLANIFICATEUR SPÉCIAL ITW
 - Bouton pour transférer directement la focale, la distance et le diaphragme vers le calcul DOF principal.
 - La distance est une estimation de placement ; le cadre exact reste à confirmer dans FRAME.
 - Cache applicatif renouvelé pour charger correctement la V5.34.
+V5.35 — TROIS BULLES INDÉPENDANTES
+
+- L’application est désormais organisée en trois bulles fonctionnelles repliables indépendamment.
+- Bulle 1 « PDC » : focale, diaphragme, distance du Sujet 1 et résultat classique à un sujet.
+- Bulle 2 « Spécial ITW » : planificateur d’interview complet conservé.
+- Bulle 3 « 2 Sujets » : focale, diaphragme, distance Sujet 1 puis distance Sujet 2, dans cet ordre.
+- Le solveur, la marge de mouvement, les solutions alternatives et le schéma vu du dessus sont regroupés dans « 2 Sujets ».
+- Les réglages focale, diaphragme et distance Sujet 1 sont synchronisés entre PDC et 2 Sujets.
+- Le résultat de la bulle PDC reste toujours un calcul à un seul sujet, même lorsque la bulle 2 Sujets est ouverte.
+- PDC est ouverte au démarrage ; ITW et 2 Sujets sont refermées par défaut.
+- Cache applicatif renouvelé pour charger correctement la V5.35.

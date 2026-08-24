@@ -1568,6 +1568,26 @@ body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject
   .interview-range-slider .free-value-readout{min-width:54px}
   .interview-result-grid strong{font-size:18px}
 }
+
+/* V5.35 — trois bulles indépendantes : PDC / ITW / 2 Sujets */
+.mode-panel{margin-top:10px;padding:0;overflow:hidden;border-radius:22px}
+.mode-panel-head{margin:0!important;padding:0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}
+.mode-panel-head .collapse-toggle{padding:13px 15px}
+.mode-panel-head .info{margin-right:12px}
+.mode-panel:not(.collapsed) .collapse-chevron{transform:rotate(180deg);color:var(--text)}
+.mode-panel-content{padding:14px 15px 16px;border-top:1px solid var(--card-border)}
+.two-subjects-panel{background:var(--panel)}
+.two-subjects-content .subject2-range-block{
+  margin-top:0;padding:14px 2px;border-top:1px solid var(--line);
+}
+.two-subjects-content .subject-nudge-wrap{margin-top:8px}
+.two-subjects-content .topview-main{margin-top:14px!important}
+.two-subjects-content .focus-solver{margin-top:14px}
+@media(max-width:520px){
+  .mode-panel-content{padding:12px}
+  .mode-panel-head .collapse-toggle{padding:12px}
+  .mode-panel-head .info{margin-right:10px}
+}
 .primary-dof-result .range{
   margin-top:0;
 }

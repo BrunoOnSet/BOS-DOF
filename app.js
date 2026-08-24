@@ -133,7 +133,7 @@ const rangeInputs = {
   interviewDepth: $("interviewDepthSlider")
 };
 
-let subject2Enabled = false;
+let subject2Enabled = true;
 let focusMode = "s1";
 let focusSafetyM = 0;
 let interviewShot = "chest";
@@ -682,6 +682,11 @@ function updateActiveChips() {
   if($("interviewFocalReadout")) $("interviewFocalReadout").textContent = Number.isFinite(itwF) ? `${String(roundSmart(itwF)).replace(".",",")} mm` : "—";
   if($("interviewHeightReadout")) $("interviewHeightReadout").textContent = Number.isFinite(itwH) ? formatM(itwH) : "—";
   if($("interviewDepthReadout")) $("interviewDepthReadout").textContent = Number.isFinite(itwDepth) ? `${String(roundSmart(itwDepth)).replace(".",",")} cm` : "—";
+  if($("solverFocalReadout")) $("solverFocalReadout").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
+  if($("solverApertureReadout")) $("solverApertureReadout").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
+  if($("solverDistance1Readout")) $("solverDistance1Readout").textContent = Number.isFinite(d) ? formatM(d) : "—";
+  if($("pdcSummary")) $("pdcSummary").textContent = Number.isFinite(f)&&Number.isFinite(a)&&Number.isFinite(d) ? `${String(roundSmart(f)).replace(".",",")} mm · f/${String(roundSmart(a)).replace(".",",")} · ${formatM(d)}` : "Réglages incomplets";
+  if($("twoSubjectsSummary")) $("twoSubjectsSummary").textContent = Number.isFinite(f)&&Number.isFinite(a)&&Number.isFinite(d)&&Number.isFinite(d2) ? `${String(roundSmart(f)).replace(".",",")} mm · f/${String(roundSmart(a)).replace(".",",")} · S1 ${formatM(d)} · S2 ${formatM(d2)}` : "Réglages incomplets";
 
   if(rangeInputs.focal && Number.isFinite(f)) rangeInputs.focal.value=String(Math.max(9,Math.min(200,f)));
   if(rangeInputs.distance && Number.isFinite(d)) rangeInputs.distance.value=String(Math.max(.3,Math.min(15,d)));
@@ -689,12 +694,15 @@ function updateActiveChips() {
   if(rangeInputs.interviewFocal && Number.isFinite(itwF)) rangeInputs.interviewFocal.value=String(Math.max(9,Math.min(200,itwF)));
   if(rangeInputs.interviewHeight && Number.isFinite(itwH)) rangeInputs.interviewHeight.value=String(Math.max(1.5,Math.min(2.05,itwH)));
   if(rangeInputs.interviewDepth && Number.isFinite(itwDepth)) rangeInputs.interviewDepth.value=String(Math.max(10,Math.min(60,itwDepth)));
+  if($("solverFocalSlider") && Number.isFinite(f)) $("solverFocalSlider").value=String(Math.max(9,Math.min(200,f)));
+  if($("solverDistance1Slider") && Number.isFinite(d)) $("solverDistance1Slider").value=String(Math.max(.3,Math.min(15,d)));
   if(rangeInputs.aperture && Number.isFinite(a)){
     let nearest=0;
     apertureStops.forEach((stop,index)=>{
       if(Math.abs(stop-a)<Math.abs(apertureStops[nearest]-a)) nearest=index;
     });
     rangeInputs.aperture.value=String(nearest);
+    if($("solverApertureSlider")) $("solverApertureSlider").value=String(nearest);
   }
 }
 
@@ -708,74 +716,57 @@ function updateEquivalentInfo(focal, distanceM) {
 }
 
 function calculate() {
-  const fmt = currentFormat();
-  const COC = fmt.coc;
+  const fmt=currentFormat();
+  const COC=fmt.coc;
+  const f=parseFR(inputs.focal.value);
+  const N=parseFR(inputs.aperture.value);
+  const s1M=parseFR(inputs.distance.value);
+  const s2M=parseFR(inputs.subject2Distance.value);
 
-  const f = parseFR(inputs.focal.value);
-  const N = parseFR(inputs.aperture.value);
-  const s1M = parseFR(inputs.distance.value);
-  const s2M = parseFR(inputs.subject2Distance.value);
-  const focusM = focusDistanceForSubjects(s1M, s2M);
-
-  $("formatBadge").textContent = fmt.name;
-  $("footerText").textContent =
-    `Cercle de confusion : ${fmt.coc.toFixed(3).replace(".", ",")} mm · ${fmt.name}`;
-
-  // Toujours synchroniser l'état visuel des presets avec la valeur courante,
-  // même si un autre réglage est momentanément invalide.
+  $("formatBadge").textContent=fmt.name;
+  $("footerText").textContent=`Cercle de confusion : ${fmt.coc.toFixed(3).replace(".",",")} mm · ${fmt.name}`;
   updateActiveChips();
   renderInterviewPlanner();
 
-  if (!(f > 0 && N > 0 && s1M > 0 && focusM > 0) || (subject2Enabled && !(s2M > 0))) {
+  if(!(f>0 && N>0 && s1M>0)){
     ["dof","range","heroHyper","frontLabel","backLabel","ffEquivalent","ffDistanceSameFocal"]
-      .forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
-    if (subject2Enabled && $("subject2Summary")) {
-      $("subject2Summary").textContent = "S2 · distance invalide";
-      $("subject2Summary").classList.remove("is-net");
-      $("subject2Summary").classList.add("is-out");
-    }
-    updatePeoplePreview(s1M, s2M, focusM, NaN, NaN);
-    if(subject2Enabled && $("solverStatus")){
-      $("solverStatus").textContent="Distances incomplètes";
-      $("solverPrimaryTitle").textContent="Renseigner les deux sujets";
-      $("solverPrimaryDetail").textContent="L’assistant calculera ensuite les solutions possibles.";
-    }
+      .forEach(id=>{const el=$(id);if(el)el.textContent="—";});
     clearTopView();
     return;
   }
 
-  // Full-frame framing references remain attached to Subject 1, our main subject.
-  updateEquivalentInfo(f, s1M);
+  updateEquivalentInfo(f,s1M);
 
-  const s = focusM * 1000;
-  const H = (f * f) / (N * COC) + f;
+  // Bulle PDC : calcul volontairement limité au Sujet 1.
+  const mainBounds=dofBounds(f,N,COC,s1M);
+  const nearM=mainBounds.nearM;
+  const farM=mainBounds.farM;
+  const frontM=Math.max(0,s1M-nearM);
+  const backM=Number.isFinite(farM)?Math.max(0,farM-s1M):Infinity;
+  const dofM=Number.isFinite(farM)?Math.max(0,farM-nearM):Infinity;
+  const hyperM=((f*f)/(N*COC)+f)/1000;
 
-  const near = (H * s) / (H + (s - f));
-  let far = Infinity;
-  if (H > (s - f)) {
-    far = (H * s) / (H - (s - f));
+  $("dof").textContent=formatDepth(dofM);
+  $("range").textContent=`${formatM(nearM)} → ${formatM(farM)}`;
+  $("heroHyper").textContent=`Hyperfocale ${formatM(hyperM)}`;
+  $("frontLabel").textContent=`− ${formatDepth(frontM)}`;
+  $("backLabel").textContent=`+ ${formatDepth(backM)}`;
+
+  // Bulle 2 Sujets : calcul indépendant de l'affichage PDC, avec ses propres choix de MAP.
+  if(s2M>0){
+    const focusM=focusDistanceForSubjects(s1M,s2M);
+    const subjectBounds=dofBounds(f,N,COC,focusM);
+    updateSubjectUI(s1M,s2M,focusM,subjectBounds.nearM,subjectBounds.farM);
+    renderFocusSolver(f,N,COC,s1M,s2M,focusM,subjectBounds.nearM,subjectBounds.farM);
+    updatePeoplePreview(s1M,s2M,focusM,subjectBounds.nearM,subjectBounds.farM);
+    updateTopView(s1M,s2M,focusM,subjectBounds.nearM,subjectBounds.farM);
+  }else{
+    if($("focusDistanceLabel")) $("focusDistanceLabel").textContent="Distance S2 invalide";
+    if($("solverStatus")) $("solverStatus").textContent="Distance Sujet 2 incomplète";
+    clearTopView();
   }
-
-  const nearM = near / 1000;
-  const farM = Number.isFinite(far) ? far / 1000 : Infinity;
-  const frontM = Math.max(0, focusM - nearM);
-  const backM = Number.isFinite(farM) ? Math.max(0, farM - focusM) : Infinity;
-  const dofM = Number.isFinite(farM) ? Math.max(0, farM - nearM) : Infinity;
-  const hyperM = H / 1000;
-
-  $("dof").textContent = formatDepth(dofM);
-  $("range").textContent = `${formatM(nearM)} → ${formatM(farM)}`;
-  $("heroHyper").textContent = `Hyperfocale ${formatM(hyperM)}`;
-  $("frontLabel").textContent = `− ${formatDepth(frontM)}`;
-  $("backLabel").textContent = `+ ${formatDepth(backM)}`;
-
-  updateSubjectUI(s1M, s2M, focusM, nearM, farM);
-  renderFocusSolver(f,N,COC,s1M,s2M,focusM,nearM,farM);
-  updatePeoplePreview(s1M, s2M, focusM, nearM, farM);
-  updateTopView(s1M, s2M, focusM, nearM, farM);
   updateActiveChips();
 }
-
 document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEach(btn => {
   btn.addEventListener("click", () => {
     const group = btn.closest(".chips");
@@ -819,6 +810,18 @@ if(rangeInputs.interviewDepth) rangeInputs.interviewDepth.addEventListener("inpu
   inputs.interviewDepth.value=rangeInputs.interviewDepth.value;
   calculate();
 });
+$("solverFocalSlider").addEventListener("input",event=>{
+  inputs.focal.value=event.target.value;
+  calculate();
+});
+$("solverApertureSlider").addEventListener("input",event=>{
+  inputs.aperture.value=String(apertureStops[Number(event.target.value)]??2.8);
+  calculate();
+});
+$("solverDistance1Slider").addEventListener("input",event=>{
+  inputs.distance.value=event.target.value;
+  calculate();
+});
 
 
 Object.values(inputs).forEach(input => {
@@ -844,64 +847,23 @@ $("cameraSelect").addEventListener("change",(event)=>setCurrentCamera(event.targ
 
 
 
-// Two-subject workflow — active independently from collapsed/open state
-const subject2Toggle = $("subject2Toggle");
-const subject2Controls = $("subject2Controls");
-const subject2CollapseToggle = $("subject2CollapseToggle");
-const subject2Panel = $("subject2Panel");
-const focusModeGroup = $("focusMode");
-let subject2Collapsed = true;
+// Two-subject workflow — dedicated independent panel
+const focusModeGroup=$("focusMode");
 
-function renderSubject2Panel() {
-  const open = subject2Enabled && !subject2Collapsed;
-  subject2Controls.hidden = !open;
-  subject2CollapseToggle.disabled = !subject2Enabled;
-  subject2CollapseToggle.setAttribute("aria-expanded", open ? "true" : "false");
-  subject2Panel.classList.toggle("is-active", subject2Enabled);
-  subject2Panel.classList.toggle("is-collapsed", subject2Enabled && subject2Collapsed);
-  subject2Toggle.textContent = subject2Enabled ? "RETIRER" : "+ SUJET 2";
-  subject2Toggle.classList.toggle("active", subject2Enabled);
-}
-
-function setSubject2Enabled(enabled) {
-  subject2Enabled = enabled;
-  if (enabled) subject2Collapsed = false;
-  else {
-    subject2Collapsed = true;
-    focusMode = "s1";
-    focusSafetyM = 0;
-    if($("solverSafety")) $("solverSafety").querySelectorAll("button").forEach(button=>button.classList.toggle("active",button.dataset.safety==="0"));
-    if($("subject2Summary")) $("subject2Summary").textContent = "Non activé";
-  }
-  focusModeGroup.querySelectorAll("button").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.focus === focusMode);
-  });
-  renderSubject2Panel();
-  calculate();
-}
-
-subject2Toggle.addEventListener("click", () => setSubject2Enabled(!subject2Enabled));
-subject2CollapseToggle.addEventListener("click", () => {
-  if(!subject2Enabled) return;
-  subject2Collapsed = !subject2Collapsed;
-  renderSubject2Panel();
-});
-
-$("subject2Nudges").addEventListener("click", (event) => {
-  const btn = event.target.closest("button[data-delta]");
-  if (!btn) return;
-  const current = parseFR(inputs.subject2Distance.value);
-  const base = current > 0 ? current : parseFR(inputs.distance.value);
-  const next = Math.max(0.1, base + Number(btn.dataset.delta));
-  inputs.subject2Distance.value = next.toFixed(2).replace(".", ",");
+$("subject2Nudges").addEventListener("click",event=>{
+  const btn=event.target.closest("button[data-delta]");
+  if(!btn) return;
+  const current=parseFR(inputs.subject2Distance.value);
+  const base=current>0?current:parseFR(inputs.distance.value);
+  inputs.subject2Distance.value=Math.max(.1,base+Number(btn.dataset.delta)).toFixed(2).replace(".",",");
   calculate();
 });
 
-focusModeGroup.addEventListener("click", (event) => {
-  const btn = event.target.closest("button[data-focus]");
-  if (!btn) return;
-  focusMode = btn.dataset.focus;
-  focusModeGroup.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+focusModeGroup.addEventListener("click",event=>{
+  const btn=event.target.closest("button[data-focus]");
+  if(!btn) return;
+  focusMode=btn.dataset.focus;
+  focusModeGroup.querySelectorAll("button").forEach(button=>button.classList.toggle("active",button===btn));
   calculate();
 });
 
@@ -920,10 +882,10 @@ $("solverSafety").addEventListener("click",event=>{
 
 $("focusSolver").addEventListener("click",event=>{
   const button=event.target.closest("button[data-solver-action]");
-  if(!button || button.disabled) return;
+  if(!button||button.disabled) return;
   const action=button.dataset.solverAction;
   const value=Number(button.dataset.solverValue);
-  if(!action || !Number.isFinite(value)) return;
+  if(!action||!Number.isFinite(value)) return;
 
   if(action==="aperture") inputs.aperture.value=String(value);
   if(action==="retreat"){
@@ -938,7 +900,6 @@ $("focusSolver").addEventListener("click",event=>{
   updateActiveChips();
   calculate();
 });
-
 
 // V5.23 — saisie libre en fenêtre pour garder une seule ligne par réglage.
 const customValueDialog = $("customValueDialog");
@@ -996,6 +957,18 @@ if (dofCameraSettingsPanel && dofCameraSettingsToggle && dofCameraSettingsConten
     dofCameraSettingsToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
   });
 }
+
+function bindModePanel(panelId,toggleId,contentId){
+  const panel=$(panelId),toggle=$(toggleId),content=$(contentId);
+  toggle.addEventListener("click",()=>{
+    const isOpen=!content.hidden;
+    content.hidden=isOpen;
+    panel.classList.toggle("collapsed",isOpen);
+    toggle.setAttribute("aria-expanded",isOpen?"false":"true");
+  });
+}
+bindModePanel("pdcPanel","pdcToggle","pdcContent");
+bindModePanel("twoSubjectsPanel","twoSubjectsToggle","twoSubjectsContent");
 
 const interviewPanel=$("interviewPanel");
 const interviewToggle=$("interviewToggle");
