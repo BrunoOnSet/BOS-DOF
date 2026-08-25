@@ -1588,6 +1588,25 @@ body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject
   .mode-panel-head .collapse-toggle{padding:12px}
   .mode-panel-head .info{margin-right:10px}
 }
+
+/* V5.36 — ITW approximatif + MAP optimale prioritaire */
+.interview-result-grid{grid-template-columns:minmax(0,1.35fr) minmax(120px,.75fr)}
+.interview-result-grid small b{color:var(--accent);font-size:13px;vertical-align:-1px}
+.interview-distance-line{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:8px;padding-top:8px;border-top:1px solid var(--line);
+}
+.interview-distance-line span{color:var(--muted);font-size:9px;font-weight:800;white-space:nowrap}
+.interview-distance-line strong{
+  margin:0!important;color:var(--text);font-size:13px!important;line-height:1!important;
+  font-weight:900;white-space:nowrap;
+}
+.two-subjects-content .focus-mode.frame-segmented{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:520px){
+  .interview-result-grid{grid-template-columns:1fr}
+  .two-subjects-content .focus-mode.frame-segmented{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .two-subjects-content .focus-mode.frame-segmented button{font-size:7px;padding:7px 2px}
+}
 .primary-dof-result .range{
   margin-top:0;
 }
@@ -1606,4 +1625,85 @@ body.dark .subject-collapse-toggle small.is-net{color:#8BD0AC}body.dark .subject
   .primary-dof-result .hero-hyper{
     font-size:10px;
   }
+}
+
+/* V5.37 — en-tête strictement repris de BOS_LIGHT_V0_46 */
+.app{
+  width:min(760px,100%) !important;
+  max-width:none !important;
+  margin:0 auto !important;
+  padding:14px 12px calc(32px + env(safe-area-inset-bottom)) !important;
+}
+.cardlike{background:var(--header-bg);border:1px solid var(--header-border)}
+.topbar{
+  display:block !important;
+  background:var(--header-bg) !important;
+  border:1px solid var(--header-border) !important;
+  border-radius:22px !important;
+  padding:14px 16px 15px !important;
+  margin:0 0 14px !important;
+  position:static !important;
+}
+.bos-top-inner{
+  width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+}
+.bos-brand-lockup{display:flex;align-items:center;gap:12px;min-width:0}
+.bos-header-logo{
+  display:block !important;
+  width:56px !important;
+  height:56px !important;
+  object-fit:contain !important;
+  flex:0 0 56px !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+}
+.bos-brand-text{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.bos-header-name{
+  display:flex;align-items:baseline;gap:0;flex-wrap:wrap;
+  font-family:"Montserrat",Arial,sans-serif !important;
+  font-weight:700 !important;
+  font-size:19px !important;
+  line-height:1 !important;
+  color:#2F5B66 !important;
+  letter-spacing:0 !important;
+  white-space:nowrap !important;
+}
+.bos-header-app{
+  margin-left:4px !important;
+  color:#17191C !important;
+  font-weight:700 !important;
+}
+.bos-header-tagline{
+  font-family:"Montserrat",Arial,sans-serif !important;
+  font-weight:400 !important;
+  font-size:11px !important;
+  line-height:1.2 !important;
+  color:#17191C !important;
+  letter-spacing:0 !important;
+  white-space:nowrap !important;
+}
+body.dark .bos-header-name{color:#2F5B66 !important}
+body.dark .bos-header-app,
+body.dark .bos-header-tagline{color:#17191C !important}
+.mode-btn{
+  border:1px solid var(--line) !important;
+  background:var(--panel) !important;
+  color:var(--text) !important;
+  border-radius:999px !important;
+  padding:7px 10px !important;
+  min-height:auto !important;
+  font-size:9px !important;
+  letter-spacing:.12em !important;
+  font-weight:900 !important;
+  white-space:nowrap !important;
+}
+.mode-btn:hover{border-color:var(--accent) !important}
+@media(max-width:520px){
+  .app{padding-left:9px !important;padding-right:9px !important}
+  .bos-brand-lockup{gap:9px}
+  .bos-header-logo{width:46px !important;height:46px !important;flex-basis:46px !important}
+  .bos-header-name{font-size:15px !important}
+  .bos-brand-text{gap:2px}
+  .bos-header-tagline{font-size:9px !important}
 }

@@ -119,7 +119,6 @@ const inputs = {
   distance: $("distance"),
   subject2Distance: $("subject2Distance"),
   interviewFocal: $("interviewFocal"),
-  interviewHeight: $("interviewHeight"),
   interviewDepth: $("interviewDepth")
 };
 const apertureStops = [1, 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
@@ -129,12 +128,11 @@ const rangeInputs = {
   distance: $("distanceSlider"),
   subject2Distance: $("subject2DistanceSlider"),
   interviewFocal: $("interviewFocalSlider"),
-  interviewHeight: $("interviewHeightSlider"),
   interviewDepth: $("interviewDepthSlider")
 };
 
 let subject2Enabled = true;
-let focusMode = "s1";
+let focusMode = "optimal";
 let focusSafetyM = 0;
 let interviewShot = "chest";
 
@@ -244,41 +242,37 @@ function requiredApertureAtFocus(focalMm,cocMm,focusM,depthM){
 
 function renderInterviewPlanner(){
   const focal=parseFR(inputs.interviewFocal.value);
-  const heightM=parseFR(inputs.interviewHeight.value);
   const depthCm=parseFR(inputs.interviewDepth.value);
   const shot=interviewShots[interviewShot]||interviewShots.chest;
   const camera=currentCamera();
   const coc=currentFormat().coc;
-  const apply=$("interviewApply");
 
-  if(!(focal>0 && heightM>0 && depthCm>0 && camera)){
-    $("interviewDistanceResult").textContent="—";
+  if(!(focal>0 && depthCm>0 && camera)){
+    $("interviewDistance160").textContent="≈ —";
+    $("interviewDistance180").textContent="≈ —";
     $("interviewApertureResult").textContent="—";
     $("interviewResultDetail").textContent="Réglages incomplets.";
-    apply.disabled=true;
     return;
   }
 
-  const framing=interviewDistanceForFrame(focal,heightM,shot,camera);
+  const framing160=interviewDistanceForFrame(focal,1.60,shot,camera);
+  const framing180=interviewDistanceForFrame(focal,1.80,shot,camera);
   const depthM=depthCm/100;
-  const exactAperture=requiredApertureAtFocus(focal,coc,framing.distanceM,depthM);
+  // Le sujet de 1,60 m impose la caméra la plus proche : c'est le cas prudent
+  // retenu pour afficher un seul diaphragme minimum valable pour les deux repères.
+  const exactAperture=requiredApertureAtFocus(focal,coc,framing160.distanceM,depthM);
   const practicalAperture=nextPracticalStop(exactAperture);
   const halfDepth=depthM/2;
 
-  $("interviewDistanceResult").textContent=formatM(framing.distanceM);
+  $("interviewDistance160").textContent=`≈ ${formatM(framing160.distanceM)}`;
+  $("interviewDistance180").textContent=`≈ ${formatM(framing180.distanceM)}`;
   $("interviewApertureResult").textContent=Number.isFinite(practicalAperture)?`f/${String(practicalAperture).replace(".",",")}`:"> f/32";
   $("interviewResultDetail").textContent=Number.isFinite(practicalAperture)
-    ? `MAP sur la personne à ${formatM(framing.distanceM)} · zone utile ${formatM(framing.distanceM-halfDepth)} → ${formatM(framing.distanceM+halfDepth)}.`
-    : `La zone nette demandée nécessite de fermer au-delà de f/32 avec ce cadre.`;
+    ? `Minimum prudent calculé au repère 1,60 m · zone utile ± ${formatDepth(halfDepth)} autour de la personne.`
+    : "La zone nette demandée nécessite de fermer au-delà de f/32 avec ce cadre.";
   $("interviewSummary").textContent=`${String(roundSmart(focal)).replace(".",",")} mm · ${shot.label} · PDC ${String(roundSmart(depthCm)).replace(".",",")} cm`;
-  $("interviewNote").textContent=`Estimation 16:9 · hauteur active ${framing.activeHeightMm.toFixed(1).replace(".",",")} mm · ${camera.name}. Confirmer le cadre exact dans FRAME.`;
-
-  apply.disabled=!Number.isFinite(practicalAperture);
-  apply.dataset.focal=String(focal);
-  apply.dataset.distance=String(framing.distanceM);
-  apply.dataset.aperture=Number.isFinite(practicalAperture)?String(practicalAperture):"";
+  $("interviewNote").textContent=`Distances approximatives en 16:9 · hauteur active ${framing160.activeHeightMm.toFixed(1).replace(".",",")} mm · ${camera.name}. Confirmer le cadre exact dans FRAME.`;
 }
-
 function nextPracticalStop(value){
   if(!Number.isFinite(value)) return Infinity;
   return practicalStops.find(stop=>stop+1e-8>=value) ?? Infinity;
@@ -674,13 +668,12 @@ function updateActiveChips() {
   });
 
   const f=parseFR(inputs.focal.value), a=parseFR(inputs.aperture.value), d=parseFR(inputs.distance.value), d2=parseFR(inputs.subject2Distance.value);
-  const itwF=parseFR(inputs.interviewFocal.value),itwH=parseFR(inputs.interviewHeight.value),itwDepth=parseFR(inputs.interviewDepth.value);
+  const itwF=parseFR(inputs.interviewFocal.value),itwDepth=parseFR(inputs.interviewDepth.value);
   if($("focalCurrentValue")) $("focalCurrentValue").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
   if($("apertureCurrentValue")) $("apertureCurrentValue").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
   if($("distanceCurrentValue")) $("distanceCurrentValue").textContent = Number.isFinite(d) ? formatM(d) : "—";
   if($("subject2DistanceReadout")) $("subject2DistanceReadout").textContent = Number.isFinite(d2) ? formatM(d2) : "—";
   if($("interviewFocalReadout")) $("interviewFocalReadout").textContent = Number.isFinite(itwF) ? `${String(roundSmart(itwF)).replace(".",",")} mm` : "—";
-  if($("interviewHeightReadout")) $("interviewHeightReadout").textContent = Number.isFinite(itwH) ? formatM(itwH) : "—";
   if($("interviewDepthReadout")) $("interviewDepthReadout").textContent = Number.isFinite(itwDepth) ? `${String(roundSmart(itwDepth)).replace(".",",")} cm` : "—";
   if($("solverFocalReadout")) $("solverFocalReadout").textContent = Number.isFinite(f) ? `${String(roundSmart(f)).replace(".",",")} mm` : "—";
   if($("solverApertureReadout")) $("solverApertureReadout").textContent = Number.isFinite(a) ? `f/${String(roundSmart(a)).replace(".",",")}` : "—";
@@ -692,7 +685,6 @@ function updateActiveChips() {
   if(rangeInputs.distance && Number.isFinite(d)) rangeInputs.distance.value=String(Math.max(.3,Math.min(15,d)));
   if(rangeInputs.subject2Distance && Number.isFinite(d2)) rangeInputs.subject2Distance.value=String(Math.max(.3,Math.min(15,d2)));
   if(rangeInputs.interviewFocal && Number.isFinite(itwF)) rangeInputs.interviewFocal.value=String(Math.max(9,Math.min(200,itwF)));
-  if(rangeInputs.interviewHeight && Number.isFinite(itwH)) rangeInputs.interviewHeight.value=String(Math.max(1.5,Math.min(2.05,itwH)));
   if(rangeInputs.interviewDepth && Number.isFinite(itwDepth)) rangeInputs.interviewDepth.value=String(Math.max(10,Math.min(60,itwDepth)));
   if($("solverFocalSlider") && Number.isFinite(f)) $("solverFocalSlider").value=String(Math.max(9,Math.min(200,f)));
   if($("solverDistance1Slider") && Number.isFinite(d)) $("solverDistance1Slider").value=String(Math.max(.3,Math.min(15,d)));
@@ -802,10 +794,6 @@ if(rangeInputs.interviewFocal) rangeInputs.interviewFocal.addEventListener("inpu
   inputs.interviewFocal.value=rangeInputs.interviewFocal.value;
   calculate();
 });
-if(rangeInputs.interviewHeight) rangeInputs.interviewHeight.addEventListener("input",()=>{
-  inputs.interviewHeight.value=rangeInputs.interviewHeight.value;
-  calculate();
-});
 if(rangeInputs.interviewDepth) rangeInputs.interviewDepth.addEventListener("input",()=>{
   inputs.interviewDepth.value=rangeInputs.interviewDepth.value;
   calculate();
@@ -849,15 +837,6 @@ $("cameraSelect").addEventListener("change",(event)=>setCurrentCamera(event.targ
 
 // Two-subject workflow — dedicated independent panel
 const focusModeGroup=$("focusMode");
-
-$("subject2Nudges").addEventListener("click",event=>{
-  const btn=event.target.closest("button[data-delta]");
-  if(!btn) return;
-  const current=parseFR(inputs.subject2Distance.value);
-  const base=current>0?current:parseFR(inputs.distance.value);
-  inputs.subject2Distance.value=Math.max(.1,base+Number(btn.dataset.delta)).toFixed(2).replace(".",",");
-  calculate();
-});
 
 focusModeGroup.addEventListener("click",event=>{
   const btn=event.target.closest("button[data-focus]");
@@ -914,7 +893,6 @@ const customMeta = {
   distance:{title:"Distance Sujet 1",unit:"m",min:0.1},
   subject2Distance:{title:"Distance Sujet 2",unit:"m",min:0.1},
   interviewFocal:{title:"Focale ITW",unit:"mm",min:1},
-  interviewHeight:{title:"Taille de la personne",unit:"m",min:0.5},
   interviewDepth:{title:"Zone nette minimale",unit:"cm",min:1}
 };
 
@@ -986,18 +964,6 @@ $("interviewShotMode").addEventListener("click",event=>{
   interviewShot=button.dataset.interviewShot;
   $("interviewShotMode").querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
   calculate();
-});
-
-$("interviewApply").addEventListener("click",event=>{
-  const button=event.currentTarget;
-  const focal=Number(button.dataset.focal),distance=Number(button.dataset.distance),aperture=Number(button.dataset.aperture);
-  if(!(focal>0 && distance>0 && aperture>0)) return;
-  inputs.focal.value=String(focal);
-  inputs.distance.value=String(distance);
-  inputs.aperture.value=String(aperture);
-  updateActiveChips();
-  calculate();
-  document.querySelector(".dof-controls-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
 });
 
 // Theme: light by default, dark on demand.

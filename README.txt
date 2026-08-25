@@ -348,3 +348,24 @@ V5.35 — TROIS BULLES INDÉPENDANTES
 - Le résultat de la bulle PDC reste toujours un calcul à un seul sujet, même lorsque la bulle 2 Sujets est ouverte.
 - PDC est ouverte au démarrage ; ITW et 2 Sujets sont refermées par défaut.
 - Cache applicatif renouvelé pour charger correctement la V5.35.
+V5.36 — ITW APPROXIMATIF + MAP OPTIMALE
+
+- Suppression du réglage sélectionnable de taille de la personne dans ITW.
+- La carte « Distance caméra » indique explicitement le caractère approximatif avec le symbole ≈.
+- Deux repères fixes sont affichés : personne de 1,60 m et personne de 1,80 m.
+- La carte voisine est renommée « Diaphragme minimum ».
+- Le diaphragme minimum unique est calculé prudemment à partir du repère 1,60 m, donc de la caméra la plus proche.
+- La focale ITW reste complètement indépendante de la focale PDC ; le bouton de transfert vers PDC est supprimé.
+- Suppression des boutons « Rapprocher / Éloigner S2 » dans 2 Sujets.
+- « Optimale » devient la mise au point par défaut et le premier choix de la ligne.
+- Les quatre choix de mise au point restent sur une seule ligne, y compris sur mobile.
+- Cache applicatif renouvelé pour charger correctement la V5.36.
+
+V5.37 — EN-TÊTE LIGHT V0.46
+
+- En-tête repris strictement de BOS_LIGHT_V0_46 : structure, typographie, disposition et espacements.
+- Logo d’en-tête identique à celui de LIGHT V0.46.
+- Seul le nom d’application change dans le titre : « Bruno OnSet - DOF ».
+- Signature « Avec vous, sur chaque tournage. » et bouton LIGHT/DARK conservés à l’identique.
+- Toutes les fonctionnalités et tous les calculs DOF restent inchangés.
+- Cache applicatif renouvelé pour charger correctement la V5.37.
