@@ -1059,6 +1059,11 @@ function closeTips() {
 tipsBtn.addEventListener("click", openTips);
 tipsBackBtn.addEventListener("click", closeTips);
 
+const projectDialog=document.getElementById("projectDialog");
+const projectContactBtn=document.getElementById("projectContactBtn");
+if(projectContactBtn && projectDialog) projectContactBtn.addEventListener("click",()=>projectDialog.showModal());
+if(projectDialog) projectDialog.addEventListener("click",event=>{if(event.target===projectDialog)projectDialog.close();});
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").catch(() => {});

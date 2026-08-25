@@ -401,3 +401,12 @@ V5.40 — SOUS-TITRES ONSET V58
 - 04 2 SUJETS : « Optimiser la mise au point ».
 - Aucun changement dans les calculs ou les fonctionnalités.
 - Cache applicatif renouvelé pour charger correctement la V5.40.
+
+V5.41 — CONTACT PROJET ONSET V58
+
+- Ajout en bas de l’application du bouton « Besoin d’un regard sur votre projet ? ».
+- Le bouton, sa typographie, sa couleur, ses espacements et son animation sont repris à l’identique de BOS_BRUNO_ONSET_V58.
+- La carte professionnelle complète est également reprise sans modification : profil, prestations, texte, e-mail, WhatsApp et site.
+- Comportement clair/sombre et fermeture par le fond identiques à ONSET V58.
+- Aucun changement dans les calculs ou les autres fonctionnalités DOF.
+- Cache applicatif renouvelé pour charger correctement la V5.41.

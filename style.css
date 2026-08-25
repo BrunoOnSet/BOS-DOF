@@ -1841,3 +1841,173 @@ body.dark .bos-card-heading .bos-heading-title{color:#2F5B66 !important}
 @media(max-width:520px){
   .bos-card-heading .camera-heading-subtitle{max-width:220px}
 }
+
+/* V5.41 — CTA professionnel repris à l’identique de BOS_BRUNO_ONSET_V58 */
+.project-contact{
+  display:flex;
+  justify-content:center;
+  padding:34px 0 6px;
+}
+.project-contact-btn{
+  border:0;
+  background:transparent;
+  color:#2F5B66;
+  padding:8px 2px;
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.01em;
+  cursor:pointer;
+}
+.project-contact-btn span{
+  display:inline-block;
+  margin-left:5px;
+  transition:transform .16s ease;
+}
+.project-contact-btn:hover span{transform:translateX(3px)}
+.project-contact-btn:focus-visible{
+  outline:2px solid #2F5B66;
+  outline-offset:5px;
+  border-radius:4px;
+}
+.sheet{
+  width:min(540px,calc(100% - 20px));
+  border:0;
+  padding:0;
+  border-radius:22px;
+  background:var(--panel);
+  color:var(--text);
+  box-shadow:0 25px 90px rgba(0,0,0,.35);
+}
+.sheet::backdrop{background:rgba(0,0,0,.5);backdrop-filter:blur(3px)}
+.sheet-inner{padding:16px}
+.project-sheet{width:min(470px,calc(100% - 24px));max-width:none}
+.project-sheet-inner{padding:22px}
+.project-sheet-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.project-kicker{
+  display:block;
+  color:#2F5B66;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.16em;
+  margin-bottom:7px;
+}
+.project-sheet-head h2{
+  margin:0;
+  color:var(--text);
+  font-size:20px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+}
+.project-close{
+  flex:0 0 38px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:var(--text);
+  font-size:23px;
+  line-height:1;
+  cursor:pointer;
+}
+.project-profile{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:24px;
+}
+.project-profile strong{font-size:14px;color:var(--text)}
+.project-profile span{font-size:11px;color:var(--muted);line-height:1.4}
+.project-services{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:18px;
+}
+.project-services span{
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 10px;
+  color:var(--text);
+  background:var(--panel2);
+  font-size:10px;
+  font-weight:700;
+}
+.project-note{
+  margin:18px 0 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.55;
+}
+.project-site-link{
+  display:inline-block;
+  margin-top:16px;
+  color:var(--muted);
+  text-decoration:none;
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.project-site-link:hover,
+.project-site-link:focus-visible{color:#2F5B66;text-decoration:underline}
+.project-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  margin-top:18px;
+}
+.project-email-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:40px;
+  padding:0 15px;
+  border:1px solid #2F5B66;
+  border-radius:999px;
+  background:#2F5B66;
+  color:#fff;
+  text-decoration:none;
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.project-email-btn span{transition:transform .16s ease}
+.project-email-btn:hover span{transform:translateX(3px)}
+.project-email-btn:focus-visible{outline:2px solid #2F5B66;outline-offset:3px}
+.project-actions .project-site-link{margin-top:0}
+.project-secondary-links{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px;
+  color:var(--muted);
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:11px;
+  line-height:1.35;
+}
+.project-secondary-link{
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+.project-secondary-link:hover,
+.project-secondary-link:focus-visible{color:#2F5B66;text-decoration:underline}
+body.dark .project-contact-btn{color:#7FA7B0}
+body.dark .project-email-btn{background:#7FA7B0;border-color:#7FA7B0;color:#101315}
+body.dark .project-secondary-link:hover,
+body.dark .project-secondary-link:focus-visible{color:#7FA7B0}
+@media(max-width:520px){
+  .project-contact{padding-top:28px}
+  .project-contact-btn{font-size:11px}
+  .project-sheet-inner{padding:18px}
+}
