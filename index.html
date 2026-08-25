@@ -9,11 +9,12 @@
   <meta name="apple-mobile-web-app-title" content="DOF · BOS" />
   <title>BRUNO ONSET / DOF</title>
   <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" type="image/png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5.41" />
+  <link rel="stylesheet" href="style.css?v=5.43" />
 </head>
 <body>
   <main class="app" id="mainApp">
@@ -33,9 +34,17 @@
         </div>
       </div>
     </header>
-    <div class="utility-row">
+
+    <section class="project-contact project-contact-top" aria-label="Contact professionnel">
+      <button class="project-contact-btn" id="projectContactBtn" type="button">
+        Une question ? Un projet ? On en parle. <span aria-hidden="true">→</span>
+      </button>
+    </section>
+
+    <div class="utility-row bos-utility-row">
       <button class="utility-link" id="tipsBtn" type="button">TIPS</button>
       <button class="utility-link" id="infoBtn" type="button">INFO</button>
+      <button class="utility-link" id="quickResetBtn" type="button">RESET</button>
     </div>
 
     <section class="panel method-panel collapsed" id="dofCameraSettingsPanel">
@@ -43,7 +52,7 @@
         <button type="button" class="collapse-toggle card-heading collapsible-heading bos-card-heading" id="dofCameraSettingsToggle"
                 aria-expanded="false" aria-controls="dofCameraSettingsContent">
           <span class="step">01</span>
-          <span class="heading-copy"><span class="bos-heading-title">Réglages Caméra</span><small class="bos-heading-subtitle camera-heading-subtitle" id="cameraSettingsSummary">Full Frame 36 mm</small></span>
+          <span class="heading-copy"><span class="bos-heading-title">RÉGLAGES CAMÉRA</span><small class="bos-heading-subtitle camera-heading-subtitle" id="cameraSettingsSummary">Full Frame 36 mm</small></span>
           <span class="chevron collapse-chevron" aria-hidden="true">⌄</span>
         </button>
       </div>
@@ -364,11 +373,9 @@
       </div>
     </section>
 
-    <section class="project-contact" aria-label="Contact professionnel">
-      <button class="project-contact-btn" id="projectContactBtn" type="button">
-        Besoin d’un regard sur votre projet ? <span aria-hidden="true">→</span>
-      </button>
-    </section>
+    <div class="feedback-contact">
+      <a class="feedback-contact-link" href="mailto:brunoguillardcontact@gmail.com?subject=Suggestion%20%E2%80%94%20Bruno%20OnSet&amp;body=Bonjour%20Bruno%2C%0A%0AJ%E2%80%99ai%20une%20id%C3%A9e%20pour%20am%C3%A9liorer%20Bruno%20OnSet%20%3A%0A%0A">Une idée pour améliorer l’application ? <span aria-hidden="true">→</span></a>
+    </div>
 
     <footer>
       <div id="footerText" class="technical-footer">
@@ -379,7 +386,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.41</span>
+        <span class="app-version">v5.43</span>
       </div>
     </footer>
   </main>
@@ -532,6 +539,6 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5.41"></script>
+  <script src="app.js?v=5.43"></script>
 </body>
 </html>

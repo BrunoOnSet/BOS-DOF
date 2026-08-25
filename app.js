@@ -1064,6 +1064,54 @@ const projectContactBtn=document.getElementById("projectContactBtn");
 if(projectContactBtn && projectDialog) projectContactBtn.addEventListener("click",()=>projectDialog.showModal());
 if(projectDialog) projectDialog.addEventListener("click",event=>{if(event.target===projectDialog)projectDialog.close();});
 
+function setDofPanelOpen(panelId,toggleId,contentId,isOpen){
+  const panel=$(panelId),toggle=$(toggleId),content=$(contentId);
+  if(!panel||!toggle||!content)return;
+  panel.classList.toggle("collapsed",!isOpen);
+  content.hidden=!isOpen;
+  toggle.setAttribute("aria-expanded",isOpen?"true":"false");
+}
+
+function resetDofInterface(){
+  inputs.focal.value="50";
+  inputs.aperture.value="2.8";
+  inputs.distance.value="2.50";
+  inputs.subject2Distance.value="3.00";
+  inputs.interviewFocal.value="50";
+  inputs.interviewDepth.value="20";
+
+  subject2Enabled=true;
+  focusMode="optimal";
+  focusSafetyM=0;
+  interviewShot="chest";
+  interviewRatio=16/9;
+
+  focusModeGroup.querySelectorAll("button[data-focus]").forEach(button=>{
+    button.classList.toggle("active",button.dataset.focus==="optimal");
+  });
+  $("solverSafety").querySelectorAll("button[data-safety]").forEach(button=>{
+    button.classList.toggle("active",Number(button.dataset.safety)===0);
+  });
+  $("interviewShotMode").querySelectorAll("button[data-interview-shot]").forEach(button=>{
+    button.classList.toggle("active",button.dataset.interviewShot==="chest");
+  });
+  $("interviewRatioMode").querySelectorAll("button[data-interview-ratio]").forEach(button=>{
+    button.classList.toggle("active",Math.abs(Number(button.dataset.interviewRatio)-16/9)<.0001);
+  });
+
+  setDofPanelOpen("dofCameraSettingsPanel","dofCameraSettingsToggle","dofCameraSettingsContent",false);
+  setDofPanelOpen("pdcPanel","pdcToggle","pdcContent",true);
+  setDofPanelOpen("interviewPanel","interviewToggle","interviewContent",false);
+  setDofPanelOpen("twoSubjectsPanel","twoSubjectsToggle","twoSubjectsContent",false);
+
+  setCurrentCamera("ff",true);
+  updateActiveChips();
+  calculate();
+}
+
+const quickResetBtn=document.getElementById("quickResetBtn");
+if(quickResetBtn) quickResetBtn.addEventListener("click",resetDofInterface);
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").catch(() => {});

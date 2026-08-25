@@ -2011,3 +2011,79 @@ body.dark .project-secondary-link:focus-visible{color:#7FA7B0}
   .project-contact-btn{font-size:11px}
   .project-sheet-inner{padding:18px}
 }
+
+/* V5.43 — actions et placements repris exactement de BOS_BRUNO_ONSET_V64 */
+.topbar{
+  margin-bottom:2px !important;
+}
+.project-contact-top{
+  justify-content:flex-start;
+  padding:2px 0 2px !important;
+  margin:0 2px 0 !important;
+}
+.project-contact-top .project-contact-btn{
+  font-size:11px;
+}
+.utility-row.bos-utility-row{
+  margin-top:0 !important;
+  margin-bottom:12px !important;
+}
+.utility-link{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:9px;
+  letter-spacing:.12em;
+  font-weight:900;
+  white-space:nowrap;
+}
+.utility-link:hover,
+.mode-btn:hover{
+  border-color:var(--accent);
+}
+
+/* Reset identique aux autres actions utilitaires de la référence */
+#quickResetBtn{
+  /* hérite volontairement de .utility-link */
+}
+
+/* Suggestion d'amélioration tout en bas */
+.feedback-contact{
+  display:flex;
+  justify-content:center;
+  padding:24px 0 2px;
+}
+.feedback-contact-link{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:6px 2px;
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.01em;
+  text-decoration:none;
+}
+.feedback-contact-link span{
+  display:inline-block;
+  margin-left:4px;
+  transition:transform .16s ease;
+}
+.feedback-contact-link:hover,
+.feedback-contact-link:focus-visible{
+  color:#2F5B66;
+}
+.feedback-contact-link:hover span{
+  transform:translateX(3px);
+}
+.feedback-contact-link:focus-visible{
+  outline:2px solid #2F5B66;
+  outline-offset:4px;
+  border-radius:4px;
+}
+body.dark .feedback-contact-link:hover,
+body.dark .feedback-contact-link:focus-visible{
+  color:#7FA7B0;
+}

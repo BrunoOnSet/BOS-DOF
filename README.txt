@@ -410,3 +410,24 @@ V5.41 — CONTACT PROJET ONSET V58
 - Comportement clair/sombre et fermeture par le fond identiques à ONSET V58.
 - Aucun changement dans les calculs ou les autres fonctionnalités DOF.
 - Cache applicatif renouvelé pour charger correctement la V5.41.
+
+V5.42 — TITRE CAMÉRA + ICÔNE DOF
+
+- Le titre « RÉGLAGES CAMÉRA » passe entièrement en majuscules, comme PDC, ITW et 2 SUJETS.
+- Le visuel BOS DOF fourni devient l’icône officielle de l’application.
+- Génération fidèle des icônes PWA 192 × 192 px et 512 × 512 px à partir du fichier original.
+- La même icône est utilisée pour l’installation Android, le raccourci iOS et l’onglet du navigateur.
+- Le logo de l’en-tête reste inchangé.
+- Aucun changement dans les calculs ou les fonctionnalités.
+- Cache applicatif renouvelé pour charger correctement la V5.42.
+
+V5.43 — ACTIONS ONSET V64
+
+- BOS_BRUNO_ONSET_V64 devient la référence exacte pour les actions disposées autour de l’application.
+- Le bouton « Une question ? Un projet ? On en parle. » est placé immédiatement sous l’en-tête, avec la typographie, la couleur et les espacements de V64.
+- Le bouton « Une idée pour améliorer l’application ? » est placé tout en bas, juste avant le pied de page, avec le lien e-mail de la référence.
+- RESET est ajouté à la rangée utilitaire sous le bouton de contact et reprend exactement le style des autres actions utilitaires.
+- RESET restaure les valeurs initiales de DOF : Full Frame, 50 mm, f/2,8, S1 2,50 m, S2 3,00 m, MAP optimale, marge 0, ITW 50 mm, poitrine, 16:9 et zone nette 20 cm.
+- RESET restaure aussi l’ouverture initiale des bulles sans modifier le mode clair/sombre.
+- Les calculs PDC, ITW et deux sujets restent inchangés.
+- Cache applicatif renouvelé pour charger correctement la V5.43.
