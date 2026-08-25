@@ -390,3 +390,14 @@ V5.39 — RÉGLAGES CAMÉRA EN 01
 - Typographie, couleur, cartouche numéroté, résumé, chevron et espacements restent alignés sur LIGHT V0.46.
 - Aucun changement dans les calculs PDC, ITW, ratios ou deux sujets.
 - Cache applicatif renouvelé pour charger correctement la V5.39.
+
+V5.40 — SOUS-TITRES ONSET V58
+
+- Ajout de sous-titres sous les quatre titres de bulles avec le style exact de BOS_BRUNO_ONSET_V58.
+- Même disposition, taille 10 px, couleur atténuée et espacement de 2 px sous le titre.
+- 01 Réglages Caméra : affichage dynamique du modèle sélectionné dans la bulle.
+- 02 PDC : « Profondeur de Champ ».
+- 03 ITW : « Placement conseillé ».
+- 04 2 SUJETS : « Optimiser la mise au point ».
+- Aucun changement dans les calculs ou les fonctionnalités.
+- Cache applicatif renouvelé pour charger correctement la V5.40.

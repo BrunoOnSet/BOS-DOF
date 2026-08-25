@@ -1823,3 +1823,21 @@ body.dark .bos-card-heading .bos-heading-title{color:#2F5B66 !important}
   color:var(--accent) !important;
   transform:translateY(-50%) rotate(180deg);
 }
+
+/* V5.40 — sous-titres repris de BOS_BRUNO_ONSET_V58 */
+.bos-card-heading .heading-copy{display:block;min-width:0}
+.bos-card-heading .bos-heading-subtitle{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:10px;
+}
+.bos-card-heading .camera-heading-subtitle{
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+@media(max-width:520px){
+  .bos-card-heading .camera-heading-subtitle{max-width:220px}
+}
