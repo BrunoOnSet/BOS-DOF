@@ -431,3 +431,13 @@ V5.43 — ACTIONS ONSET V64
 - RESET restaure aussi l’ouverture initiale des bulles sans modifier le mode clair/sombre.
 - Les calculs PDC, ITW et deux sujets restent inchangés.
 - Cache applicatif renouvelé pour charger correctement la V5.43.
+
+V5.44 — INSTALLATION ONSET V64
+
+- Ajout du bouton exact « INSTALLER L’APPLICATION → » de BOS_BRUNO_ONSET_V64.
+- Placement identique au-dessus de l’en-tête, avec la même typographie, la même couleur, les mêmes espacements et la même animation.
+- Sur Android et les navigateurs compatibles, le bouton déclenche directement la proposition native d’installation.
+- Sur iPhone, iPad ou navigateur sans proposition native, il affiche les instructions adaptées pour ajouter DOF à l’écran d’accueil.
+- Le bouton disparaît automatiquement lorsque DOF est lancé comme application installée.
+- Aucun changement dans les calculs ou les autres fonctionnalités DOF.
+- Cache applicatif renouvelé pour charger correctement la V5.44.

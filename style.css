@@ -2087,3 +2087,82 @@ body.dark .feedback-contact-link:hover,
 body.dark .feedback-contact-link:focus-visible{
   color:#7FA7B0;
 }
+
+/* V5.44 — installation PWA reprise exactement de BOS_BRUNO_ONSET_V64 */
+.install-app-row{
+  display:flex;
+  justify-content:flex-start;
+  margin:0 2px 0 !important;
+}
+.install-app-row[hidden]{display:none !important}
+.install-app-btn{
+  border:0;
+  background:transparent;
+  color:#2F5B66;
+  padding:4px 0;
+  font-family:"Montserrat",Arial,sans-serif;
+  font-size:10px;
+  line-height:1.3;
+  font-weight:700;
+  letter-spacing:.08em;
+  cursor:pointer;
+  text-transform:uppercase;
+}
+.install-app-btn span{
+  display:inline-block;
+  margin-left:4px;
+  transition:transform .16s ease;
+}
+.install-app-btn:hover span{transform:translateX(3px)}
+.install-app-btn:focus-visible{
+  outline:2px solid #2F5B66;
+  outline-offset:4px;
+  border-radius:3px;
+}
+body.dark .install-app-btn{color:#7FA7B0}
+
+.install-sheet-inner{padding:20px}
+.install-sheet .sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.install-sheet .sheet-head>div{display:flex;flex-direction:column}
+.install-sheet .sheet-head strong{font-size:18px}
+.install-sheet .sheet-head small{display:none}
+.install-sheet .iconbtn{
+  border:1px solid var(--line);
+  background:var(--panel2);
+  color:var(--text);
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+}
+.install-help{
+  margin-top:16px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:12px;
+  line-height:1.55;
+}
+.install-help strong{font-weight:800}
+.install-help p{margin:0}
+.install-help p+p{margin-top:8px}
+.install-sheet .sheet-actions{display:flex;gap:8px;margin-top:14px}
+.install-sheet .sheet-actions>*{flex:1}
+.install-sheet .primary{
+  border-radius:13px;
+  padding:11px 14px;
+  min-height:43px;
+  font-weight:700;
+  border:1px solid var(--accent);
+  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+}

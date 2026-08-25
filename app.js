@@ -1112,6 +1112,94 @@ function resetDofInterface(){
 const quickResetBtn=document.getElementById("quickResetBtn");
 if(quickResetBtn) quickResetBtn.addEventListener("click",resetDofInterface);
 
+let bosDeferredInstallPrompt=null;
+const BOS_INSTALLED_KEY="bos-dof-installed";
+
+function bosIsStandalone(){
+  return window.matchMedia?.("(display-mode: standalone)").matches===true ||
+         window.navigator.standalone===true;
+}
+function bosIsIos(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+}
+function bosInstalledRemembered(){
+  try{return localStorage.getItem(BOS_INSTALLED_KEY)==="1";}catch(_){return false;}
+}
+function bosRememberInstalled(){
+  try{localStorage.setItem(BOS_INSTALLED_KEY,"1");}catch(_){}
+}
+function updateInstallAppVisibility(){
+  const row=document.getElementById("installAppRow");
+  if(!row)return;
+  if(bosIsStandalone()){
+    bosRememberInstalled();
+    row.hidden=true;
+    return;
+  }
+  if(bosInstalledRemembered()){
+    row.hidden=true;
+    return;
+  }
+  row.hidden=false;
+}
+function showBosInstallHelp(){
+  const dlg=document.getElementById("installDialog");
+  const body=document.getElementById("installHelpBody");
+  const intro=document.getElementById("installHelpText");
+  if(!dlg||!body)return;
+  if(bosIsIos()){
+    if(intro)intro.textContent="Installation sur iPhone / iPad";
+    body.innerHTML="<p><strong>Safari :</strong> touchez le bouton <strong>Partager</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois Bruno OnSet lancé depuis son icône, ce bouton d’installation disparaît automatiquement.</p>";
+  }else{
+    if(intro)intro.textContent="Installation depuis votre navigateur";
+    body.innerHTML="<p>Ouvrez le menu de votre navigateur puis choisissez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois Bruno OnSet lancé comme application, ce bouton disparaît automatiquement.</p>";
+  }
+  dlg.showModal();
+}
+function setupBosInstallExperience(){
+  updateInstallAppVisibility();
+
+  window.addEventListener("beforeinstallprompt",event=>{
+    event.preventDefault();
+    bosDeferredInstallPrompt=event;
+    updateInstallAppVisibility();
+  });
+
+  window.addEventListener("appinstalled",()=>{
+    bosDeferredInstallPrompt=null;
+    bosRememberInstalled();
+    updateInstallAppVisibility();
+  });
+
+  const displayMode=window.matchMedia?.("(display-mode: standalone)");
+  displayMode?.addEventListener?.("change",updateInstallAppVisibility);
+
+  const btn=document.getElementById("installAppBtn");
+  if(btn){
+    btn.addEventListener("click",async()=>{
+      if(bosIsStandalone()){
+        updateInstallAppVisibility();
+        return;
+      }
+      if(bosDeferredInstallPrompt){
+        const prompt=bosDeferredInstallPrompt;
+        bosDeferredInstallPrompt=null;
+        try{
+          await prompt.prompt();
+          const choice=await prompt.userChoice;
+          if(choice?.outcome==="accepted")bosRememberInstalled();
+        }catch(_){}
+        updateInstallAppVisibility();
+        return;
+      }
+      showBosInstallHelp();
+    });
+  }
+}
+
+setupBosInstallExperience();
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").catch(() => {});
