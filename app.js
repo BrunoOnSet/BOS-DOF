@@ -135,6 +135,7 @@ let subject2Enabled = true;
 let focusMode = "optimal";
 let focusSafetyM = 0;
 let interviewShot = "chest";
+let interviewRatio = 16/9;
 
 const practicalStops = [0.7,0.8,0.9,1,1.1,1.2,1.4,1.6,1.8,2,2.2,2.5,2.8,3.2,3.5,4,4.5,5,5.6,6.3,7.1,8,9,10,11,13,14,16,18,20,22,25,29,32];
 const interviewShots = {
@@ -144,6 +145,12 @@ const interviewShots = {
   chest:{label:"Poitrine",heightRatio:.34,frameFill:.82},
   face:{label:"Serré visage",heightRatio:.16,frameFill:.78}
 };
+const interviewRatios = [
+  {label:"2.39:1",value:2.39},{label:"2.00:1",value:2},
+  {label:"1.85:1",value:1.85},{label:"16:9",value:16/9},
+  {label:"4:3",value:4/3},{label:"1:1",value:1},
+  {label:"4:5",value:4/5},{label:"9:16",value:9/16}
+];
 
 function parseFR(v) {
   return Number(String(v).replace(",", ".").trim());
@@ -210,15 +217,39 @@ function dofBounds(focalMm,aperture,cocMm,focusM){
   return {nearM:nearMm/1000,farM:Number.isFinite(farMm)?farMm/1000:Infinity};
 }
 
-function interviewDistanceForFrame(focalMm,personHeightM,shot,camera){
-  const widthMm=Number(camera?.sensorWidthMm)||36;
-  const nativeHeightMm=Number(camera?.sensorHeightMm||camera?.sensor?.heightMm)||0;
-  const sixteenNineHeight=widthMm*9/16;
-  const activeHeightMm=nativeHeightMm>0?Math.min(nativeHeightMm,sixteenNineHeight):sixteenNineHeight;
+function interviewRatioLabel(value){
+  const ratio=Number(value);
+  return interviewRatios.find(item=>Math.abs(item.value-ratio)<.001)?.label || `${ratio.toFixed(2)}:1`;
+}
+
+function interviewCropSensorDimensions(ratio,camera){
+  const sensorLong=Number(camera?.sensorWidthMm)||36;
+  const baseLandscapeRatio=16/9;
+  const targetRatio=Math.max(.2,Number(ratio)||baseLandscapeRatio);
+
+  // Même modèle que FRAME : base 16:9 horizontale, ou caméra tournée pour les ratios portrait.
+  const portrait=targetRatio<1;
+  let baseW,baseH;
+  if(portrait){
+    baseW=sensorLong/baseLandscapeRatio;
+    baseH=sensorLong;
+  }else{
+    baseW=sensorLong;
+    baseH=sensorLong/baseLandscapeRatio;
+  }
+  const baseRatio=baseW/baseH;
+  let cropW=baseW,cropH=baseH;
+  if(targetRatio<baseRatio) cropW=baseH*targetRatio;
+  else if(targetRatio>baseRatio) cropH=baseW/targetRatio;
+  return {baseW,baseH,cropW,cropH,targetRatio,portrait};
+}
+
+function interviewDistanceForFrame(focalMm,personHeightM,shot,camera,ratio=interviewRatio){
+  const crop=interviewCropSensorDimensions(ratio,camera);
   const visiblePersonM=personHeightM*shot.heightRatio;
-  const imageHeightMm=activeHeightMm*shot.frameFill;
+  const imageHeightMm=crop.cropH*shot.frameFill;
   const distanceMm=focalMm+(focalMm*visiblePersonM*1000)/imageHeightMm;
-  return {distanceM:distanceMm/1000,activeHeightMm,visiblePersonM};
+  return {distanceM:distanceMm/1000,activeHeightMm:crop.cropH,visiblePersonM,...crop};
 }
 
 function requiredApertureAtFocus(focalMm,cocMm,focusM,depthM){
@@ -244,6 +275,7 @@ function renderInterviewPlanner(){
   const focal=parseFR(inputs.interviewFocal.value);
   const depthCm=parseFR(inputs.interviewDepth.value);
   const shot=interviewShots[interviewShot]||interviewShots.chest;
+  const ratioLabel=interviewRatioLabel(interviewRatio);
   const camera=currentCamera();
   const coc=currentFormat().coc;
 
@@ -255,8 +287,8 @@ function renderInterviewPlanner(){
     return;
   }
 
-  const framing160=interviewDistanceForFrame(focal,1.60,shot,camera);
-  const framing180=interviewDistanceForFrame(focal,1.80,shot,camera);
+  const framing160=interviewDistanceForFrame(focal,1.60,shot,camera,interviewRatio);
+  const framing180=interviewDistanceForFrame(focal,1.80,shot,camera,interviewRatio);
   const depthM=depthCm/100;
   // Le sujet de 1,60 m impose la caméra la plus proche : c'est le cas prudent
   // retenu pour afficher un seul diaphragme minimum valable pour les deux repères.
@@ -270,8 +302,17 @@ function renderInterviewPlanner(){
   $("interviewResultDetail").textContent=Number.isFinite(practicalAperture)
     ? `Minimum prudent calculé au repère 1,60 m · zone utile ± ${formatDepth(halfDepth)} autour de la personne.`
     : "La zone nette demandée nécessite de fermer au-delà de f/32 avec ce cadre.";
-  $("interviewSummary").textContent=`${String(roundSmart(focal)).replace(".",",")} mm · ${shot.label} · PDC ${String(roundSmart(depthCm)).replace(".",",")} cm`;
-  $("interviewNote").textContent=`Distances approximatives en 16:9 · hauteur active ${framing160.activeHeightMm.toFixed(1).replace(".",",")} mm · ${camera.name}. Confirmer le cadre exact dans FRAME.`;
+  $("interviewSummary").textContent=`${String(roundSmart(focal)).replace(".",",")} mm · ${shot.label} · ${ratioLabel} · PDC ${String(roundSmart(depthCm)).replace(".",",")} cm`;
+  const ratioMethod=framing160.portrait
+    ? (Math.abs(interviewRatio-9/16)<.001
+      ? "caméra tournée verticalement · base 9:16"
+      : `caméra tournée verticalement puis cache ${ratioLabel} en haut et en bas dans le 9:16`)
+    : (Math.abs(interviewRatio-16/9)<.001
+      ? "capteur 16:9 horizontal"
+      : (interviewRatio>16/9
+        ? `cache ${ratioLabel} en haut et en bas dans le 16:9 horizontal`
+        : `cache ${ratioLabel} sur les côtés dans le 16:9 horizontal`));
+  $("interviewNote").textContent=`Distances approximatives · ${ratioMethod} · hauteur active ${framing160.activeHeightMm.toFixed(1).replace(".",",")} mm · ${camera.name}. Confirmer le cadre exact dans FRAME.`;
 }
 function nextPracticalStop(value){
   if(!Number.isFinite(value)) return Infinity;
@@ -963,6 +1004,14 @@ $("interviewShotMode").addEventListener("click",event=>{
   if(!button) return;
   interviewShot=button.dataset.interviewShot;
   $("interviewShotMode").querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
+  calculate();
+});
+
+$("interviewRatioMode").addEventListener("click",event=>{
+  const button=event.target.closest("button[data-interview-ratio]");
+  if(!button) return;
+  interviewRatio=Number(button.dataset.interviewRatio)||16/9;
+  $("interviewRatioMode").querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
   calculate();
 });
 

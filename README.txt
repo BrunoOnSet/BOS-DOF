@@ -369,3 +369,16 @@ V5.37 — EN-TÊTE LIGHT V0.46
 - Signature « Avec vous, sur chaque tournage. » et bouton LIGHT/DARK conservés à l’identique.
 - Toutes les fonctionnalités et tous les calculs DOF restent inchangés.
 - Cache applicatif renouvelé pour charger correctement la V5.37.
+
+V5.38 — TITRES LIGHT + RATIOS ITW
+
+- Les trois bulles principales reprennent la construction exacte des titres de LIGHT V0.46.
+- Numérotation ajoutée : 01 PDC, 02 ITW et 03 2 SUJETS.
+- Typographie Montserrat, couleur pétrole, cartouche numéroté, résumé et chevron alignés comme dans LIGHT.
+- Le bouton d’information de PDC est déplacé à côté de TIPS afin de conserver un titre strictement conforme à la référence.
+- Ajout du choix de ratio dans ITW : 2.39:1, 2.00:1, 1.85:1, 16:9, 4:3, 1:1, 4:5 et 9:16.
+- Calcul de cadrage aligné sur FRAME : base capteur 16:9, formats paysage/carré obtenus par caches, formats portrait calculés après rotation physique de la caméra.
+- Le 9:16 correspond donc à la caméra tenue verticalement, sans simulation de cache dans une caméra horizontale.
+- La distance caméra et le diaphragme minimum ITW sont recalculés selon la hauteur réellement conservée par le ratio.
+- Toutes les autres fonctions DOF restent inchangées.
+- Cache applicatif renouvelé pour charger correctement la V5.38.
