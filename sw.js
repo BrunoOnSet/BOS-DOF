@@ -1,9 +1,9 @@
-const CACHE = "bos-dof-v5.38";
+const CACHE = "bos-dof-v5.39";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css?v=5.38",
-  "./app.js?v=5.38",
+  "./style.css?v=5.39",
+  "./app.js?v=5.39",
   "./assets/logo-bos-header.jpg",
   "./manifest.webmanifest",
   "./icon-192.png",

@@ -382,3 +382,11 @@ V5.38 — TITRES LIGHT + RATIOS ITW
 - La distance caméra et le diaphragme minimum ITW sont recalculés selon la hauteur réellement conservée par le ratio.
 - Toutes les autres fonctions DOF restent inchangées.
 - Cache applicatif renouvelé pour charger correctement la V5.38.
+
+V5.39 — RÉGLAGES CAMÉRA EN 01
+
+- « Réglages Caméra » devient la première bulle numérotée et reprend exactement le titre LIGHT.
+- Nouvelle hiérarchie : 01 Réglages Caméra, 02 PDC, 03 ITW, 04 2 SUJETS.
+- Typographie, couleur, cartouche numéroté, résumé, chevron et espacements restent alignés sur LIGHT V0.46.
+- Aucun changement dans les calculs PDC, ITW, ratios ou deux sujets.
+- Cache applicatif renouvelé pour charger correctement la V5.39.

@@ -1807,3 +1807,19 @@ body.dark .bos-card-heading .bos-heading-title{color:#2F5B66 !important}
 @media(max-width:380px){
   .bos-card-heading .summary-value{display:none}
 }
+
+/* V5.39 — Réglages Caméra devient la bulle 01 */
+.method-panel{
+  padding:0;
+  overflow:hidden;
+}
+.method-panel .method-content{
+  margin:0;
+  padding:14px 15px 16px;
+  border-top:1px solid var(--card-border);
+}
+.method-panel.collapsed .method-content{margin:0}
+.method-panel:not(.collapsed) .bos-card-heading .chevron{
+  color:var(--accent) !important;
+  transform:translateY(-50%) rotate(180deg);
+}
