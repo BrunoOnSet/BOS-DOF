@@ -1,0 +1,20 @@
+{
+  "id": "dof",
+  "name": "DOF",
+  "version": "5.44",
+  "script": "app.js",
+  "style": "style.css",
+  "fallbackData": [
+    "cameras"
+  ],
+  "localState": [
+    "bos-dof-camera-id-v1",
+    "bos-dof-last-camera-by-brand-v1"
+  ],
+  "entry": "index.html",
+  "integratedMode": "integrated",
+  "standaloneMode": "standalone",
+  "sharedStateOptional": true,
+  "standalonePwa": true,
+  "bosBuild": 79
+}

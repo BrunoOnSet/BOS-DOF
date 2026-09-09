@@ -1,0 +1,1706 @@
+{
+  "schemaVersion": 1,
+  "databaseVersion": "1.2",
+  "updated": "2026-08-18",
+  "cameras": [
+    {
+      "id": "fx30",
+      "name": "Sony FX30",
+      "brand": "Sony",
+      "group": "SONY",
+      "sensorWidthMm": 23.3,
+      "dof": {
+        "label": "Super 35 / APS-C",
+        "cocMm": 0.019,
+        "cropToFF": 1.5
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "dual_base",
+        "baseValues": [
+          800,
+          2500
+        ],
+        "defaultValue": 800,
+        "mode": "Cine EI / Log",
+        "label": "Dual Base ISO",
+        "source": {
+          "manufacturer": "Sony",
+          "url": "https://helpguide.sony.net/ilc/2220/v1/fr/contents/TP1000888674.html",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "FX30",
+        "modes": {
+          "DCI 4K": {
+            "width": 4096,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              }
+            }
+          },
+          "UHD 4K": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 140,
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "29.97": 140,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "Long GOP · 4:2:2 10 bit"
+              },
+              "XAVC HS": {
+                "kind": "fixed",
+                "rates": {
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "HEVC Long GOP · 4:2:2 10 bit"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 93,
+                  "50": 185,
+                  "23.98": 89,
+                  "29.97": 111,
+                  "59.94": 222
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 50,
+                  "50": 50,
+                  "100": 100,
+                  "23.98": 50,
+                  "29.97": 50,
+                  "59.94": 50,
+                  "119.88": 100
+                },
+                "note": "Long GOP · preset 4:2:2 10 bit / débit haut"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fx3",
+      "name": "Sony FX3",
+      "brand": "Sony",
+      "group": "SONY",
+      "sensorWidthMm": 35.6,
+      "dof": {
+        "label": "Full Frame",
+        "cocMm": 0.029,
+        "cropToFF": 1.0
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "dual_base",
+        "baseValues": [
+          800,
+          12800
+        ],
+        "defaultValue": 800,
+        "mode": "Cine EI / Log",
+        "label": "Dual Base ISO",
+        "source": {
+          "manufacturer": "Sony",
+          "url": "https://helpguide.sony.net/ilc/2210/v1/fr/contents/TP1000888674.html",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "FX3",
+        "modes": {
+          "DCI 4K": {
+            "width": 4096,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              }
+            }
+          },
+          "UHD 4K": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 140,
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "29.97": 140,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "Long GOP · 4:2:2 10 bit"
+              },
+              "XAVC HS": {
+                "kind": "fixed",
+                "rates": {
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "HEVC Long GOP · 4:2:2 10 bit"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 93,
+                  "50": 185,
+                  "23.98": 89,
+                  "29.97": 111,
+                  "59.94": 222
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 50,
+                  "50": 50,
+                  "100": 100,
+                  "23.98": 50,
+                  "29.97": 50,
+                  "59.94": 50,
+                  "119.88": 100
+                },
+                "note": "Long GOP · preset 4:2:2 10 bit / débit haut"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fx5",
+      "name": "Sony FX5",
+      "brand": "Sony",
+      "group": "SONY",
+      "sensorWidthMm": 35.9,
+      "dof": {
+        "label": "Full Frame",
+        "cocMm": 0.029,
+        "cropToFF": 1.0
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "triple_base",
+        "baseValues": [
+          800,
+          4000,
+          12800
+        ],
+        "defaultValue": 800,
+        "mode": "Cine EI / Flexible ISO",
+        "label": "Three Base ISO",
+        "specialModes": [
+          {
+            "value": 800,
+            "id": "dual_gain",
+            "label": "ISO 800 (Dual Gain)"
+          }
+        ],
+        "source": {
+          "manufacturer": "Sony",
+          "url": "https://helpguide.sony.net/ilc/2630/v1/fr/contents/base_iso.html",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "FX5",
+        "modes": {
+          "DCI 4K": {
+            "width": 4096,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              }
+            }
+          },
+          "UHD 4K": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S-L 422": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 140,
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "29.97": 140,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "Long GOP · 4:2:2 10 bit"
+              },
+              "XAVC HS-L 422": {
+                "kind": "fixed",
+                "rates": {
+                  "50": 200,
+                  "100": 280,
+                  "23.98": 100,
+                  "59.94": 200,
+                  "119.88": 280
+                },
+                "note": "HEVC Long GOP · 4:2:2 10 bit"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "XAVC S-I": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 93,
+                  "50": 185,
+                  "23.98": 89,
+                  "29.97": 111,
+                  "59.94": 222
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC S-L 422": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 50,
+                  "50": 50,
+                  "100": 100,
+                  "23.98": 50,
+                  "29.97": 50,
+                  "59.94": 50,
+                  "119.88": 100
+                },
+                "note": "Long GOP · preset 4:2:2 10 bit / débit haut"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fx6",
+      "name": "Sony FX6",
+      "brand": "Sony",
+      "group": "SONY",
+      "sensorWidthMm": 35.6,
+      "dof": {
+        "label": "Full Frame",
+        "cocMm": 0.029,
+        "cropToFF": 1.0
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "dual_base",
+        "baseValues": [
+          800,
+          12800
+        ],
+        "defaultValue": 800,
+        "mode": "Cine EI / Flexible ISO",
+        "label": "Dual Base ISO",
+        "source": {
+          "manufacturer": "Sony",
+          "url": "https://pro.sony/bp_BR/products/handheld-camcorders/ilme-fx6",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "FX6",
+        "modes": {
+          "DCI 4K": {
+            "width": 4096,
+            "height": 2160,
+            "codecs": {
+              "XAVC-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              }
+            }
+          },
+          "UHD 4K": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "XAVC-I": {
+                "kind": "fixed",
+                "rates": {
+                  "24": 240,
+                  "25": 250,
+                  "50": 500,
+                  "23.98": 240,
+                  "29.97": 300,
+                  "59.94": 600
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC-L": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 100,
+                  "50": 150,
+                  "23.98": 100,
+                  "29.97": 100,
+                  "59.94": 150
+                },
+                "note": "Long GOP · VBR"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "XAVC-I": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 93,
+                  "50": 185,
+                  "23.98": 89,
+                  "29.97": 111,
+                  "59.94": 222
+                },
+                "note": "All-Intra · 4:2:2 10 bit"
+              },
+              "XAVC-L 50": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 50,
+                  "50": 50,
+                  "23.98": 50,
+                  "29.97": 50,
+                  "59.94": 50
+                },
+                "note": "Long GOP · VBR · 50 Mb/s max"
+              },
+              "XAVC-L 35": {
+                "kind": "fixed",
+                "rates": {
+                  "25": 35,
+                  "50": 35,
+                  "23.98": 35,
+                  "29.97": 35,
+                  "59.94": 35
+                },
+                "note": "Long GOP · VBR · 35 Mb/s max"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "vraptor",
+      "name": "RED V-RAPTOR VV",
+      "brand": "RED",
+      "group": "ARRI / RED",
+      "sensorWidthMm": 40.96,
+      "dof": {
+        "label": "Vista Vision",
+        "cocMm": 0.033,
+        "cropToFF": 0.88
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "red_metadata_iso",
+        "baseValues": [],
+        "defaultValue": 800,
+        "mode": "R3D / RED ISO metadata",
+        "label": "ISO de référence",
+        "note": "RED ne définit pas de sensibilité ISO native fixe au sens classique. ISO 800 est la valeur par défaut du V-RAPTOR et sert de référence, mais tous les ISO exploitent le plein potentiel du capteur.",
+        "source": {
+          "manufacturer": "RED",
+          "url": "https://docs.red.com/955-0225/955-0225_V1.7%2BRev-B%2BRED%2BPS%2C%2BV-RAPTOR%2B%5BX%5D%2B8K%2BVV%2BOperation%2BGuide%2BHTML/Content/4_Menus/a_Image_LUT/02_ISO.htm",
+          "checked": "2026-08-18"
+        }
+      }
+    },
+    {
+      "id": "miniLF",
+      "name": "ARRI ALEXA Mini LF",
+      "brand": "ARRI",
+      "group": "ARRI / RED",
+      "sensorWidthMm": 36.7,
+      "dof": {
+        "label": "Large Format",
+        "cocMm": 0.03,
+        "cropToFF": 0.98
+      },
+      "exposure": {
+        "unit": "EI",
+        "type": "single_base",
+        "baseValues": [
+          800
+        ],
+        "defaultValue": 800,
+        "mode": "ARRI Exposure Index",
+        "label": "Base sensitivity",
+        "source": {
+          "manufacturer": "ARRI",
+          "url": "https://www.arri.com/en/cine-systems/cine-cameras/alexa-mini-lf",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "ALEXA Mini LF",
+        "modes": {
+          "4.5K Open Gate": {
+            "width": 4448,
+            "height": 3096,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "40"
+            ]
+          },
+          "UHD": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60"
+            ]
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60",
+              "75",
+              "90"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "alexa35",
+      "name": "ARRI ALEXA 35",
+      "brand": "ARRI",
+      "group": "ARRI / RED",
+      "sensorWidthMm": 27.99,
+      "dof": {
+        "label": "Super 35",
+        "cocMm": 0.023,
+        "cropToFF": 1.29
+      },
+      "exposure": {
+        "unit": "EI",
+        "type": "single_base",
+        "baseValues": [
+          800
+        ],
+        "defaultValue": 800,
+        "mode": "ARRI Exposure Index",
+        "label": "Base sensitivity",
+        "source": {
+          "manufacturer": "ARRI",
+          "url": "https://www.arri.com/en/learn-help/learn-help-camera-system/image-science/hdr-faq",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "ALEXA 35",
+        "modes": {
+          "4.6K Open Gate": {
+            "width": 4608,
+            "height": 3164,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60"
+            ]
+          },
+          "4K 16:9": {
+            "width": 4096,
+            "height": 2304,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60",
+              "75",
+              "100"
+            ]
+          },
+          "UHD": {
+            "width": 3840,
+            "height": 2160,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60",
+              "100",
+              "120"
+            ]
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444": {
+                "kind": "prores",
+                "target1080": 330,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 4444 XQ": {
+                "kind": "prores",
+                "target1080": 500,
+                "note": "ProRes · débit cible VBR"
+              }
+            },
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "48",
+              "50",
+              "60",
+              "100",
+              "120"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "bmpcc4k",
+      "name": "Blackmagic Pocket Cinema Camera 4K",
+      "brand": "Blackmagic",
+      "group": "BLACKMAGIC",
+      "sensorWidthMm": 18.96,
+      "sensorHeightMm": 10.0,
+      "dof": {
+        "label": "Four Thirds",
+        "cocMm": 0.014,
+        "cropToFF": 1.9
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "dual_native",
+        "baseValues": [
+          400,
+          3200
+        ],
+        "defaultValue": 400,
+        "mode": "Blackmagic Film / Video",
+        "label": "Dual Native ISO",
+        "source": {
+          "manufacturer": "Blackmagic Design",
+          "url": "https://www.blackmagicdesign.com/products/blackmagicpocketcinemacamera",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "Cinema 4K",
+        "modes": {
+          "4K DCI": {
+            "width": 4096,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 136,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 82,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 51,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 35,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "UHD": {
+            "width": 3840,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 127,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 77,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 48,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 32,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 33,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 20,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 13,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 8.4,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "bmpcc6k",
+      "name": "Blackmagic Pocket Cinema Camera 6K",
+      "brand": "Blackmagic",
+      "group": "BLACKMAGIC",
+      "sensorWidthMm": 23.1,
+      "sensorHeightMm": 12.99,
+      "dof": {
+        "label": "Super 35",
+        "cocMm": 0.018,
+        "cropToFF": 1.56
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "dual_native",
+        "baseValues": [
+          400,
+          3200
+        ],
+        "defaultValue": 400,
+        "mode": "Blackmagic Film / Video",
+        "label": "Dual Native ISO",
+        "source": {
+          "manufacturer": "Blackmagic Design",
+          "url": "https://www.blackmagicdesign.com/products/blackmagicpocketcinemacamera",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "Cinema 6K",
+        "modes": {
+          "6K": {
+            "width": 6144,
+            "height": 3456,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 323,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 194,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 121,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 81,
+                "note": "Blackmagic RAW · débit constant"
+              }
+            }
+          },
+          "4K DCI": {
+            "width": 4096,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 136,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 82,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 51,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 35,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "UHD": {
+            "width": 3840,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ursamp46kg2",
+      "name": "Blackmagic URSA Mini Pro 4.6K G2",
+      "brand": "Blackmagic",
+      "group": "BLACKMAGIC",
+      "sensorWidthMm": 25.34,
+      "sensorHeightMm": 14.25,
+      "dof": {
+        "label": "Super 35",
+        "cocMm": 0.019,
+        "cropToFF": 1.42
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "single_native",
+        "baseValues": [
+          800
+        ],
+        "defaultValue": 800,
+        "mode": "Blackmagic Film",
+        "label": "Native ISO",
+        "note": "ISO 800 est la sensibilité native/référence du capteur 4.6K G2.",
+        "source": {
+          "manufacturer": "Blackmagic Design",
+          "url": "https://www.blackmagicdesign.com/products/blackmagicursaminipro/gallery",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "URSA Mini Pro 4.6K",
+        "modes": {
+          "4.6K": {
+            "width": 4608,
+            "height": 2592,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 183,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 110,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 68,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 46,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "UHD": {
+            "width": 3840,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 127,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 76,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 48,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 32,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          },
+          "HD": {
+            "width": 1920,
+            "height": 1080,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 3:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 33,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 20,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 12,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 30,
+                "baseMBps": 8,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "ProRes 422 HQ": {
+                "kind": "prores",
+                "target1080": 220,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422": {
+                "kind": "prores",
+                "target1080": 147,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes 422 LT": {
+                "kind": "prores",
+                "target1080": 102,
+                "note": "ProRes · débit cible VBR"
+              },
+              "ProRes Proxy": {
+                "kind": "prores",
+                "target1080": 45,
+                "note": "ProRes · débit cible VBR"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ursamp12k",
+      "name": "Blackmagic URSA Mini Pro 12K",
+      "brand": "Blackmagic",
+      "group": "BLACKMAGIC",
+      "sensorWidthMm": 27.03,
+      "sensorHeightMm": 14.25,
+      "dof": {
+        "label": "Super 35",
+        "cocMm": 0.02,
+        "cropToFF": 1.33
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "single_native",
+        "baseValues": [
+          800
+        ],
+        "defaultValue": 800,
+        "mode": "Blackmagic Film",
+        "label": "Native ISO",
+        "source": {
+          "manufacturer": "Blackmagic Design",
+          "url": "https://www.blackmagicdesign.com/products/blackmagicursaminipro",
+          "checked": "2026-08-18"
+        }
+      },
+      "media": {
+        "label": "URSA Mini Pro 12K",
+        "modes": {
+          "12K": {
+            "width": 12288,
+            "height": 6480,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60"
+            ],
+            "codecs": {
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 578,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 361,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 241,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 18:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 160,
+                "note": "Blackmagic RAW · débit constant"
+              }
+            }
+          },
+          "8K": {
+            "width": 8192,
+            "height": 4320,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 257,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 161,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 107,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 18:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 71,
+                "note": "Blackmagic RAW · débit constant"
+              }
+            }
+          },
+          "6K S16": {
+            "width": 6144,
+            "height": 3240,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 146,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 91,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 61,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 18:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 40,
+                "note": "Blackmagic RAW · débit constant"
+              }
+            }
+          },
+          "4K": {
+            "width": 4096,
+            "height": 2160,
+            "fps": [
+              "24",
+              "25",
+              "30",
+              "50",
+              "60",
+              "100",
+              "120"
+            ],
+            "codecs": {
+              "BRAW 5:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 161,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 8:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 107,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 12:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 80,
+                "note": "Blackmagic RAW · débit constant"
+              },
+              "BRAW 18:1": {
+                "kind": "scaledMBps",
+                "baseFps": 24,
+                "baseMBps": 53,
+                "note": "Blackmagic RAW · débit constant"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ff",
+      "name": "Full Frame 36 mm",
+      "brand": "Générique",
+      "group": "GÉNÉRIQUE",
+      "sensorWidthMm": 36.0,
+      "dof": {
+        "label": "Full Frame",
+        "cocMm": 0.029,
+        "cropToFF": 1.0
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "generic",
+        "baseValues": [],
+        "defaultValue": null,
+        "mode": null,
+        "label": "Non applicable",
+        "note": "Format de capteur générique : aucune sensibilité native ne peut être définie sans modèle de caméra."
+      }
+    },
+    {
+      "id": "s35",
+      "name": "Super 35",
+      "brand": "Générique",
+      "group": "GÉNÉRIQUE",
+      "sensorWidthMm": 24.89,
+      "dof": {
+        "label": "Super 35",
+        "cocMm": 0.019,
+        "cropToFF": 1.5
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "generic",
+        "baseValues": [],
+        "defaultValue": null,
+        "mode": null,
+        "label": "Non applicable",
+        "note": "Format de capteur générique : aucune sensibilité native ne peut être définie sans modèle de caméra."
+      }
+    },
+    {
+      "id": "apsc",
+      "name": "APS-C",
+      "brand": "Générique",
+      "group": "GÉNÉRIQUE",
+      "sensorWidthMm": 23.5,
+      "dof": {
+        "label": "APS-C",
+        "cocMm": 0.019,
+        "cropToFF": 1.53
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "generic",
+        "baseValues": [],
+        "defaultValue": null,
+        "mode": null,
+        "label": "Non applicable",
+        "note": "Format de capteur générique : aucune sensibilité native ne peut être définie sans modèle de caméra."
+      }
+    },
+    {
+      "id": "mft",
+      "name": "Micro 4/3",
+      "brand": "Générique",
+      "group": "GÉNÉRIQUE",
+      "sensorWidthMm": 17.3,
+      "dof": {
+        "label": "Micro 4/3",
+        "cocMm": 0.014,
+        "cropToFF": 2.08
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "generic",
+        "baseValues": [],
+        "defaultValue": null,
+        "mode": null,
+        "label": "Non applicable",
+        "note": "Format de capteur générique : aucune sensibilité native ne peut être définie sans modèle de caméra."
+      }
+    },
+    {
+      "id": "oneinch",
+      "name": "1 pouce",
+      "brand": "Générique",
+      "group": "GÉNÉRIQUE",
+      "sensorWidthMm": 13.2,
+      "dof": {
+        "label": "1 pouce",
+        "cocMm": 0.011,
+        "cropToFF": 2.73
+      },
+      "exposure": {
+        "unit": "ISO",
+        "type": "generic",
+        "baseValues": [],
+        "defaultValue": null,
+        "mode": null,
+        "label": "Non applicable",
+        "note": "Format de capteur générique : aucune sensibilité native ne peut être définie sans modèle de caméra."
+      }
+    }
+  ],
+  "notes": "V1.1: profils MEDIA centralisés + Blackmagic ajoutées à la liste commune."
+}

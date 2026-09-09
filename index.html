@@ -8,23 +8,17 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="DOF · BOS" />
   <title>BRUNO ONSET / DOF</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icon-192.png" type="image/png" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5.44" />
+  <link rel="stylesheet" href="style.css?v=5.44-bos79" />
+  <link rel="stylesheet" href="shared/module-shell.css?v=79" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
 </head>
 <body>
   <main class="app" id="mainApp">
-    <section class="install-app-row" id="installAppRow" hidden aria-label="Installer Bruno OnSet">
-      <button class="install-app-btn" id="installAppBtn" type="button">
-        INSTALLER L’APPLICATION <span aria-hidden="true">→</span>
-      </button>
-    </section>
-
-    <header class="topbar cardlike">
+<header class="topbar cardlike">
       <div class="top-inner bos-top-inner">
         <div class="top-title bos-top-title">
           <div class="bos-brand-lockup" aria-label="Bruno OnSet">
@@ -41,13 +35,11 @@
       </div>
     </header>
 
-    <section class="project-contact project-contact-top" aria-label="Contact professionnel">
-      <button class="project-contact-btn" id="projectContactBtn" type="button">
-        Une question ? Un projet ? On en parle. <span aria-hidden="true">→</span>
-      </button>
+    <section class="dof-bos-return-row" aria-label="Retour à Bruno OnSet" data-bos-return>
+      <a class="dof-bos-return-link" id="bosBackBtn" href="./">← Retour à Bruno OnSet</a>
     </section>
 
-    <div class="utility-row bos-utility-row">
+<div class="utility-row bos-utility-row">
       <button class="utility-link" id="tipsBtn" type="button">TIPS</button>
       <button class="utility-link" id="infoBtn" type="button">INFO</button>
       <button class="utility-link" id="quickResetBtn" type="button">RESET</button>
@@ -396,24 +388,7 @@
       </div>
     </footer>
   </main>
-
-  <dialog id="installDialog" class="sheet install-sheet">
-    <form method="dialog" class="sheet-inner install-sheet-inner">
-      <div class="sheet-head">
-        <div>
-          <strong>Installer Bruno OnSet</strong>
-          <small id="installHelpText">Ajoutez l’application à votre écran d’accueil.</small>
-        </div>
-        <button value="close" class="iconbtn" aria-label="Fermer">×</button>
-      </div>
-      <div class="install-help" id="installHelpBody"></div>
-      <div class="sheet-actions">
-        <button value="close" class="primary">Compris</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="projectDialog" class="sheet project-sheet">
+<dialog id="projectDialog" class="sheet project-sheet">
     <form method="dialog" class="sheet-inner project-sheet-inner">
       <div class="project-sheet-head">
         <div>
@@ -561,6 +536,12 @@
     </form>
   </dialog>
 
-  <script src="app.js?v=5.44"></script>
+  <script src="shared/state.js?v=79"></script>
+<script src="shared/navigation.js?v=79"></script>
+<script src="shared/db.js?v=79"></script>
+<script src="shared/analytics.js?v=79"></script>
+<script src="adapters/standalone.js?v=79"></script>
+<script src="shared/module-host.js?v=79"></script>
+<script src="app.js?v=5.44-bos79"></script>
 </body>
 </html>

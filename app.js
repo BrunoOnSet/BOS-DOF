@@ -1,4 +1,5 @@
-const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoSetTools/BOS-CAMERA-DB/main/cameras.json";
+const CAMERA_DB_URL="https://raw.githubusercontent.com/BrunoOnSet/BOS-CAMERA-DB/main/cameras.json";
+const CAMERA_DB_FALLBACK_URL=window.BOSModuleHost?.assetPath?.('data/cameras.json')||'data/cameras.json';
 const CAMERA_DB_CACHE_KEY="bos-camera-db-cache-v1";
 const DOF_CAMERA_KEY='bos-dof-camera-id-v1';
 const DOF_LAST_CAMERA_BY_BRAND_KEY='bos-dof-last-camera-by-brand-v1';
@@ -104,12 +105,25 @@ function changeCameraBrand(brand){
 }
 
 async function refreshCameraDb(){
+  let data=null;
   try{
-    const res=await fetch(CAMERA_DB_URL,{cache:'no-store'});if(!res.ok)throw new Error(String(res.status));const data=await res.json();if(!setCameraDb(data))throw new Error('invalid');
-    try{localStorage.setItem(CAMERA_DB_CACHE_KEY,JSON.stringify(data))}catch(_ ){}
-    if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId='ff';
-    renderCameraSelect();calculate();
-  }catch(_ ){}
+    const res=await fetch(CAMERA_DB_URL,{cache:'no-store'});
+    if(!res.ok)throw new Error(String(res.status));
+    data=await res.json();
+    if(!setCameraDb(data))throw new Error('invalid');
+  }catch(_remote){
+    try{
+      const res=await fetch(CAMERA_DB_FALLBACK_URL,{cache:'no-store'});
+      if(!res.ok)throw new Error(String(res.status));
+      data=await res.json();
+      if(!setCameraDb(data))throw new Error('invalid fallback');
+    }catch(_fallback){ return; }
+  }
+  try{localStorage.setItem(CAMERA_DB_CACHE_KEY,JSON.stringify(data))}catch(_ ){}
+  const sharedCameraId=bosReadSharedState()?.cameraId;
+  if(sharedCameraId && cameraPresets.some(c=>c.id===sharedCameraId)) currentCameraId=sharedCameraId;
+  else if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId='ff';
+  renderCameraSelect();calculate();
 }
 
 const $ = (id) => document.getElementById(id);
@@ -122,6 +136,7 @@ const inputs = {
   interviewDepth: $("interviewDepth")
 };
 const apertureStops = [1, 1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+
 const rangeInputs = {
   focal: $("focalSlider"),
   aperture: $("apertureSlider"),
@@ -130,6 +145,57 @@ const rangeInputs = {
   interviewFocal: $("interviewFocalSlider"),
   interviewDepth: $("interviewDepthSlider")
 };
+
+let bosSharedReady=false;
+
+function bosReadSharedState(){ return window.BOSModuleHost?.readShared?.()||null; }
+function bosPublishSharedState(){
+  if(!bosSharedReady)return;
+  try{
+    const previous=bosReadSharedState()||{};
+    const focal=parseFR(inputs.focal.value);
+    const aperture=parseFR(inputs.aperture.value);
+    const distance=parseFR(inputs.distance.value);
+    const theme=document.body.classList.contains("dark")?"dark":"light";
+    const next={
+      ...previous,
+      cameraId:currentCameraId,
+      focal:Number.isFinite(focal)?focal:previous.focal,
+      aperture:Number.isFinite(aperture)?aperture:previous.aperture,
+      distanceCm:Number.isFinite(distance)?distance*100:previous.distanceCm,
+      theme,
+      updatedAt:Date.now(),
+      source:"dof"
+    };
+    window.BOSModuleHost?.patchShared?.(next,'dof');
+  }catch(_){}
+}
+function bosApplySharedState(){
+  const shared=bosReadSharedState();
+  if(!shared)return false;
+  let changed=false;
+  if(shared.cameraId && cameraPresets.some(c=>c.id===shared.cameraId) && currentCameraId!==shared.cameraId){
+    currentCameraId=shared.cameraId; changed=true;
+    try{localStorage.setItem(DOF_CAMERA_KEY,currentCameraId)}catch(_){}
+  }
+  if(Number.isFinite(Number(shared.focal))){
+    const v=String(Number(shared.focal));
+    if(inputs.focal.value!==v){inputs.focal.value=v;changed=true;}
+  }
+  if(Number.isFinite(Number(shared.aperture))){
+    const v=String(Number(shared.aperture));
+    if(inputs.aperture.value!==v){inputs.aperture.value=v;changed=true;}
+  }
+  if(Number.isFinite(Number(shared.distanceCm))){
+    const v=(Number(shared.distanceCm)/100).toFixed(2);
+    if(inputs.distance.value!==v){inputs.distance.value=v;changed=true;}
+  }
+  if(shared.theme==="light"||shared.theme==="dark"){
+    try{localStorage.setItem("bg-set-tools-theme",shared.theme)}catch(_){}
+  }
+  return changed;
+}
+
 
 let subject2Enabled = true;
 let focusMode = "optimal";
@@ -799,6 +865,7 @@ function calculate() {
     clearTopView();
   }
   updateActiveChips();
+  bosPublishSharedState();
 }
 document.querySelectorAll(".chips[data-target]:not(.sensor-chips) button").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -1029,13 +1096,14 @@ function applyTheme(theme) {
   }
 }
 
-const savedTheme = localStorage.getItem("bg-set-tools-theme") || "light";
+const savedTheme = bosReadSharedState()?.theme || localStorage.getItem("bg-set-tools-theme") || "light";
 applyTheme(savedTheme);
 
 themeToggle.addEventListener("click", () => {
   const nextTheme = document.body.classList.contains("dark") ? "light" : "dark";
   localStorage.setItem("bg-set-tools-theme", nextTheme);
   applyTheme(nextTheme);
+  bosPublishSharedState();
 });
 
 // TIPS page navigation
@@ -1200,15 +1268,37 @@ function setupBosInstallExperience(){
 
 setupBosInstallExperience();
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  });
-}
-
 loadCachedCameraDb();
-try{currentCameraId=localStorage.getItem(DOF_CAMERA_KEY)||"ff";}catch(_){currentCameraId="ff";}
+
+const bosInitialShared=bosReadSharedState();
+try{
+  currentCameraId=(bosInitialShared?.cameraId)||localStorage.getItem(DOF_CAMERA_KEY)||"ff";
+}catch(_){
+  currentCameraId=bosInitialShared?.cameraId||"ff";
+}
 if(!cameraPresets.some(c=>c.id===currentCameraId)) currentCameraId="ff";
+
+bosApplySharedState();
+bosSharedReady=true;
 renderCameraSelect();
 calculate();
 refreshCameraDb();
+
+// Adapter environnement : retour intégré, masqué automatiquement en standalone.
+window.BOSModuleHost?.bindBack?.('bosBackBtn',bosPublishSharedState);
+
+// Si le navigateur restaure DOF depuis le bfcache, reprendre les éventuels changements BOS.
+window.addEventListener("pageshow",()=>{
+  if(!bosSharedReady)return;
+  if(bosApplySharedState()){
+    renderCameraSelect();
+    calculate();
+  }
+});
+
+// Service worker choisi par l’adaptateur : BOS racine en mode intégré, SW local en standalone.
+window.addEventListener('load',()=>window.BOSModuleHost?.registerServiceWorker?.(),{once:true});
+
+
+
+window.addEventListener('load',()=>window.BOSModuleHost?.trackOpen?.(),{once:true});
