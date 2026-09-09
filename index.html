@@ -18,6 +18,12 @@
 </head>
 <body>
   <main class="app" id="mainApp">
+<section class="install-app-row" id="installAppRow" hidden aria-label="Installer Bruno OnSet">
+      <button class="install-app-btn" id="installAppBtn" type="button">
+        INSTALLER L’APPLICATION <span aria-hidden="true">→</span>
+      </button>
+    </section>
+
 <header class="topbar cardlike">
       <div class="top-inner bos-top-inner">
         <div class="top-title bos-top-title">
@@ -35,8 +41,10 @@
       </div>
     </header>
 
-    <section class="dof-bos-return-row" aria-label="Retour à Bruno OnSet" data-bos-return>
-      <a class="dof-bos-return-link" id="bosBackBtn" href="./">← Retour à Bruno OnSet</a>
+    <section class="project-contact project-contact-top" aria-label="Contact professionnel">
+      <button class="project-contact-btn" id="projectContactBtn" type="button">
+        Parler de votre tournage <span aria-hidden="true">→</span>
+      </button>
     </section>
 
 <div class="utility-row bos-utility-row">
@@ -388,6 +396,22 @@
       </div>
     </footer>
   </main>
+<dialog id="installDialog" class="sheet install-sheet">
+    <form method="dialog" class="sheet-inner install-sheet-inner">
+      <div class="sheet-head">
+        <div>
+          <strong>Installer Bruno OnSet</strong>
+          <small id="installHelpText">Ajoutez l’application à votre écran d’accueil.</small>
+        </div>
+        <button value="close" class="iconbtn" aria-label="Fermer">×</button>
+      </div>
+      <div class="install-help" id="installHelpBody"></div>
+      <div class="sheet-actions">
+        <button value="close" class="primary">Compris</button>
+      </div>
+    </form>
+  </dialog>
+
 <dialog id="projectDialog" class="sheet project-sheet">
     <form method="dialog" class="sheet-inner project-sheet-inner">
       <div class="project-sheet-head">
@@ -399,13 +423,12 @@
 
       <div class="project-profile">
         <strong>Bruno Guillard</strong>
-        <span>Réalisateur · Directeur de la photographie · Consultant image</span>
+        <span>Directeur de la photographie · Consultant</span>
       </div>
 
       <div class="project-services" aria-label="Prestations">
-        <span>Réalisation</span>
         <span>Direction de la photographie</span>
-        <span>Conseil / préparation image</span>
+        <span>Consulting / préparation du projet</span>
       </div>
 
       <p class="project-note">
