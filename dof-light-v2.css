@@ -129,6 +129,9 @@ button,input,select,textarea{font-family:inherit!important}
   font-weight:600!important;
   letter-spacing:-.045em!important;
 }
+/* Les anciennes règles `body.dark` de style.css ne doivent pas figer les couleurs. */
+body.dark .bos-header-name{color:var(--bos-accent)!important}
+body.dark .bos-header-app{color:var(--bos-ink)!important}
 .mode-btn{
   min-width:42px!important;
   height:36px!important;
@@ -388,26 +391,33 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
   position:relative!important;
   z-index:3!important;
 }
-.bos-heading-title{
+/* Typographie des bulles = règles exactes de LIGHT (light-design.css).
+   Sélecteurs plus précis pour neutraliser l'ancien thème Montserrat V5.38. */
+.collapse-toggle.bos-card-heading .heading-copy .bos-heading-title{
   display:block!important;
+  margin:0!important;
   overflow:hidden!important;
   color:var(--bos-ink)!important;
+  font-family:inherit!important;
   font-size:15px!important;
   line-height:1.12!important;
   font-weight:600!important;
   letter-spacing:-.018em!important;
+  text-transform:none!important;
   white-space:nowrap!important;
   text-overflow:ellipsis!important;
 }
-.bos-heading-subtitle{
+.collapse-toggle.bos-card-heading .heading-copy .bos-heading-subtitle{
   display:block!important;
   margin:2px 0 0!important;
   overflow:hidden!important;
   color:var(--bos-muted)!important;
-  font-size:9.5px!important;
-  line-height:1.2!important;
+  font-family:inherit!important;
+  font-size:10px!important;
+  line-height:1.35!important;
   font-weight:400!important;
   letter-spacing:-.005em!important;
+  text-transform:none!important;
   white-space:nowrap!important;
   text-overflow:ellipsis!important;
 }
@@ -521,7 +531,7 @@ select,input:not([type="range"]),.camera-select,.free-value-readout{
   .bos-header-name{font-size:10px!important}
   .bos-header-app{font-size:23px!important}
   .panel{border-radius:16px!important}
-  .bos-heading-title{font-size:14px!important}
+  .collapse-toggle.bos-card-heading .heading-copy .bos-heading-title{font-size:14px!important}
   #installAppBtn::before{width:17px;height:17px;flex-basis:17px}
   #projectContactBtn::before{width:18px;height:18px;flex-basis:18px}
   .mode-switch.light-section-switch{border-radius:13px!important}
