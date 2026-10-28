@@ -926,7 +926,8 @@ Object.values(inputs).forEach(input => {
 });
 
 const dialog = $("infoDialog");
-$("infoBtn").addEventListener("click", () => dialog.showModal());
+const infoBtn = $("infoBtn");
+if (infoBtn) infoBtn.addEventListener("click", () => dialog.showModal());
 $("closeDialog").addEventListener("click", () => dialog.close());
 dialog.addEventListener("click", (e) => {
   if (e.target === dialog) dialog.close();
