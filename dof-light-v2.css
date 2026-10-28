@@ -17,10 +17,10 @@
   --bos-shadow-soft:0 5px 18px rgba(22,31,35,.045);
   --bos-radius:18px;
   --bos-bubble-gap:12px;
-  --bos-bubble-radius:22px;
-  --bos-bubble-collapsed-h:82px;
-  --bos-bubble-head-h:80px;
-  --bos-bubble-number:34px;
+  --bos-bubble-radius:18px;
+  --bos-bubble-collapsed-h:62px;
+  --bos-bubble-head-h:60px;
+  --bos-bubble-number:31px;
   --bos-bubble-warm:#8B857F;
   --bos-bubble-warm-soft:color-mix(in srgb,var(--bos-bubble-warm) 11%,var(--bos-panel));
   --bos-bubble-warm-line:color-mix(in srgb,var(--bos-bubble-warm) 20%,transparent);
@@ -90,7 +90,7 @@ button,input,select,textarea{font-family:inherit!important}
   width:min(760px,100%)!important;
   max-width:none!important;
   margin:0 auto!important;
-  padding:16px 12px calc(32px + env(safe-area-inset-bottom))!important;
+  padding:16px 16px calc(24px + env(safe-area-inset-bottom))!important;
 }
 .topbar{
   position:sticky!important;
@@ -306,7 +306,7 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
 /* Bulles : géométrie exacte de LIGHT et même composition photographique. */
 .panel{
   width:100%!important;
-  margin:0 0 var(--bos-bubble-gap)!important;
+  margin:var(--bos-bubble-gap) 0 0!important;
   padding:0!important;
   border:1px solid var(--bos-line)!important;
   border-radius:var(--bos-bubble-radius)!important;
@@ -314,14 +314,25 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
   box-shadow:var(--bos-shadow)!important;
   overflow:hidden!important;
 }
-.panel.collapsed{height:var(--bos-bubble-collapsed-h)!important;min-height:var(--bos-bubble-collapsed-h)!important}
+.dof-content-view#dofApplicationsView{padding-bottom:6px!important}
+#dofCameraSettingsPanel{margin-top:0!important}
+.panel.collapsed{
+  height:var(--bos-bubble-collapsed-h)!important;
+  min-height:var(--bos-bubble-collapsed-h)!important;
+  max-height:var(--bos-bubble-collapsed-h)!important;
+}
 .panel-head,.compact-head{
   display:block!important;
   width:100%!important;
-  height:var(--bos-bubble-head-h)!important;
-  min-height:var(--bos-bubble-head-h)!important;
+  height:auto!important;
+  min-height:0!important;
   margin:0!important;
   padding:0!important;
+}
+.panel.collapsed .panel-head{
+  height:var(--bos-bubble-head-h)!important;
+  min-height:var(--bos-bubble-head-h)!important;
+  max-height:var(--bos-bubble-head-h)!important;
 }
 .collapse-toggle{
   display:grid!important;
@@ -330,17 +341,24 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
   column-gap:12px!important;
   position:relative!important;
   width:100%!important;
-  height:var(--bos-bubble-head-h)!important;
-  min-height:var(--bos-bubble-head-h)!important;
+  height:auto!important;
+  min-height:0!important;
   margin:0!important;
-  padding:14px 16px!important;
-  padding-right:calc(clamp(180px,23vw,240px) + 48px)!important;
+  padding:15px 228px 14px 16px!important;
   border:0!important;
   border-radius:0!important;
   background:transparent!important;
   color:var(--bos-ink)!important;
   overflow:hidden!important;
   text-align:left!important;
+}
+.panel.collapsed .collapse-toggle{
+  height:var(--bos-bubble-head-h)!important;
+  min-height:var(--bos-bubble-head-h)!important;
+  max-height:var(--bos-bubble-head-h)!important;
+}
+.panel:not(.collapsed) .collapse-toggle{
+  border-bottom:1px solid var(--bos-line)!important;
 }
 .collapse-toggle>.step{
   grid-column:1!important;
@@ -383,11 +401,11 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
 }
 .bos-heading-subtitle{
   display:block!important;
-  margin:4px 0 0!important;
+  margin:2px 0 0!important;
   overflow:hidden!important;
   color:var(--bos-muted)!important;
-  font-size:10px!important;
-  line-height:1.35!important;
+  font-size:9.5px!important;
+  line-height:1.2!important;
   font-weight:400!important;
   letter-spacing:-.005em!important;
   white-space:nowrap!important;
@@ -417,7 +435,7 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
   top:0!important;
   right:0!important;
   bottom:0!important;
-  width:clamp(180px,23vw,240px)!important;
+  width:180px!important;
   min-height:100%!important;
   border-radius:0 18px 18px 0!important;
   background-repeat:no-repeat!important;
@@ -455,7 +473,7 @@ body.dark .collapse-toggle::before{filter:brightness(.72) saturate(.86)!importan
 }
 .panel:not(.collapsed) .collapse-toggle>.chevron{transform:translateY(-50%) rotate(180deg)!important}
 .panel:not(.collapsed){border-color:color-mix(in srgb,var(--bos-bubble-warm) 14%,var(--bos-line))!important}
-.method-content,.mode-panel-content,.interview-content{border-top:1px solid var(--bos-line)!important}
+.method-content,.mode-panel-content,.interview-content{border-top:0!important}
 
 /* Composants intérieurs : mêmes surfaces et typographie que LIGHT, logique DOF inchangée. */
 select,input:not([type="range"]),.camera-select,.free-value-readout{
@@ -497,7 +515,7 @@ select,input:not([type="range"]),.camera-select,.free-value-readout{
 }
 
 @media(max-width:520px){
-  .app{padding-left:10px!important;padding-right:10px!important}
+  .app{padding-left:max(9px,env(safe-area-inset-left))!important;padding-right:max(9px,env(safe-area-inset-right))!important}
   .topbar{top:5px!important;padding:10px 11px!important;border-radius:16px!important}
   .bos-header-logo{width:43px!important;height:43px!important;flex-basis:43px!important}
   .bos-header-name{font-size:10px!important}
