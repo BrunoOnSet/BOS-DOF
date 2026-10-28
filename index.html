@@ -74,16 +74,16 @@
       </div>
     </section>
 
-    <section class="panel input-panel dof-controls-panel mode-panel" id="pdcPanel">
+    <section class="panel input-panel dof-controls-panel mode-panel collapsed" id="pdcPanel">
       <div class="panel-head compact-head bos-card-head">
-        <button type="button" class="collapse-toggle card-heading collapsible-heading bos-card-heading" id="pdcToggle" aria-expanded="true" aria-controls="pdcContent">
+        <button type="button" class="collapse-toggle card-heading collapsible-heading bos-card-heading" id="pdcToggle" aria-expanded="false" aria-controls="pdcContent">
           <span class="step">02</span>
           <span class="heading-copy"><span class="bos-heading-title">PDC</span><small class="bos-heading-subtitle">Profondeur de Champ</small></span>
           <span class="summary-value" id="pdcSummary">50 mm · f/2,8 · 2,50 m</span>
           <span class="chevron collapse-chevron" aria-hidden="true">⌄</span>
         </button>
       </div>
-      <div class="mode-panel-content" id="pdcContent">
+      <div class="mode-panel-content" id="pdcContent" hidden>
 
       <div class="compact-setting-block">
         <div class="dof-range-slider">
@@ -398,7 +398,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.51</span>
+        <span class="app-version">v5.52</span>
       </div>
     </footer>
   </main>
@@ -571,6 +571,6 @@
 <script src="shared/analytics.js?v=79"></script>
 <script src="adapters/standalone.js?v=79"></script>
 <script src="shared/module-host.js?v=79"></script>
-<script src="app.js?v=5.48-exact-light-sizes"></script>
+<script src="app.js?v=5.52-pdc-closed-default"></script>
 </body>
 </html>

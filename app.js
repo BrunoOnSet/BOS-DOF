@@ -1184,7 +1184,7 @@ function resetDofInterface(){
   });
 
   setDofPanelOpen("dofCameraSettingsPanel","dofCameraSettingsToggle","dofCameraSettingsContent",false);
-  setDofPanelOpen("pdcPanel","pdcToggle","pdcContent",true);
+  setDofPanelOpen("pdcPanel","pdcToggle","pdcContent",false);
   setDofPanelOpen("interviewPanel","interviewToggle","interviewContent",false);
   setDofPanelOpen("twoSubjectsPanel","twoSubjectsToggle","twoSubjectsContent",false);
 
