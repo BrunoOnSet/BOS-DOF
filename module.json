@@ -1,7 +1,7 @@
 {
   "id": "dof",
   "name": "DOF",
-  "version": "5.48",
+  "version": "5.49",
   "script": "app.js",
   "style": "dof-light-entry.css",
   "fallbackData": [
