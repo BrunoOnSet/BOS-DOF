@@ -1,3 +1,3 @@
 /* Point d'entrée CSS unique du module DOF, utilisable en intégré comme en standalone. */
 @import url("./style.css?v=5.48-exact-light-sizes");
-@import url("./dof-light-v2.css?v=5.51");
+@import url("./dof-light-v2.css?v=5.53");

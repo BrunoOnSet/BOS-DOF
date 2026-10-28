@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared/module-shell.css?v=79" />
-  <link rel="stylesheet" href="dof-light-entry.css?v=5.51" />
+  <link rel="stylesheet" href="dof-light-entry.css?v=5.53" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
 </head>
@@ -87,7 +87,7 @@
 
       <div class="compact-setting-block">
         <div class="dof-range-slider">
-          <span>FOCALE</span>
+          <span class="dof-control-label"><span class="dof-control-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="18" height="15" rx="3.3"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/></svg></span><span class="dof-control-text">FOCALE</span></span>
           <input id="focalSlider" type="range" min="9" max="200" step="1" value="50" aria-label="Focale" />
           <button id="focalCurrentValue" class="free-value-readout" type="button" data-custom-target="focal" title="Cliquer pour saisir une valeur libre">50 mm</button>
         </div>
@@ -96,7 +96,7 @@
 
       <div class="compact-setting-block">
         <div class="dof-range-slider">
-          <span>DIAPH</span>
+          <span class="dof-control-label"><span class="dof-control-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 3.2 8.6 9l3.4 3m8.1-4.4-6.7-.2L12 12m4.2 7.5-3.4-5.5L12 12m-8.1 4.4 6.7.2L12 12M7.8 4.5l3.4 5.5L12 12m-8.1-4.4 6.7.2L12 12"/></svg></span><span class="dof-control-text">DIAPH</span></span>
           <input id="apertureSlider" type="range" min="0" max="9" step="1" value="3" aria-label="Diaphragme" />
           <button id="apertureCurrentValue" class="free-value-readout" type="button" data-custom-target="aperture" title="Cliquer pour saisir une valeur libre">f/2.8</button>
         </div>
@@ -105,7 +105,7 @@
 
       <div class="compact-setting-block">
         <div class="dof-range-slider dof-distance-slider">
-          <span>SUJET 1 · DISTANCE CAMÉRA</span>
+          <span class="dof-control-label"><span class="dof-control-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="6.5" r="3"/><path d="M5.7 20v-2.3a6.3 6.3 0 0 1 12.6 0V20"/><path d="M4.5 20h15"/></svg></span><span class="dof-control-text">SUJET 1<small>Distance caméra</small></span></span>
           <input id="distanceSlider" type="range" min="0.30" max="15" step="0.10" value="2.50" aria-label="Distance caméra du sujet 1" />
           <button id="distanceCurrentValue" class="free-value-readout" type="button" data-custom-target="distance" title="Cliquer pour saisir une valeur libre">2,50 m</button>
         </div>
@@ -123,15 +123,39 @@
           <div class="hero-hyper" id="heroHyper">Hyperfocale —</div>
         </div>
 
-        <div class="visual" aria-hidden="true">
-          <div class="line"></div>
-          <div class="zone"></div>
-          <div class="near-mark"></div>
-          <div class="focus-mark"></div>
-          <div class="far-mark"></div>
-          <div class="visual-label near" id="frontLabel">—</div>
-          <div class="visual-label focus">MAP</div>
-          <div class="visual-label far" id="backLabel">—</div>
+        <div class="visual dof-visual" aria-hidden="true">
+          <div class="dof-visual-head">
+            <span>COMPRENDRE LA ZONE NETTE</span>
+            <small>Schéma non à l’échelle</small>
+          </div>
+          <div class="dof-visual-axis">
+            <div class="dof-visual-camera">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="8" width="13" height="10" rx="2.5"/><path d="m16 11 5-2.5v9L16 15"/><path d="M7 8V6.5h5V8"/></svg>
+              <small>Caméra</small>
+            </div>
+            <div class="dof-visual-areas">
+              <div class="dof-visual-area dof-visual-blur"><span>Flou<br>avant</span></div>
+              <div class="dof-visual-area dof-visual-sharp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="6" r="2.6"/><path d="M8.6 12.2h6.8M12 9v9m0 0-3 3m3-3 3 3M8.6 12.2 6 16m9.4-3.8 2.6 3.8"/></svg>
+                <span>ZONE NETTE</span>
+              </div>
+              <div class="dof-visual-area dof-visual-blur"><span>Flou<br>arrière</span></div>
+            </div>
+          </div>
+          <div class="dof-visual-values">
+            <div class="dof-visual-value">
+              <small>DEVANT LA MAP</small>
+              <strong class="visual-label near" id="frontLabel">—</strong>
+            </div>
+            <div class="dof-visual-value dof-visual-value-focus">
+              <small>MISE AU POINT</small>
+              <strong class="visual-label focus">MAP</strong>
+            </div>
+            <div class="dof-visual-value">
+              <small>APRÈS LA MAP</small>
+              <strong class="visual-label far" id="backLabel">—</strong>
+            </div>
+          </div>
         </div>
       </div>
       </div>
@@ -398,7 +422,7 @@
           <img class="brand-logo footer-logo" src="logo-bruno-guillard.png" alt="" />
           <span>Made for the set · Bruno Guillard</span>
         </a>
-        <span class="app-version">v5.52</span>
+        <span class="app-version">v5.53</span>
       </div>
     </footer>
   </main>
