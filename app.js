@@ -1092,7 +1092,7 @@ function applyTheme(theme) {
   themeToggle.textContent = isDark ? "LIGHT" : "DARK";
   themeToggle.setAttribute("aria-label", isDark ? "Passer en mode clair" : "Passer en mode sombre");
   if (themeColorMeta) {
-    themeColorMeta.setAttribute("content", isDark ? "#0B0C0E" : "#F3F1EC");
+    themeColorMeta.setAttribute("content", isDark ? "#101315" : "#F4F5F5");
   }
 }
 
@@ -1218,10 +1218,10 @@ function showBosInstallHelp(){
   if(!dlg||!body)return;
   if(bosIsIos()){
     if(intro)intro.textContent="Installation sur iPhone / iPad";
-    body.innerHTML="<p><strong>Safari :</strong> touchez le bouton <strong>Partager</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois Bruno OnSet lancé depuis son icône, ce bouton d’installation disparaît automatiquement.</p>";
+    body.innerHTML="<p><strong>Safari :</strong> touchez le bouton <strong>Partager</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois DOF lancé depuis son icône, ce bouton d’installation disparaît automatiquement.</p>";
   }else{
     if(intro)intro.textContent="Installation depuis votre navigateur";
-    body.innerHTML="<p>Ouvrez le menu de votre navigateur puis choisissez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois Bruno OnSet lancé comme application, ce bouton disparaît automatiquement.</p>";
+    body.innerHTML="<p>Ouvrez le menu de votre navigateur puis choisissez <strong>Installer l’application</strong> ou <strong>Ajouter à l’écran d’accueil</strong>.</p><p>Une fois DOF lancé comme application, ce bouton disparaît automatiquement.</p>";
   }
   dlg.showModal();
 }

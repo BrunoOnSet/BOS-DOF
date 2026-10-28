@@ -1,9 +1,9 @@
 {
   "id": "dof",
   "name": "DOF",
-  "version": "5.44",
+  "version": "5.45",
   "script": "app.js",
-  "style": "style.css",
+  "style": "dof-light-entry.css",
   "fallbackData": [
     "cameras"
   ],
