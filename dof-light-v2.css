@@ -446,10 +446,10 @@ body.dark .project-contact-btn span{color:var(--bos-muted)!important}
   -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.72) 15%,#000 34%,#000 100%);
   mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.72) 15%,#000 34%,#000 100%);
 }
-#dofCameraSettingsToggle::before{background-image:url("assets/thumb-camera.webp")!important}
-#pdcToggle::before{background-image:url("assets/thumb-pdc.webp")!important}
-#interviewToggle::before{background-image:url("assets/thumb-itw.webp")!important}
-#twoSubjectsToggle::before{background-image:url("assets/thumb-two-subjects.webp")!important}
+#dofCameraSettingsToggle::before{background-image:url("assets/thumb-camera.webp?v=5.50")!important}
+#pdcToggle::before{background-image:url("assets/thumb-pdc.webp?v=5.50")!important}
+#interviewToggle::before{background-image:url("assets/thumb-itw.webp?v=5.50")!important}
+#twoSubjectsToggle::before{background-image:url("assets/thumb-two-subjects.webp?v=5.50")!important}
 body.dark .collapse-toggle::before{filter:brightness(.72) saturate(.86)!important;opacity:.88!important}
 .collapse-toggle>.chevron{
   position:absolute!important;
