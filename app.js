@@ -1106,26 +1106,41 @@ themeToggle.addEventListener("click", () => {
   bosPublishSharedState();
 });
 
-// TIPS page navigation
+// V5.46 — même sélecteur APPLICATIONS / FICHES TECHNIQUES que LIGHT.
+// Le contenu TIPS existant est déplacé dans la fiche technique sans duplication.
 const tipsPage = document.getElementById("tipsPage");
-const mainApp = document.getElementById("mainApp");
 const tipsBtn = document.getElementById("tipsBtn");
 const tipsBackBtn = document.getElementById("tipsBackBtn");
+const dofTipsMount = document.getElementById("dofTipsMount");
+const dofApplicationsView = document.getElementById("dofApplicationsView");
+const dofTechnicalView = document.getElementById("dofTechnicalView");
+const applicationsModeBtn = document.getElementById("applicationsModeBtn");
+const technicalModeBtn = document.getElementById("technicalModeBtn");
 
-function openTips() {
-  mainApp.hidden = true;
+if (tipsPage && dofTipsMount) {
+  dofTipsMount.appendChild(tipsPage);
   tipsPage.hidden = false;
-  window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-function closeTips() {
-  tipsPage.hidden = true;
-  mainApp.hidden = false;
-  window.scrollTo({ top: 0, behavior: "instant" });
+function setDofContentMode(mode, scrollToTop = true) {
+  const isTechnical = mode === "technical";
+  dofApplicationsView.hidden = isTechnical;
+  dofTechnicalView.hidden = !isTechnical;
+  applicationsModeBtn.classList.toggle("active", !isTechnical);
+  technicalModeBtn.classList.toggle("active", isTechnical);
+  applicationsModeBtn.setAttribute("aria-pressed", isTechnical ? "false" : "true");
+  technicalModeBtn.setAttribute("aria-pressed", isTechnical ? "true" : "false");
+  if (scrollToTop) window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-tipsBtn.addEventListener("click", openTips);
-tipsBackBtn.addEventListener("click", closeTips);
+function openTips() { setDofContentMode("technical"); }
+function closeTips() { setDofContentMode("applications"); }
+
+applicationsModeBtn.addEventListener("click", closeTips);
+technicalModeBtn.addEventListener("click", openTips);
+if (tipsBtn) tipsBtn.addEventListener("click", openTips);
+if (tipsBackBtn) tipsBackBtn.addEventListener("click", closeTips);
+setDofContentMode("applications", false);
 
 const projectDialog=document.getElementById("projectDialog");
 const projectContactBtn=document.getElementById("projectContactBtn");
