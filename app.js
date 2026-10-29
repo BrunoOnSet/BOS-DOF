@@ -1146,7 +1146,7 @@ setDofContentMode("applications", false);
 const projectDialog=document.getElementById("projectDialog");
 const projectContactBtn=document.getElementById("projectContactBtn");
 if(projectContactBtn && projectDialog) projectContactBtn.addEventListener("click",()=>projectDialog.showModal());
-if(projectDialog) projectDialog.addEventListener("click",event=>{if(event.target===projectDialog)projectDialog.close();});
+// Comme LIGHT : fermeture par la croix, la touche Échap ou le formulaire.
 
 function setDofPanelOpen(panelId,toggleId,contentId,isOpen){
   const panel=$(panelId),toggle=$(toggleId),content=$(contentId);
