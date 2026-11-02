@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared/module-shell.css?v=79" />
-  <link rel="stylesheet" href="dof-light-entry.css?v=5.64" />
+  <link rel="stylesheet" href="dof-light-entry.css?v=5.65" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
 </head>
@@ -86,7 +86,12 @@
       <div class="mode-panel-content" id="pdcContent" hidden>
 
       <!-- PREVIEW de cadrage reprise du module FRAME : Sujet 1, 1,75 m, ratio 16:9. -->
-      <div class="dof-framing-preview" aria-label="Simulation du cadrage avec la focale et la distance du Sujet 1">
+      <div class="dof-framing-preview" aria-label="Simulation du cadrage avec la focale, la distance et la hauteur de la caméra">
+        <div class="dof-framing-height-control">
+          <label for="dofCameraHeightSlider">HAUTEUR CAMÉRA</label>
+          <input id="dofCameraHeightSlider" type="range" min="0.50" max="2.50" step="0.01" value="1.55" aria-label="Hauteur de la caméra dans la preview" />
+          <strong id="dofCameraHeightReadout" class="free-value-readout" role="button" tabindex="0" aria-label="Saisir librement la hauteur de la caméra" title="Cliquer pour saisir une valeur libre">1,55 m</strong>
+        </div>
         <div class="dof-framing-stage" id="dofFramingStage">
           <div class="dof-framing-wall"></div>
           <div class="dof-framing-floor"></div>
@@ -549,6 +554,6 @@
 <script src="shared/analytics.js?v=79"></script>
 <script src="adapters/standalone.js?v=79"></script>
 <script src="shared/module-host.js?v=79"></script>
-<script src="app.js?v=5.64-frame-preview"></script>
+<script src="app.js?v=5.65-height-preview"></script>
 </body>
 </html>
