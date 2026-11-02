@@ -731,3 +731,69 @@ select,input:not([type="range"]),.camera-select,.free-value-readout{
 @media(max-width:520px){
   #projectDialog .project-sheet-inner{padding:14px!important}
 }
+
+
+/* V5.64 — Cadre optique du module FRAME dans la seule bulle PDC (02).
+   Mannequin 310 × 1300 d'origine, cadrage 16:9, aucune commande supplémentaire. */
+#pdcContent .dof-framing-preview{margin:0 0 15px;min-width:0}
+#pdcContent .dof-framing-stage{
+  position:relative;width:100%;height:clamp(250px,58vw,380px);
+  overflow:hidden;border-radius:16px;border:1px solid var(--bos-line);
+  background:#d8dad9;isolation:isolate;
+}
+#pdcContent .dof-framing-wall{
+  position:absolute;inset:0 0 24% 0;
+  background:radial-gradient(circle at 50% 34%,rgba(255,255,255,.95) 0%,rgba(240,241,239,.92) 28%,rgba(207,211,209,.98) 74%,#c3c7c5 100%);
+}
+#pdcContent .dof-framing-floor{
+  position:absolute;left:-12%;right:-12%;bottom:-7%;height:38%;
+  background:linear-gradient(to bottom,rgba(191,195,193,.72),#b8bcba 62%,#aeb2b0);
+  transform:perspective(480px) rotateX(63deg);transform-origin:bottom center;
+}
+#pdcContent .dof-framing-floor:after{
+  content:"";position:absolute;left:0;right:0;top:12%;height:1px;
+  background:rgba(74,80,78,.22);
+  box-shadow:0 26px rgba(74,80,78,.08),0 52px rgba(74,80,78,.06);
+}
+#pdcContent .dof-framing-person{
+  position:absolute;z-index:3;transform:translateX(-50%);
+  transform-origin:top center;pointer-events:none;
+}
+#pdcContent .dof-framing-person img{
+  display:block;width:100%;height:100%;object-fit:contain;overflow:visible;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.12));
+}
+#pdcContent .dof-framing-mask{
+  position:absolute;inset:0;z-index:4;pointer-events:none;
+}
+#pdcContent .dof-framing-frame{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  border:1px solid rgba(255,255,255,.76);
+  box-shadow:0 0 0 9999px rgba(0,0,0,.14);
+}
+#pdcContent .dof-framing-corner{position:absolute;width:26px;height:26px}
+#pdcContent .dof-framing-corner.tl{top:-2px;left:-2px;border-top:3px solid #2f5b66;border-left:3px solid #2f5b66}
+#pdcContent .dof-framing-corner.tr{top:-2px;right:-2px;border-top:3px solid #2f5b66;border-right:3px solid #2f5b66}
+#pdcContent .dof-framing-corner.bl{bottom:-2px;left:-2px;border-bottom:3px solid #2f5b66;border-left:3px solid #2f5b66}
+#pdcContent .dof-framing-corner.br{bottom:-2px;right:-2px;border-bottom:3px solid #2f5b66;border-right:3px solid #2f5b66}
+#pdcContent .dof-framing-eye-guide{
+  position:absolute;z-index:5;height:1px;
+  border-top:1px dashed rgba(46,127,142,.5);pointer-events:none;
+}
+#pdcContent .dof-framing-eye-guide span{
+  position:absolute;right:8px;top:-14px;padding:2px 5px;border-radius:5px;
+  background:rgba(11,12,14,.48);color:rgba(255,255,255,.72);
+  font-size:6px;font-weight:850;letter-spacing:.06em;
+}
+#pdcContent .dof-framing-legend{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:10px;padding:10px 2px 0;color:var(--bos-ink);
+}
+#pdcContent .dof-framing-legend strong{font-size:12px;font-weight:650;letter-spacing:-.015em}
+#pdcContent .dof-framing-legend span{font-size:11px;color:var(--bos-accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+#pdcContent .dof-framing-note{margin:4px 2px 0;color:var(--bos-muted);font-size:9px}
+@media(max-width:420px){
+  #pdcContent .dof-framing-stage{height:265px}
+  #pdcContent .dof-framing-legend strong{font-size:11px}
+  #pdcContent .dof-framing-legend span{font-size:10px}
+}
