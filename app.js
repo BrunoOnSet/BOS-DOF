@@ -816,11 +816,16 @@ function updateEquivalentInfo(focal, distanceM) {
 
 
 
-// Identique à FRAME : hauteur caméra modifiable indépendamment de la MAP et de la PDC.
-// L'angle optique reste calé sur une caméra de référence à 1,55 m,
-// donc le sujet monte/descend naturellement lorsque la hauteur change.
+// AUTO : comportement d'origine (cadrage à la hauteur de référence 1,55 m).
+// MANUEL : hauteur caméra modifiable sans recadrage de l'axe,
+// indépendamment de la MAP et des calculs de PDC.
 const DOF_CAMERA_HEIGHT_KEY="bos-dof-preview-camera-height-v1";
+const DOF_CAMERA_HEIGHT_MODE_KEY="bos-dof-preview-camera-height-mode-v1";
 const DOF_DEFAULT_CAMERA_HEIGHT=1.55;
+function dofReadHeightMode(){
+  try{return localStorage.getItem(DOF_CAMERA_HEIGHT_MODE_KEY)==="manual"?"manual":"auto";}catch(_){return "auto";}
+}
+let dofCameraHeightMode=dofReadHeightMode();
 function dofReadCameraHeight(){
   try{
     const val=Number(localStorage.getItem(DOF_CAMERA_HEIGHT_KEY));
@@ -830,8 +835,31 @@ function dofReadCameraHeight(){
 let dofCameraHeight=dofReadCameraHeight();
 function dofSyncCameraHeight(){
   const slider=$("dofCameraHeightSlider"),readout=$("dofCameraHeightReadout");
-  if(slider)slider.value=String(dofCameraHeight);
-  if(readout&&!readout.querySelector("input"))readout.textContent=dofCameraHeight.toFixed(2).replace(".",",")+" m";
+  const modeButton=$("dofCameraHeightMode"),container=$("dofFramingHeightControl");
+  const manual=dofCameraHeightMode==="manual";
+  if(slider){
+    slider.value=String(dofCameraHeight);
+    slider.disabled=!manual;
+  }
+  if(readout){
+    if(!readout.querySelector("input"))readout.textContent=dofCameraHeight.toFixed(2).replace(".",",")+" m";
+    readout.setAttribute("aria-disabled",manual?"false":"true");
+    readout.tabIndex=manual?0:-1;
+    readout.title=manual?"Cliquer pour saisir une valeur libre":"Disponible en mode manuel";
+  }
+  if(modeButton){
+    modeButton.textContent=manual?"MANUEL":"AUTO";
+    modeButton.setAttribute("aria-pressed",manual?"true":"false");
+    modeButton.setAttribute("aria-label",manual?"Passer en mode automatique":"Passer en mode manuel");
+  }
+  container?.classList.toggle("is-auto",!manual);
+  container?.classList.toggle("is-manual",manual);
+}
+function dofSetCameraHeightMode(mode){
+  dofCameraHeightMode=mode==="manual"?"manual":"auto";
+  try{localStorage.setItem(DOF_CAMERA_HEIGHT_MODE_KEY,dofCameraHeightMode);}catch(_){}
+  dofSyncCameraHeight();
+  updateDofFramingPreview(parseFR(inputs.focal.value),parseFR(inputs.distance.value));
 }
 function dofSetCameraHeight(next){
   const val=Number(String(next).replace(",","."));
@@ -843,7 +871,7 @@ function dofSetCameraHeight(next){
 }
 function dofEditCameraHeight(){
   const readout=$("dofCameraHeightReadout");
-  if(!readout||readout.querySelector("input"))return;
+  if(dofCameraHeightMode!=="manual"||!readout||readout.querySelector("input"))return;
   const input=document.createElement("input");
   input.type="number";
   input.inputMode="decimal";
@@ -873,7 +901,13 @@ function dofEditCameraHeight(){
 }
 function dofInitCameraHeightControl(){
   const slider=$("dofCameraHeightSlider"),readout=$("dofCameraHeightReadout");
-  slider?.addEventListener("input",e=>dofSetCameraHeight(e.target.value));
+  const modeButton=$("dofCameraHeightMode");
+  modeButton?.addEventListener("click",()=>{
+    dofSetCameraHeightMode(dofCameraHeightMode==="auto"?"manual":"auto");
+  });
+  slider?.addEventListener("input",e=>{
+    if(dofCameraHeightMode==="manual")dofSetCameraHeight(e.target.value);
+  });
   readout?.addEventListener("click",dofEditCameraHeight);
   readout?.addEventListener("keydown",e=>{
     if((e.key==="Enter"||e.key===" ")&&!readout.querySelector("input")){
@@ -922,7 +956,8 @@ function updateDofFramingPreview(focal,distanceM){
   guide.style.top=(top+pxH/3)+"px";
 
   // Projection perspective utilisée dans FRAME pour le même mannequin.
-  const figureH=1.75,cameraH=dofCameraHeight,referenceCameraH=1.55;
+  const figureH=1.75,referenceCameraH=DOF_DEFAULT_CAMERA_HEIGHT;
+  const cameraH=dofCameraHeightMode==="auto"?referenceCameraH:dofCameraHeight;
   const eyeHeight=figureH*(1-(dofFrameFigure.eye-dofFrameFigure.head)/(dofFrameFigure.foot-dofFrameFigure.head));
   const tanHalfV=sensorWidth/(2*focal*ratio);
   const eyeAngle=Math.atan((1/3)*tanHalfV);
@@ -1307,6 +1342,7 @@ function setDofPanelOpen(panelId,toggleId,contentId,isOpen){
 
 function resetDofInterface(){
   dofSetCameraHeight(DOF_DEFAULT_CAMERA_HEIGHT);
+  dofSetCameraHeightMode("auto");
   inputs.focal.value="50";
   inputs.aperture.value="2.8";
   inputs.distance.value="2.50";
