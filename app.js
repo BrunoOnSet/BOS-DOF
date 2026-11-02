@@ -815,10 +815,79 @@ function updateEquivalentInfo(focal, distanceM) {
 }
 
 
+
+// Identique à FRAME : hauteur caméra modifiable indépendamment de la MAP et de la PDC.
+// L'angle optique reste calé sur une caméra de référence à 1,55 m,
+// donc le sujet monte/descend naturellement lorsque la hauteur change.
+const DOF_CAMERA_HEIGHT_KEY="bos-dof-preview-camera-height-v1";
+const DOF_DEFAULT_CAMERA_HEIGHT=1.55;
+function dofReadCameraHeight(){
+  try{
+    const val=Number(localStorage.getItem(DOF_CAMERA_HEIGHT_KEY));
+    return Number.isFinite(val)&&val>=0.50&&val<=2.50?val:DOF_DEFAULT_CAMERA_HEIGHT;
+  }catch(_){return DOF_DEFAULT_CAMERA_HEIGHT;}
+}
+let dofCameraHeight=dofReadCameraHeight();
+function dofSyncCameraHeight(){
+  const slider=$("dofCameraHeightSlider"),readout=$("dofCameraHeightReadout");
+  if(slider)slider.value=String(dofCameraHeight);
+  if(readout&&!readout.querySelector("input"))readout.textContent=dofCameraHeight.toFixed(2).replace(".",",")+" m";
+}
+function dofSetCameraHeight(next){
+  const val=Number(String(next).replace(",","."));
+  if(!Number.isFinite(val))return;
+  dofCameraHeight=Math.round(Math.max(0.50,Math.min(2.50,val))*100)/100;
+  try{localStorage.setItem(DOF_CAMERA_HEIGHT_KEY,String(dofCameraHeight));}catch(_){}
+  dofSyncCameraHeight();
+  updateDofFramingPreview(parseFR(inputs.focal.value),parseFR(inputs.distance.value));
+}
+function dofEditCameraHeight(){
+  const readout=$("dofCameraHeightReadout");
+  if(!readout||readout.querySelector("input"))return;
+  const input=document.createElement("input");
+  input.type="number";
+  input.inputMode="decimal";
+  input.step="0.01";
+  input.min="0.50";
+  input.max="2.50";
+  input.value=String(dofCameraHeight);
+  input.className="dof-framing-height-input";
+  input.setAttribute("aria-label","Hauteur caméra en mètres");
+  readout.textContent="";
+  readout.appendChild(input);
+  input.focus();
+  input.select();
+  let finished=false;
+  const finish=(commit)=>{
+    if(finished)return;
+    finished=true;
+    const v=Number(String(input.value).replace(",","."));
+    if(commit&&Number.isFinite(v)&&input.value.trim()!=="")dofSetCameraHeight(v);
+    readout.textContent=dofCameraHeight.toFixed(2).replace(".",",")+" m";
+  };
+  input.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();finish(true);input.blur();}
+    else if(e.key==="Escape"){e.preventDefault();finish(false);input.blur();}
+  });
+  input.addEventListener("blur",()=>finish(true),{once:true});
+}
+function dofInitCameraHeightControl(){
+  const slider=$("dofCameraHeightSlider"),readout=$("dofCameraHeightReadout");
+  slider?.addEventListener("input",e=>dofSetCameraHeight(e.target.value));
+  readout?.addEventListener("click",dofEditCameraHeight);
+  readout?.addEventListener("keydown",e=>{
+    if((e.key==="Enter"||e.key===" ")&&!readout.querySelector("input")){
+      e.preventDefault();dofEditCameraHeight();
+    }
+  });
+  dofSyncCameraHeight();
+}
+dofInitCameraHeightControl();
+
 // Preview optique de FRAME, intégrée à la seule bulle 02 de DOF.
 // Même mannequin et mêmes repères anatomiques, capteur issu de la base caméra BOS.
-// Convention FRAME : sujet de 1,75 m, ratio 16:9, caméra à 1,55 m,
-// axe composé pour placer les yeux au tiers supérieur.
+// Convention FRAME : sujet de 1,75 m, ratio 16:9, hauteur caméra réglable,
+// axe composé sur la hauteur de référence de 1,55 m.
 const dofFrameFigure={w:310,h:1300,head:2.08,eye:79.56,chest:297.96,waist:461.24,knee:875.68,foot:1289.6};
 const dofFramePlans=[
   {label:"TRÈS GROS PLAN",crop:145},
@@ -853,11 +922,11 @@ function updateDofFramingPreview(focal,distanceM){
   guide.style.top=(top+pxH/3)+"px";
 
   // Projection perspective utilisée dans FRAME pour le même mannequin.
-  const figureH=1.75,cameraH=1.55;
+  const figureH=1.75,cameraH=dofCameraHeight,referenceCameraH=1.55;
   const eyeHeight=figureH*(1-(dofFrameFigure.eye-dofFrameFigure.head)/(dofFrameFigure.foot-dofFrameFigure.head));
   const tanHalfV=sensorWidth/(2*focal*ratio);
   const eyeAngle=Math.atan((1/3)*tanHalfV);
-  const axis=Math.atan2(eyeHeight-cameraH,distanceM)-eyeAngle;
+  const axis=Math.atan2(eyeHeight-referenceCameraH,distanceM)-eyeAngle;
   const cos=Math.cos(axis),sin=Math.sin(axis);
   const projection=z=>{
     const dz=z-cameraH;
@@ -1237,6 +1306,7 @@ function setDofPanelOpen(panelId,toggleId,contentId,isOpen){
 }
 
 function resetDofInterface(){
+  dofSetCameraHeight(DOF_DEFAULT_CAMERA_HEIGHT);
   inputs.focal.value="50";
   inputs.aperture.value="2.8";
   inputs.distance.value="2.50";
