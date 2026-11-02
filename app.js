@@ -814,6 +814,81 @@ function updateEquivalentInfo(focal, distanceM) {
   $("ffDistanceSameFocal").textContent = formatM(ffDistanceSameFocal);
 }
 
+
+// Preview optique de FRAME, intégrée à la seule bulle 02 de DOF.
+// Même mannequin et mêmes repères anatomiques, capteur issu de la base caméra BOS.
+// Convention FRAME : sujet de 1,75 m, ratio 16:9, caméra à 1,55 m,
+// axe composé pour placer les yeux au tiers supérieur.
+const dofFrameFigure={w:310,h:1300,head:2.08,eye:79.56,chest:297.96,waist:461.24,knee:875.68,foot:1289.6};
+const dofFramePlans=[
+  {label:"TRÈS GROS PLAN",crop:145},
+  {label:"GROS PLAN",crop:220},
+  {label:"POITRINE",crop:dofFrameFigure.chest},
+  {label:"TAILLE",crop:dofFrameFigure.waist},
+  {label:"AMÉRICAIN",crop:(dofFrameFigure.waist+dofFrameFigure.knee)/2},
+  {label:"PIED",crop:dofFrameFigure.foot}
+].map(plan=>({...plan,scale:(2/3)*(dofFrameFigure.foot-dofFrameFigure.head)/(plan.crop-dofFrameFigure.eye)}));
+
+function updateDofFramingPreview(focal,distanceM){
+  const stage=$("dofFramingStage"),frame=$("dofFramingFrame"),person=$("dofFramingPerson");
+  const guide=$("dofFramingEyeGuide"),planReadout=$("dofFramingPlan"),sizeReadout=$("dofFramingSize");
+  if(!stage||!frame||!person||!guide)return;
+  const sensorWidth=Number(currentCamera()?.sensorWidthMm);
+  if(!(focal>0&&distanceM>0&&sensorWidth>0)){
+    if(planReadout)planReadout.textContent="PLAN —";
+    if(sizeReadout)sizeReadout.textContent="—";
+    return;
+  }
+  // Le cadre visible occupe le même centre que la zone de preview de FRAME.
+  const stageW=stage.clientWidth,stageH=stage.clientHeight;
+  if(!stageW||!stageH)return;
+  const ratio=16/9;
+  const pxW=Math.min(stageW-20,(stageH-20)*ratio);
+  const pxH=pxW/ratio;
+  const left=(stageW-pxW)/2,top=(stageH-pxH)/2;
+  frame.style.width=pxW+"px";
+  frame.style.height=pxH+"px";
+  guide.style.left=left+"px";
+  guide.style.width=pxW+"px";
+  guide.style.top=(top+pxH/3)+"px";
+
+  // Projection perspective utilisée dans FRAME pour le même mannequin.
+  const figureH=1.75,cameraH=1.55;
+  const eyeHeight=figureH*(1-(dofFrameFigure.eye-dofFrameFigure.head)/(dofFrameFigure.foot-dofFrameFigure.head));
+  const tanHalfV=sensorWidth/(2*focal*ratio);
+  const eyeAngle=Math.atan((1/3)*tanHalfV);
+  const axis=Math.atan2(eyeHeight-cameraH,distanceM)-eyeAngle;
+  const cos=Math.cos(axis),sin=Math.sin(axis);
+  const projection=z=>{
+    const dz=z-cameraH;
+    const depth=distanceM*cos+dz*sin;
+    return depth>0.03?((dz*cos-distanceM*sin)/depth)/tanHalfV:null;
+  };
+  const eyeY=projection(eyeHeight),footY=projection(0),headY=projection(figureH);
+  if(eyeY===null||footY===null||headY===null)return;
+  const yPixels=v=>top+(pxH/2)-(v*pxH/2);
+  const imageHeight=Math.abs(yPixels(footY)-yPixels(eyeY))/((dofFrameFigure.foot-dofFrameFigure.eye)/dofFrameFigure.h);
+  const imageWidth=imageHeight*dofFrameFigure.w/dofFrameFigure.h;
+  person.style.left=(stageW/2)+"px";
+  person.style.top=(yPixels(eyeY)-imageHeight*dofFrameFigure.eye/dofFrameFigure.h)+"px";
+  person.style.width=imageWidth+"px";
+  person.style.height=imageHeight+"px";
+
+  // Classification des plans identique à FRAME (seuils au milieu de deux références).
+  const scale=Math.abs(yPixels(footY)-yPixels(headY))/pxH;
+  const plans=dofFramePlans;
+  let selected=plans[plans.length-1];
+  if(scale>=plans[0].scale)selected=plans[0];
+  else for(let i=0;i<plans.length-1;i++){
+    if(scale>=(plans[i].scale+plans[i+1].scale)/2){selected=plans[i];break;}
+  }
+  const widthM=sensorWidth*distanceM/focal;
+  const heightM=widthM/ratio;
+  if(planReadout)planReadout.textContent="PLAN "+selected.label;
+  if(sizeReadout)sizeReadout.textContent=
+    widthM.toFixed(2).replace(".",",")+" × "+heightM.toFixed(2).replace(".",",")+" m";
+}
+
 function calculate() {
   const fmt=currentFormat();
   const COC=fmt.coc;
@@ -821,6 +896,7 @@ function calculate() {
   const N=parseFR(inputs.aperture.value);
   const s1M=parseFR(inputs.distance.value);
   const s2M=parseFR(inputs.subject2Distance.value);
+  updateDofFramingPreview(f,s1M);
 
   $("formatBadge").textContent=fmt.name;
   $("footerText").textContent=`Cercle de confusion : ${fmt.coc.toFixed(3).replace(".",",")} mm · ${fmt.name}`;
@@ -1052,9 +1128,13 @@ function bindModePanel(panelId,toggleId,contentId){
     content.hidden=isOpen;
     panel.classList.toggle("collapsed",isOpen);
     toggle.setAttribute("aria-expanded",isOpen?"false":"true");
+    if(panelId==="pdcPanel"&&!isOpen)requestAnimationFrame(()=>updateDofFramingPreview(parseFR(inputs.focal.value),parseFR(inputs.distance.value)));
   });
 }
 bindModePanel("pdcPanel","pdcToggle","pdcContent");
+window.addEventListener("resize",()=>{
+  if(!$("pdcContent")?.hidden)updateDofFramingPreview(parseFR(inputs.focal.value),parseFR(inputs.distance.value));
+});
 bindModePanel("twoSubjectsPanel","twoSubjectsToggle","twoSubjectsContent");
 
 const interviewPanel=$("interviewPanel");
